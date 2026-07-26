@@ -1,0 +1,836 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <title>Hoa Sen Steel Intelligence - Dashboard Thống Nhất</title>
+    <style>
+        @layer base {
+
+            html,
+            body {
+                margin: 0;
+                padding: 0;
+            }
+
+            body {
+                overscroll-behavior: none;
+            }
+
+            main> :first-child {
+                margin-top: 0 !important;
+            }
+
+            main> :last-child {
+                margin-bottom: 0 !important;
+            }
+        }
+
+        ::-webkit-scrollbar {
+            display: none;
+        }
+
+        .view-content {
+            display: none;
+            opacity: 0;
+            transition: opacity 0.3s ease-in-out;
+        }
+
+        .view-content.active {
+            display: block;
+            opacity: 1;
+        }
+    </style>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script id="tailwind-config">
+        tailwind.config = {
+            theme: {
+                extend: {
+                    "colors": {
+                        "on-primary-fixed": "#410001",
+                        "on-secondary-fixed-variant": "#454749",
+                        "on-tertiary-fixed-variant": "#454749",
+                        "surface": "#f8f9fa",
+                        "on-error": "#ffffff",
+                        "on-secondary-fixed": "#1a1c1e",
+                        "on-primary": "#ffffff",
+                        "tertiary": "#57595b",
+                        "error": "#ba1a1a",
+                        "surface-dim": "#d9dadb",
+                        "surface-container-lowest": "#ffffff",
+                        "on-error-container": "#93000a",
+                        "on-secondary": "#ffffff",
+                        "primary-fixed-dim": "#ffb4aa",
+                        "surface-tint": "#c0000c",
+                        "on-primary-fixed-variant": "#930007",
+                        "outline": "#936e69",
+                        "on-primary-container": "#fff5f3",
+                        "on-background": "#191c1d",
+                        "on-secondary-container": "#636467",
+                        "on-surface": "#191c1d",
+                        "on-tertiary": "#ffffff",
+                        "tertiary-container": "#6f7173",
+                        "on-tertiary-container": "#f6f7f9",
+                        "surface-container-highest": "#e1e3e4",
+                        "surface-container-high": "#e7e8e9",
+                        "primary-fixed": "#ffdad5",
+                        "tertiary-fixed": "#e2e2e5",
+                        "inverse-primary": "#ffb4aa",
+                        "inverse-on-surface": "#f0f1f2",
+                        "primary-container": "#e30613",
+                        "on-tertiary-fixed": "#1a1c1e",
+                        "background": "#f8f9fa",
+                        "outline-variant": "#e9bcb6",
+                        "inverse-surface": "#2e3132",
+                        "surface-container-low": "#f3f4f5",
+                        "secondary-fixed": "#e2e2e5",
+                        "error-container": "#ffdad6",
+                        "surface-variant": "#e1e3e4",
+                        "secondary-container": "#e2e2e5",
+                        "on-surface-variant": "#5e3f3b",
+                        "secondary-fixed-dim": "#c6c6c9",
+                        "surface-bright": "#f8f9fa",
+                        "secondary": "#5d5e61",
+                        "tertiary-fixed-dim": "#c6c6c9",
+                        "primary": "#b5000b",
+                        "surface-container": "#edeeef"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.125rem",
+                        "lg": "0.25rem",
+                        "xl": "0.5rem",
+                        "full": "0.75rem"
+                    },
+                    "spacing": {
+                        "gutter": "16px",
+                        "base": "8px",
+                        "card-padding": "20px",
+                        "container-margin": "24px",
+                        "section-gap": "32px"
+                    },
+                    "fontFamily": {
+                        "body-lg": ["Inter"],
+                        "headline-lg-mobile": ["Inter"],
+                        "display-lg": ["Inter"],
+                        "headline-md": ["Inter"],
+                        "body-md": ["Inter"],
+                        "headline-lg": ["Inter"],
+                        "label-sm": ["JetBrains Mono"],
+                        "headline-sm": ["Inter"],
+                        "label-md": ["JetBrains Mono"]
+                    },
+                    "fontSize": {
+                        "body-lg": ["16px", { "lineHeight": "24px", "fontWeight": "400" }],
+                        "headline-lg-mobile": ["28px", { "lineHeight": "36px", "fontWeight": "600" }],
+                        "display-lg": ["48px", { "lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "700" }],
+                        "headline-md": ["24px", { "lineHeight": "32px", "fontWeight": "600" }],
+                        "body-md": ["14px", { "lineHeight": "20px", "fontWeight": "400" }],
+                        "headline-lg": ["32px", { "lineHeight": "40px", "fontWeight": "600" }],
+                        "label-sm": ["10px", { "lineHeight": "14px", "letterSpacing": "0.05em", "fontWeight": "500" }],
+                        "headline-sm": ["20px", { "lineHeight": "28px", "fontWeight": "600" }],
+                        "label-md": ["12px", { "lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "500" }]
+                    }
+                }
+            }
+        }
+    </script>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0"
+        rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500&display=swap"
+        rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap"
+        rel="stylesheet">
+</head>
+
+<body class="bg-background font-body-md text-on-background min-h-screen">
+
+    <!-- Mobile Backdrop Overlay -->
+    <div id="sidebar-overlay"
+        class="fixed inset-0 bg-black/50 z-40 hidden lg:hidden backdrop-blur-sm transition-opacity duration-300"></div>
+
+    <!-- Responsive Sidebar Navigation -->
+    <aside id="sidebar"
+        class="fixed left-0 top-0 h-full w-72 bg-surface-container-lowest z-50 flex flex-col border-r border-outline-variant transform -translate-x-full lg:translate-x-0 transition-transform duration-300 ease-in-out shadow-2xl lg:shadow-none">
+        <div class="absolute top-0 left-0 w-full h-1 bg-primary"></div>
+        <div class="p-gutter flex items-center justify-between mb-base">
+            <div class="flex items-center gap-3">
+                <img alt="Hoa Sen Steel Dashboard Logo" class="h-8 w-auto object-contain"
+                    src="https://lh3.googleusercontent.com/aida-public/AB6AXuA88QfWHdwm0SJyEj8SrQsARTwpi4G38cBqDEXGWY_9uOpHI8lkajA9yZ4ve9-ggmsXUumJyz8UsiMwpqxYibMPiZwuAF9yIMUSEpt-hHsJOXH3VRGAxEyNkzs9PCa-W9apW_SASK-DsiCtlaI9Olu6EpK4HCp1iTlAx6R142UyI85-Rz5s0wjInogKRaUjcTvSqbnbkzK9CqVdO0WJ28Iozeyjs4nv2INFYgXIn2B18o9Wuk1bbBOoQOSL8dojHV1U82tbRBHKj04">
+                <span class="font-headline-sm text-headline-sm text-on-surface tracking-tight leading-none">Steel
+                    Intelligence</span>
+            </div>
+            <!-- Close Button for Mobile Drawer -->
+            <button id="close-sidebar-btn"
+                class="lg:hidden text-on-surface-variant hover:text-primary p-1 rounded-lg transition-colors">
+                <span class="material-symbols-outlined">close</span>
+            </button>
+        </div>
+        <nav class="flex-1 px-4 mt-4 space-y-1" id="main-nav">
+            <a class="nav-item flex items-center px-4 py-3 rounded transition-all duration-200 bg-primary-container text-on-primary-container font-semibold"
+                data-path="tong-quan" href="#tong-quan">
+                <span class="material-symbols-outlined mr-3">dashboard</span>
+                <span class="font-body-md text-body-md">Tổng quan</span>
+            </a>
+            <a class="nav-item flex items-center px-4 py-3 rounded text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-all duration-200"
+                data-path="san-luong" href="#san-luong">
+                <span class="material-symbols-outlined mr-3">precision_manufacturing</span>
+                <span class="font-body-md text-body-md">Sản lượng</span>
+            </a>
+            <a class="nav-item flex items-center px-4 py-3 rounded text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-all duration-200"
+                data-path="quan-ly-loi" href="#quan-ly-loi">
+                <span class="material-symbols-outlined mr-3">report_problem</span>
+                <span class="font-body-md text-body-md">Quản lý Lỗi</span>
+            </a>
+            <a class="nav-item flex items-center px-4 py-3 rounded text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-all duration-200"
+                data-path="thoi-gian-dung-may" href="#thoi-gian-dung-may">
+                <span class="material-symbols-outlined mr-3">pause_circle</span>
+                <span class="font-body-md text-body-md">Thời gian Dừng máy</span>
+            </a>
+            <div class="pt-4 mt-4 border-t border-outline-variant">
+                <a class="nav-item flex items-center px-4 py-3 rounded text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-all duration-200"
+                    data-path="cai-dat" href="#cai-dat">
+                    <span class="material-symbols-outlined mr-3">settings</span>
+                    <span class="font-body-md text-body-md">Cài đặt</span>
+                </a>
+            </div>
+        </nav>
+    </aside>
+
+    <!-- Main Content Area with Responsive Padding -->
+    <div class="pl-0 lg:pl-72 transition-all duration-300">
+        <!-- Header with Hamburger Toggle for Mobile -->
+        <header
+            class="fixed top-0 left-0 lg:left-72 right-0 h-16 bg-surface/80 backdrop-blur-xl border-b border-outline-variant z-30 flex items-center justify-between px-4 lg:px-gutter transition-all duration-300">
+            <div class="flex items-center gap-2 lg:gap-base">
+                <!-- Hamburger Button for Mobile Screen -->
+                <button id="mobile-menu-btn"
+                    class="lg:hidden p-2 text-on-surface-variant hover:text-primary hover:bg-surface-container-high rounded-lg transition-colors flex items-center">
+                    <span class="material-symbols-outlined text-[24px]">menu</span>
+                </button>
+                <span class="material-symbols-outlined text-primary">factory</span>
+                <span
+                    class="font-label-md text-label-md uppercase tracking-widest text-on-surface-variant text-xs sm:text-sm truncate max-w-[200px] sm:max-w-none"
+                    id="header-subtitle">Operational Monitoring System</span>
+            </div>
+            <div class="flex items-center gap-3 sm:gap-6">
+                <div class="flex items-center gap-3 sm:pr-4 sm:border-r border-outline-variant">
+                    <div class="text-right hidden sm:block">
+                        <p class="font-body-md text-body-md text-on-surface leading-none">Admin User</p>
+                        <p class="font-label-sm text-label-sm text-on-surface-variant uppercase mt-1">Plant Manager</p>
+                    </div>
+                    <img alt="Profile"
+                        class="w-8 h-8 sm:w-9 sm:h-9 rounded-full object-cover border border-outline-variant"
+                        src="https://lh3.googleusercontent.com/aida-public/AB6AXuDAoLGbTUUQbPc2ZueV9TDc8CleoYIUV3Bz3X9VPP3MyqsxnLoC7GofDnN0CKkhaBRrkhC8n1Iv08wP6P7PWzA9WadKg0nnvtvrYAcO3lFDb0y5c6L4OZ_O7a-CiRswDjg9dBG-64JMGgYPSjoO-wL0PvxTbdRFuatsyCt_LKZmXw2JjQWpS93AwKT6KuYFGIQq7zWTak-UGsk2iv8AesuPOhsKL33nsjg-koVA48GDHe5FZHv5QPqVQIWR1ffUpEtfAeWd_VY6OTk">
+                </div>
+                <button class="text-on-surface-variant hover:text-primary transition-colors flex items-center p-1">
+                    <span class="material-symbols-outlined">notifications</span>
+                </button>
+            </div>
+        </header>
+
+        <main class="relative pt-16 bg-surface min-h-screen overflow-hidden">
+
+            <!-- VIEW 1: TỔNG QUAN -->
+            <div id="view-tong-quan" class="view-content active">
+                <div class="flex flex-col w-full p-4 sm:p-gutter gap-6 sm:gap-section-gap">
+                    <section class="relative flex flex-col md:flex-row md:items-end justify-between gap-4">
+                        <div class="z-10">
+                            <div class="flex items-center gap-2 mb-2">
+                                <span class="w-8 h-[2px] bg-primary"></span>
+                                <span class="font-label-md text-label-md text-primary uppercase tracking-[0.2em]">Live
+                                    Production Feed</span>
+                            </div>
+                            <h1 class="text-3xl md:text-display-lg font-bold text-on-surface tracking-tighter">Bảng điều
+                                khiển <span class="text-primary">Tổng quan</span></h1>
+                            <p class="font-body-lg text-body-lg text-on-surface-variant max-w-xl mt-2 sm:mt-4 italic">
+                                "Sau vài tháng bạn sẽ biết mình yếu ở đâu để cải thiện." — Hệ thống tối ưu hóa sản xuất
+                                Hoa Sen.
+                            </p>
+                        </div>
+                        <div class="flex flex-wrap gap-2 sm:gap-4">
+                            <div
+                                class="bg-surface-container px-3 sm:px-4 py-2 flex items-center gap-2 sm:gap-3 rounded">
+                                <div class="w-2 h-2 rounded-full bg-primary animate-pulse"></div>
+                                <span class="font-label-sm text-label-md text-on-surface-variant">TRỰC TUYẾN</span>
+                            </div>
+                            <button
+                                class="bg-surface-container text-on-surface-variant px-4 sm:px-6 py-2 font-label-md text-label-md uppercase tracking-wider flex items-center gap-2 hover:bg-surface-container-high transition-colors shadow-sm rounded">
+                                <span class="material-symbols-outlined text-[18px]">ios_share</span> Xuất dữ liệu
+                            </button>
+                            <button
+                                class="bg-primary text-on-primary px-4 sm:px-6 py-2 font-label-md text-label-md uppercase tracking-wider flex items-center gap-2 hover:bg-on-primary-fixed-variant transition-colors shadow-md rounded">
+                                <span class="material-symbols-outlined text-[18px]">download</span> Xuất báo cáo
+                            </button>
+                        </div>
+                        <div
+                            class="absolute -top-24 -left-24 w-96 h-96 bg-primary/5 rounded-full blur-[100px] pointer-events-none">
+                        </div>
+                    </section>
+
+                    <section class="grid grid-cols-1 md:grid-cols-3 gap-4 sm:gap-gutter">
+                        <div
+                            class="group relative bg-surface-container-lowest p-card-padding flex flex-col justify-between overflow-hidden shadow-sm hover:shadow-xl transition-all duration-500 border-l-4 border-primary rounded-lg">
+                            <div class="flex justify-between items-start mb-6">
+                                <div>
+                                    <p
+                                        class="text-sm sm:text-base font-semibold text-on-surface-variant uppercase tracking-wider">
+                                        Sản lượng trong ngày</p>
+                                    <h2
+                                        class="text-4xl md:text-display-lg font-bold text-on-surface mt-2 group-hover:text-primary transition-colors">
+                                        1,284</h2>
+                                    <p class="text-sm sm:text-body-md font-medium text-on-surface-variant mt-1">Cuộn tôn / 24h</p>
+                                </div>
+                                <span
+                                    class="material-symbols-outlined text-primary/20 text-[48px] group-hover:scale-110 transition-transform">layers</span>
+                            </div>
+                            <div class="flex items-center gap-2 text-[green] mt-2">
+                                <span class="material-symbols-outlined text-lg">trending_up</span>
+                                <span class="text-base font-semibold">+12.5% so với hôm qua</span>
+                            </div>
+                        </div>
+
+                        <div
+                            class="group bg-surface-container-lowest p-card-padding flex flex-col justify-between shadow-sm hover:shadow-xl transition-all duration-500 border-l-4 border-on-surface-variant rounded-lg">
+                            <div class="flex justify-between items-start mb-6">
+                                <div>
+                                    <p
+                                        class="text-sm sm:text-base font-semibold text-on-surface-variant uppercase tracking-wider">
+                                        Số lỗi phát hiện</p>
+                                    <h2
+                                        class="text-4xl md:text-display-lg font-bold text-on-surface mt-2 group-hover:text-error transition-colors">
+                                        14</h2>
+                                    <p class="text-sm sm:text-body-md font-medium text-on-surface-variant mt-1">Trường hợp kiểm định
+                                    </p>
+                                </div>
+                                <span
+                                    class="material-symbols-outlined text-error/20 text-[48px] group-hover:rotate-12 transition-transform">report_problem</span>
+                            </div>
+                            <div class="flex items-center gap-2 text-error mt-2">
+                                <span class="material-symbols-outlined text-lg">trending_down</span>
+                                <span class="text-base font-semibold">-2.4% mục tiêu giảm lỗi</span>
+                            </div>
+                        </div>
+
+                        <div
+                            class="group bg-surface-container-lowest p-card-padding flex flex-col justify-between shadow-sm hover:shadow-xl transition-all duration-500 border-l-4 border-primary rounded-lg">
+                            <div class="flex justify-between items-start mb-6">
+                                <div>
+                                    <p
+                                        class="text-sm sm:text-base font-semibold text-on-surface-variant uppercase tracking-wider">
+                                        Dừng máy (Downtime)</p>
+                                    <h2 class="text-4xl md:text-display-lg font-bold text-on-surface mt-2">42</h2>
+                                    <p class="text-sm sm:text-body-md font-medium text-on-surface-variant mt-1">Phút vận hành gián
+                                        đoạn</p>
+                                </div>
+                                <span class="material-symbols-outlined text-primary/20 text-[48px]">timer_off</span>
+                            </div>
+                            <div class="flex items-center gap-2 text-[green] mt-2">
+                                <span class="material-symbols-outlined text-lg">verified</span>
+                                <span class="text-base font-semibold">Đã khắc phục 100% sự cố</span>
+                            </div>
+                        </div>
+                    </section>
+
+                    <section class="grid grid-cols-1 lg:grid-cols-12 gap-4 sm:gap-gutter">
+                        <div
+                            class="lg:col-span-4 bg-surface-container-lowest p-card-padding shadow-md flex flex-col items-center justify-center relative overflow-hidden rounded-lg">
+                            <div class="absolute top-4 left-4">
+                                <span
+                                    class="font-label-md text-label-md text-on-surface-variant uppercase tracking-widest">Hiệu
+                                    suất dây chuyền</span>
+                            </div>
+                            <div class="relative w-52 h-52 sm:w-64 sm:h-64 flex items-center justify-center mt-6">
+                                <svg class="w-full h-full transform -rotate-90">
+                                    <circle class="text-surface-container-high" cx="128" cy="128" fill="transparent"
+                                        r="100" stroke="currentColor" stroke-width="8"></circle>
+                                    <circle class="text-primary transition-all duration-1000 ease-out gauge-circle"
+                                        cx="128" cy="128" fill="transparent" r="100" stroke="currentColor"
+                                        stroke-dasharray="628" stroke-dashoffset="125" stroke-linecap="square"
+                                        stroke-width="12"></circle>
+                                </svg>
+                                <div class="absolute flex flex-col items-center">
+                                    <span class="text-3xl sm:text-display-lg font-bold text-on-surface">82%</span>
+                                    <span class="font-label-sm text-label-sm text-on-surface-variant uppercase">Chỉ số
+                                        OEE</span>
+                                </div>
+                            </div>
+                            <div class="mt-8 grid grid-cols-2 gap-4 w-full">
+                                <div class="text-center border-r border-outline-variant">
+                                    <p class="font-label-sm text-label-sm text-on-surface-variant">Khả dụng</p>
+                                    <p class="font-headline-sm text-headline-sm text-on-surface">94.2%</p>
+                                </div>
+                                <div class="text-center">
+                                    <p class="font-label-sm text-label-sm text-on-surface-variant">Chất lượng</p>
+                                    <p class="font-headline-sm text-headline-sm text-on-surface text-primary">98.1%</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="lg:col-span-8 bg-surface-container-lowest p-card-padding shadow-md rounded-lg">
+                            <div class="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-4 mb-6">
+                                <div>
+                                    <span
+                                        class="font-label-md text-label-md text-on-surface-variant uppercase tracking-widest">So
+                                        sánh sản lượng ngày</span>
+                                    <h3 class="font-headline-md text-headline-md text-on-surface mt-1">Sản lượng tuần
+                                        hiện tại</h3>
+                                </div>
+                                <div class="flex gap-6 items-center">
+                                    <span
+                                        class="flex items-center gap-2 text-sm sm:text-base font-semibold text-on-surface">
+                                        <span class="w-3.5 h-3.5 bg-primary rounded-sm"></span> Thực tế
+                                    </span>
+                                    <span
+                                        class="flex items-center gap-2 text-sm sm:text-base font-semibold text-on-surface">
+                                        <span class="w-3.5 h-3.5 bg-surface-container-high rounded-sm"></span> Kế hoạch
+                                    </span>
+                                </div>
+                            </div>
+                            <div
+                                class="relative h-64 w-full flex items-end justify-between gap-2 sm:gap-4 px-2 sm:px-4">
+                                <div class="flex-1 flex flex-col items-center gap-3 group h-full justify-end">
+                                    <div class="w-full flex gap-1 items-end h-[70%]">
+                                        <div class="flex-1 bg-surface-container-high h-[100%]"></div>
+                                        <div
+                                            class="flex-1 bg-primary/40 group-hover:bg-primary transition-colors h-[85%]">
+                                        </div>
+                                    </div>
+                                    <span class="text-sm font-semibold text-on-surface-variant">T2</span>
+                                </div>
+                                <div class="flex-1 flex flex-col items-center gap-3 group h-full justify-end">
+                                    <div class="w-full flex gap-1 items-end h-[70%]">
+                                        <div class="flex-1 bg-surface-container-high h-[95%]"></div>
+                                        <div
+                                            class="flex-1 bg-primary/40 group-hover:bg-primary transition-colors h-[90%]">
+                                        </div>
+                                    </div>
+                                    <span class="text-sm font-semibold text-on-surface-variant">T3</span>
+                                </div>
+                                <div class="flex-1 flex flex-col items-center gap-3 group h-full justify-end">
+                                    <div class="w-full flex gap-1 items-end h-[70%]">
+                                        <div class="flex-1 bg-surface-container-high h-[100%]"></div>
+                                        <div
+                                            class="flex-1 bg-primary/40 group-hover:bg-primary transition-colors h-[95%]">
+                                        </div>
+                                    </div>
+                                    <span class="text-sm font-semibold text-on-surface-variant">T4</span>
+                                </div>
+                                <div class="flex-1 flex flex-col items-center gap-3 group h-full justify-end">
+                                    <div class="w-full flex gap-1 items-end h-[70%]">
+                                        <div class="flex-1 bg-surface-container-high h-[80%]"></div>
+                                        <div
+                                            class="flex-1 bg-primary/40 group-hover:bg-primary transition-colors h-[98%]">
+                                        </div>
+                                    </div>
+                                    <span class="text-sm font-semibold text-on-surface-variant">T5</span>
+                                </div>
+                                <div class="flex-1 flex flex-col items-center gap-3 group h-full justify-end">
+                                    <div class="w-full flex gap-1 items-end h-[70%]">
+                                        <div class="flex-1 bg-surface-container-high h-[100%]"></div>
+                                        <div
+                                            class="flex-1 bg-primary group-hover:bg-primary transition-colors h-[100%]">
+                                        </div>
+                                    </div>
+                                    <span class="text-sm font-bold text-primary">H.Nay</span>
+                                </div>
+                                <div
+                                    class="flex-1 flex flex-col items-center gap-3 group h-full justify-end opacity-30">
+                                    <div class="w-full flex gap-1 items-end h-[70%]">
+                                        <div class="flex-1 bg-surface-container-high h-[100%]"></div>
+                                        <div class="flex-1 bg-primary/40 h-[0%]"></div>
+                                    </div>
+                                    <span class="text-sm font-semibold text-on-surface-variant">T7</span>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+
+                    <section class="grid grid-cols-1 lg:grid-cols-3 gap-4 sm:gap-gutter">
+                        <div class="lg:col-span-2 bg-surface-container-lowest shadow-md overflow-hidden rounded-lg">
+                            <div
+                                class="p-4 border-b border-outline-variant flex justify-between items-center bg-surface-container-low">
+                                <div class="flex items-center gap-2">
+                                    <span class="material-symbols-outlined text-primary">analytics</span>
+                                    <h3 class="font-headline-sm text-headline-sm text-on-surface">Lỗi hệ thống thường
+                                        gặp</h3>
+                                </div>
+                                <span class="font-label-sm text-label-md text-on-surface-variant uppercase">30 Ngày
+                                    qua</span>
+                            </div>
+                            <div class="overflow-x-auto w-full">
+                                <table class="w-full text-left min-w-[500px]">
+                                    <thead>
+                                        <tr class="bg-surface">
+                                            <th
+                                                class="px-4 py-3 font-label-md text-label-md text-on-surface-variant uppercase">
+                                                Mã lỗi</th>
+                                            <th
+                                                class="px-4 py-3 font-label-md text-label-md text-on-surface-variant uppercase">
+                                                Loại lỗi</th>
+                                            <th
+                                                class="px-4 py-3 font-label-md text-label-md text-on-surface-variant uppercase">
+                                                Tần suất</th>
+                                            <th
+                                                class="px-4 py-3 font-label-md text-label-md text-on-surface-variant uppercase text-right">
+                                                Mức độ</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody class="divide-y divide-outline-variant">
+                                        <tr class="hover:bg-surface-container transition-colors">
+                                            <td class="px-4 py-3 font-label-md text-primary font-bold">ERR-042</td>
+                                            <td class="px-4 py-3 font-body-md text-on-surface">Trầy xước bề mặt mạ nhôm
+                                            </td>
+                                            <td class="px-4 py-3">
+                                                <div class="flex items-center gap-2">
+                                                    <div
+                                                        class="w-20 h-2 bg-surface-container-high rounded-full overflow-hidden">
+                                                        <div class="bg-primary h-full w-[85%]"></div>
+                                                    </div>
+                                                    <span class="font-label-sm text-label-sm">42 lần</span>
+                                                </div>
+                                            </td>
+                                            <td class="px-4 py-3 text-right">
+                                                <span
+                                                    class="px-2 py-1 bg-error/10 text-error font-label-sm text-label-sm rounded uppercase">Cao</span>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+
+                        <div
+                            class="bg-primary p-card-padding flex flex-col justify-between text-on-primary relative overflow-hidden shadow-xl rounded-lg">
+                            <div class="absolute inset-0 z-0 opacity-40 mix-blend-overlay">
+                                <img class="w-full h-full object-cover"
+                                    src="https://lh3.googleusercontent.com/aida-public/AB6AXuDddkI3m8AUkUx1GpPQvx01AmMOheN-fMx0ZdUC1Ns72S1jMEhiJEHyk8xvgbNnugKR-c93A7q8ORhIkNOtrqroDfFqE1PQHmsJjywDClOqz_7QhMWrW09LJw_aa_lOQrzT7nMI47UFBzLnyO_wC7rray8t6squYOjlVZJM2XEiVxrjVtU5u0c98mW_zWmzXvvN55RkXhcPtjqTI0jeisO4oTqyrwD1_Eh66DpaR5fvB58Secz48KSmpJJA0fYZW1M89DkA8T2Q54Y">
+                            </div>
+                            <div
+                                class="absolute inset-0 bg-gradient-to-t from-primary via-primary/60 to-transparent z-10">
+                            </div>
+                            <div class="relative z-20">
+                                <span class="material-symbols-outlined text-[40px] mb-4">psychology</span>
+                                <h3 class="font-headline-lg text-headline-lg mb-4 leading-tight">Cải thiện năng lực điều
+                                    hành</h3>
+                                <p class="font-body-md sm:font-body-lg text-on-primary/90">
+                                    Mỗi thông số được ghi nhận là một cơ hội để tinh chỉnh quy trình. "Sau vài tháng bạn
+                                    sẽ biết mình yếu ở đâu để cải thiện."
+                                </p>
+                            </div>
+                        </div>
+                    </section>
+                </div>
+            </div>
+
+            <!-- VIEW 2: SẢN LƯỢNG -->
+            <div id="view-san-luong" class="view-content">
+                <div class="flex flex-col w-full p-4 sm:p-gutter gap-6">
+                    <section class="relative overflow-hidden">
+                        <div class="flex flex-col md:flex-row md:items-end justify-between gap-4">
+                            <div class="space-y-2">
+                                <div class="flex items-center gap-2">
+                                    <span class="w-8 h-[2px] bg-primary"></span>
+                                    <span
+                                        class="font-label-md text-label-md text-primary uppercase tracking-[0.2em]">Real-time
+                                        Metrics</span>
+                                </div>
+                                <h1 class="text-3xl md:text-display-lg font-bold text-on-surface tracking-tight">Theo
+                                    dõi Sản lượng</h1>
+                                <p class="font-body-lg text-body-lg text-on-surface-variant max-w-xl">Hệ thống giám sát
+                                    hiệu suất dây chuyền cán nguội và mạ kẽm. Dữ liệu cập nhật mỗi 30 giây.</p>
+                            </div>
+                            <button
+                                class="px-6 py-2.5 bg-primary text-on-primary font-label-md text-label-md uppercase tracking-wider rounded shadow-md hover:bg-on-primary-fixed-variant transition-all w-fit">Xuất
+                                báo cáo</button>
+                        </div>
+                    </section>
+
+                    <section class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+                        <div
+                            class="sm:col-span-2 bg-surface-container-lowest p-card-padding shadow-sm relative group overflow-hidden rounded-lg">
+                            <p
+                                class="font-label-md text-label-md text-on-surface-variant uppercase mb-2 flex items-center gap-2">
+                                Sản lượng trong ngày <span
+                                    class="w-2 h-2 rounded-full bg-green-500 animate-pulse"></span>
+                            </p>
+                            <div class="flex items-baseline gap-4">
+                                <h2 class="text-4xl md:text-display-lg font-bold text-on-surface">1,240.5</h2>
+                                <span class="font-headline-sm text-headline-sm text-on-surface-variant">Tấn</span>
+                            </div>
+                        </div>
+
+                        <div
+                            class="bg-surface-container-lowest p-card-padding shadow-sm border-t-4 border-primary rounded-lg">
+                            <p class="font-label-md text-label-md text-on-surface-variant uppercase mb-2">Tổng tuần
+                                (W42)</p>
+                            <h2 class="text-3xl font-bold text-on-surface">8,642</h2>
+                            <p class="font-body-md text-on-surface-variant mt-1">Cuộn thép thành phẩm</p>
+                        </div>
+
+                        <div class="bg-surface-container-lowest p-card-padding shadow-sm rounded-lg">
+                            <p class="font-label-md text-label-md text-on-surface-variant uppercase mb-2">Tỷ lệ đạt
+                                chuẩn (Yield)</p>
+                            <h2 class="text-3xl font-bold text-on-surface">98.2%</h2>
+                        </div>
+                    </section>
+
+                    <section class="bg-surface-container-lowest shadow-sm overflow-hidden rounded-lg">
+                        <div
+                            class="p-4 border-b border-outline-variant flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+                            <h3 class="font-headline-sm text-headline-sm text-on-surface">Nhật ký Sản xuất Chi tiết</h3>
+                            <input
+                                class="px-3 py-1.5 bg-surface-container text-on-surface text-body-md border-b-2 border-transparent focus:border-primary outline-none transition-all rounded"
+                                placeholder="Tìm mã cuộn..." type="text">
+                        </div>
+                        <div class="overflow-x-auto w-full">
+                            <table class="w-full border-collapse min-w-[600px]">
+                                <thead>
+                                    <tr class="bg-surface-container-low">
+                                        <th class="p-4 text-left font-label-md text-on-surface-variant uppercase">Thời
+                                            gian</th>
+                                        <th class="p-4 text-left font-label-md text-on-surface-variant uppercase">Mã
+                                            Cuộn (Coil ID)</th>
+                                        <th class="p-4 text-left font-label-md text-on-surface-variant uppercase">Loại
+                                            Thép</th>
+                                        <th class="p-4 text-right font-label-md text-on-surface-variant uppercase">Khối
+                                            lượng (Tấn)</th>
+                                        <th class="p-4 text-center font-label-md text-on-surface-variant uppercase">
+                                            Trạng thái</th>
+                                    </tr>
+                                </thead>
+                                <tbody class="divide-y divide-outline-variant/30">
+                                    <tr class="hover:bg-surface-container-high/50 transition-colors">
+                                        <td class="p-4 font-body-md">14:22:15</td>
+                                        <td class="p-4 font-label-md text-on-surface-variant">HS-20231024-001</td>
+                                        <td class="p-4 font-body-md font-semibold">Mạ Kẽm Z275</td>
+                                        <td class="p-4 text-right font-body-md">24.5</td>
+                                        <td class="p-4 text-center">
+                                            <span
+                                                class="inline-flex px-2 py-0.5 rounded-full bg-green-100 text-green-700 font-label-sm uppercase">Đạt
+                                                chuẩn</span>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </section>
+                </div>
+            </div>
+
+            <!-- VIEW 3: QUẢN LÝ LỖI -->
+            <div id="view-quan-ly-loi" class="view-content">
+                <div class="flex flex-col w-full p-4 sm:p-gutter gap-6">
+                    <div class="flex flex-col gap-2">
+                        <span class="font-label-md text-primary uppercase tracking-[0.2em]">Quality Assurance</span>
+                        <h1 class="text-3xl md:text-display-lg font-bold text-on-surface tracking-tight">Quản lý Lỗi Sản
+                            phẩm</h1>
+                    </div>
+
+                    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+                        <div
+                            class="bg-surface-container-lowest p-card-padding shadow-xl border-t-4 border-primary rounded-lg">
+                            <p class="font-label-md text-on-surface-variant uppercase">Tỷ lệ lỗi (YTD)</p>
+                            <span class="text-3xl sm:text-display-lg font-bold text-on-surface mt-2 block">1.42%</span>
+                        </div>
+                        <div class="bg-primary p-card-padding shadow-xl rounded-lg text-on-primary">
+                            <p class="font-label-md opacity-80 uppercase">Lỗi nghiêm trọng</p>
+                            <span class="text-3xl sm:text-display-lg font-bold mt-2 block">04</span>
+                        </div>
+                        <div
+                            class="sm:col-span-2 bg-surface-container-lowest p-card-padding shadow-xl border-t-4 border-on-surface rounded-lg">
+                            <p class="font-label-md text-on-surface-variant uppercase">Thời gian phản hồi TB</p>
+                            <span class="text-3xl sm:text-display-lg font-bold text-on-surface mt-2 block">18m</span>
+                        </div>
+                    </div>
+
+                    <div>
+                        <h3 class="font-headline-sm text-headline-sm text-on-surface mb-4">Thư viện Nhận dạng Lỗi AI
+                        </h3>
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                            <div
+                                class="group relative overflow-hidden bg-surface-container-highest aspect-video rounded-lg">
+                                <img class="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-500"
+                                    src="https://lh3.googleusercontent.com/aida-public/AB6AXuCuDwN5M2fc9C9klFsKfCxt2-pmedNXeyXxT5nptyfDPTjeAmKWVZwOmXk7TCSDtnb0Ux0d7CWgaCF30Cb5VdwyNIS8sRtTD4Bbn9ogYW-R15BPNNqQ30ZQ1E-CTr1B8djhY6Pvvqf7KaJEDdZqRCtFIMIWVSVrGl61BuO4oYpKqFyD8VByFUIp06BlqRR-nz3xeXm7MxQCYAPYjK1JUP7LqtPWR6DuC9HfpflLV97mTlE7hURrWj4YIQ7ZQ9Rq3uulQ4iPpB_cOrY">
+                                <div
+                                    class="absolute bottom-0 left-0 right-0 p-3 bg-gradient-to-t from-on-surface/80 to-transparent text-on-primary">
+                                    <p class="font-label-md uppercase">Lỗi Trầy Xước Bề Mặt</p>
+                                </div>
+                            </div>
+                            <div
+                                class="group relative overflow-hidden bg-surface-container-highest aspect-video rounded-lg">
+                                <img class="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-500"
+                                    src="https://lh3.googleusercontent.com/aida-public/AB6AXuCBnkxjkC3_1a-0g-BWH-qWQS2O41tOfBUKq2NaReXOc-SlC-kMm8loQbBgkzovwegCrk7sqFfdYnzCwz_GYXD2mGTy7u99rmXqcRFlpbwe2v2yeO6d9grhWBQF2IEYynorh9hKsota8DDdcN1jEh5FqLcRAfF7c_lfzqaCopQ-avykotv_2rlvVRt-hDTTNISxA6y--7hYrVGh0gAWufEWtK_aSIhLDNhOgF_0a4SNg8OKRSBwAde0rjeAswGnVWctYKkDsp2aY9Y">
+                                <div
+                                    class="absolute bottom-0 left-0 right-0 p-3 bg-gradient-to-t from-on-surface/80 to-transparent text-on-primary">
+                                    <p class="font-label-md uppercase">Lỗi Gợn Sóng Biên</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- VIEW 4: THỜI GIAN DỪNG MÁY -->
+            <div id="view-thoi-gian-dung-may" class="view-content">
+                <div class="flex flex-col w-full p-4 sm:p-gutter gap-6">
+                    <section class="flex flex-col sm:flex-row justify-between items-start sm:items-end gap-4">
+                        <div>
+                            <span class="font-label-md uppercase tracking-widest text-primary">Live Performance
+                                Monitoring</span>
+                            <h1 class="text-3xl md:text-display-lg font-bold text-on-surface tracking-tight mt-1">Thời
+                                gian Dừng máy</h1>
+                        </div>
+                        <div class="bg-surface-container-low p-4 rounded-lg shadow-sm w-full sm:w-auto">
+                            <p class="font-label-sm text-on-surface-variant uppercase mb-1">Tổng thời gian dừng</p>
+                            <p class="text-3xl font-bold text-primary">142 <span
+                                    class="text-body-md font-normal text-on-surface-variant">phút</span></p>
+                        </div>
+                    </section>
+
+                    <section class="bg-surface-container-lowest shadow-sm rounded-lg overflow-hidden">
+                        <div class="p-4 border-b border-outline-variant">
+                            <h3 class="font-headline-sm">Nhật ký Dừng máy Chi tiết</h3>
+                        </div>
+                        <div class="overflow-x-auto w-full">
+                            <table class="w-full text-left min-w-[500px]">
+                                <thead>
+                                    <tr class="bg-surface-container-low border-b border-outline-variant">
+                                        <th class="p-4 font-label-md text-on-surface-variant uppercase">Thời điểm</th>
+                                        <th class="p-4 font-label-md text-on-surface-variant uppercase">Thiết bị</th>
+                                        <th class="p-4 font-label-md text-on-surface-variant uppercase">Thời lượng</th>
+                                        <th class="p-4 font-label-md text-on-surface-variant uppercase">Trạng thái</th>
+                                    </tr>
+                                </thead>
+                                <tbody class="divide-y divide-outline-variant">
+                                    <tr class="hover:bg-surface-container transition-colors">
+                                        <td class="p-4 font-body-md">14:22:10</td>
+                                        <td class="p-4 font-body-md font-semibold">Line Xẻ Băng 02</td>
+                                        <td class="p-4 font-body-md text-error">42m 15s</td>
+                                        <td class="p-4">
+                                            <span
+                                                class="bg-error/10 text-error px-3 py-1 font-label-sm rounded-full">ĐANG
+                                                SỬA CHỮA</span>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </section>
+                </div>
+            </div>
+
+            <!-- VIEW 5: CÀI ĐẶT -->
+            <div id="view-cai-dat" class="view-content">
+                <div class="p-4 sm:p-gutter">
+                    <h1 class="text-3xl md:text-display-lg font-bold text-on-surface mb-2">Cài đặt Hệ thống</h1>
+                    <p class="font-body-lg text-on-surface-variant mb-6">Quản lý tham số cảnh báo, phân quyền quản trị
+                        và cấu hình kênh thông báo.</p>
+
+                    <div
+                        class="max-w-2xl bg-surface-container-lowest p-4 sm:p-card-padding shadow-md space-y-6 rounded-lg">
+                        <div>
+                            <label class="block font-label-md text-on-surface mb-2">Ngưỡng Cảnh Báo Lỗi (%):</label>
+                            <input type="number" value="1.5"
+                                class="w-full px-4 py-2 border border-outline-variant rounded bg-surface">
+                        </div>
+                        <div>
+                            <label class="block font-label-md text-on-surface mb-2">Email Nhận Báo Cáo Sự Cố:</label>
+                            <input type="email" value="manager@hoasensteel.com"
+                                class="w-full px-4 py-2 border border-outline-variant rounded bg-surface">
+                        </div>
+                        <button
+                            class="px-6 py-2.5 bg-primary text-on-primary font-label-md uppercase tracking-wider rounded">Lưu
+                            cấu hình</button>
+                    </div>
+                </div>
+            </div>
+
+        </main>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const navItems = document.querySelectorAll('.nav-item');
+            const viewContents = document.querySelectorAll('.view-content');
+            const headerSubtitle = document.getElementById('header-subtitle');
+
+            // Mobile Drawer Elements
+            const sidebar = document.getElementById('sidebar');
+            const sidebarOverlay = document.getElementById('sidebar-overlay');
+            const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+            const closeSidebarBtn = document.getElementById('close-sidebar-btn');
+
+            const viewTitles = {
+                'tong-quan': 'Operational Overview System',
+                'san-luong': 'Production Output Metrics',
+                'quan-ly-loi': 'Quality & Defect Monitoring',
+                'thoi-gian-dung-may': 'Line Downtime Analytics',
+                'cai-dat': 'System Configuration Settings'
+            };
+
+            function openSidebar() {
+                sidebar.classList.remove('-translate-x-full');
+                sidebarOverlay.classList.remove('hidden');
+            }
+
+            function closeSidebar() {
+                sidebar.classList.add('-translate-x-full');
+                sidebarOverlay.classList.add('hidden');
+            }
+
+            if (mobileMenuBtn) mobileMenuBtn.addEventListener('click', openSidebar);
+            if (closeSidebarBtn) closeSidebarBtn.addEventListener('click', closeSidebar);
+            if (sidebarOverlay) sidebarOverlay.addEventListener('click', closeSidebar);
+
+            function switchTab(targetPath) {
+                navItems.forEach(item => {
+                    if (item.getAttribute('data-path') === targetPath) {
+                        item.className = 'nav-item flex items-center px-4 py-3 rounded transition-all duration-200 bg-primary-container text-on-primary-container font-semibold';
+                    } else {
+                        item.className = 'nav-item flex items-center px-4 py-3 rounded text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-all duration-200';
+                    }
+                });
+
+                viewContents.forEach(view => {
+                    if (view.id === `view-${targetPath}`) {
+                        view.classList.add('active');
+                    } else {
+                        view.classList.remove('active');
+                    }
+                });
+
+                if (viewTitles[targetPath]) {
+                    headerSubtitle.textContent = viewTitles[targetPath];
+                }
+
+                // Auto-close sidebar on mobile after choosing a tab
+                if (window.innerWidth < 1024) {
+                    closeSidebar();
+                }
+            }
+
+            navItems.forEach(item => {
+                item.addEventListener('click', (e) => {
+                    const targetPath = item.getAttribute('data-path');
+                    switchTab(targetPath);
+                });
+            });
+
+            window.addEventListener('hashchange', () => {
+                const hash = window.location.hash.replace('#', '');
+                if (hash && document.getElementById(`view-${hash}`)) {
+                    switchTab(hash);
+                }
+            });
+
+            const initialHash = window.location.hash.replace('#', '');
+            if (initialHash && document.getElementById(`view-${initialHash}`)) {
+                switchTab(initialHash);
+            }
+        });
+    </script>
+</body>
+
+</html>
