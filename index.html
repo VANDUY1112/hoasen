@@ -2446,7 +2446,7 @@
     </div>
 
     <script>
-        document.addEventListener('DOMContentLoaded', () => {
+        function initApp() {
             const navItems = document.querySelectorAll('.nav-item');
             const viewContents = document.querySelectorAll('.view-content');
             const headerSubtitle = document.getElementById('header-subtitle');
@@ -2473,13 +2473,13 @@
             };
 
             function openSidebar() {
-                sidebar.classList.remove('-translate-x-full');
-                sidebarOverlay.classList.remove('hidden');
+                if (sidebar) sidebar.classList.remove('-translate-x-full');
+                if (sidebarOverlay) sidebarOverlay.classList.remove('hidden');
             }
 
             function closeSidebar() {
-                sidebar.classList.add('-translate-x-full');
-                sidebarOverlay.classList.add('hidden');
+                if (sidebar) sidebar.classList.add('-translate-x-full');
+                if (sidebarOverlay) sidebarOverlay.classList.add('hidden');
             }
 
             if (mobileMenuBtn) mobileMenuBtn.addEventListener('click', openSidebar);
@@ -2503,7 +2503,7 @@
                     }
                 });
 
-                if (viewTitles[targetPath]) {
+                if (headerSubtitle && viewTitles[targetPath]) {
                     headerSubtitle.textContent = viewTitles[targetPath];
                 }
 
@@ -2515,6 +2515,7 @@
 
             navItems.forEach(item => {
                 item.addEventListener('click', (e) => {
+                    e.preventDefault();
                     const targetPath = item.getAttribute('data-path');
                     switchTab(targetPath);
                 });
@@ -2654,6 +2655,11 @@
                             btn.innerHTML = originalText;
                             btn.classList.replace('text-green-600', 'text-primary');
                             alert('Mục tiêu ca trực đã được ban hành và gửi thông báo thành công!');
+                        }, 2000);
+                    }, 1500);
+                });
+            }
+
             // Button Event: 'Lập phiếu sửa chữa' (Dự báo Bảo trì) -> 'lap-phieu-sua-chua'
             const btnLapPhieuSuaChua = document.getElementById('btn-lap-phieu-sua-chua');
             if (btnLapPhieuSuaChua) {
@@ -2694,7 +2700,13 @@
                     }, 1500);
                 });
             }
-        });
+        }
+
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', initApp);
+        } else {
+            initApp();
+        }
     </script>
 </body>
 
