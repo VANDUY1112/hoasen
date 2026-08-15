@@ -1,13 +1,21 @@
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { ArrowLeft, RefreshCw, CheckCircle2 } from 'lucide-react'
+import { ArrowLeft, RefreshCw, CheckCircle2, Warehouse, Layers, Calendar, FileText, Sparkles } from 'lucide-react'
+import CustomSelect, { SelectOption } from '../components/ui/CustomSelect'
+
+const warehouseOptions: SelectOption[] = [
+  { value: 'Kho TP-1', label: 'Kho TP-1 (Thành phẩm tôn cuộn)', badge: 'Khu A', description: 'Khu vực bảo quản tiêu chuẩn ISO' },
+  { value: 'Kho TP-2', label: 'Kho TP-2 (Tôn màu xuất khẩu)', badge: 'Khu B', description: 'Đóng gói màng co và pallet' },
+  { value: 'Kho A1', label: 'Kho A1 (Phôi thép cán nóng)', badge: 'NVL', description: 'Sức chứa tối đa 10,000 Tấn' },
+  { value: 'Kho B2', label: 'Kho B2 (Hóa chất & Kẽm thỏi)', badge: 'Phụ liệu', description: 'Kiểm soát nhiệt độ tự động' },
+]
 
 export default function NhapKhoThanhPham() {
   const navigate = useNavigate()
   const [formData, setFormData] = useState({
     coilId: '',
     weight: '',
-    location: '',
+    location: 'Kho TP-1',
     date: new Date().toISOString().split('T')[0],
     notes: '',
   })
@@ -23,134 +31,183 @@ export default function NhapKhoThanhPham() {
       setTimeout(() => {
         setSuccess(false)
         alert('Dữ liệu đã được lưu thành công vào hệ thống!')
-        setFormData({ coilId: '', weight: '', location: '', date: new Date().toISOString().split('T')[0], notes: '' })
+        setFormData({ coilId: '', weight: '', location: 'Kho TP-1', date: new Date().toISOString().split('T')[0], notes: '' })
       }, 2000)
     }, 1500)
   }
 
   return (
-    <div className="flex flex-col w-full p-4 sm:p-6 gap-6 animate-fade-in">
-      <div className="flex items-center gap-4">
-        <button onClick={() => navigate('/quan-ly-ton-kho')} className="p-2 hover:bg-surface-container-high rounded-lg transition-colors">
-          <ArrowLeft size={20} className="text-on-surface-variant" />
-        </button>
-        <div>
-          <h1 className="text-3xl md:text-5xl font-bold text-on-surface tracking-tight">Nhập kho Thành phẩm</h1>
-          <p className="text-sm text-on-surface-variant mt-1">Ghi nhận sản phẩm hoàn thành vào hệ thống tồn kho.</p>
+    <div className="flex flex-col w-full p-4 sm:p-6 gap-6 animate-fade-in max-w-7xl mx-auto">
+      {/* Page Title */}
+      <div className="flex items-center justify-between">
+        <div className="flex items-center gap-3.5">
+          <button
+            onClick={() => navigate('/quan-ly-ton-kho')}
+            className="p-2.5 hover:bg-surface-container-high rounded-xl transition-colors text-on-surface-variant hover:text-primary border border-outline-variant/40 shadow-xs"
+          >
+            <ArrowLeft size={18} />
+          </button>
+          <div>
+            <div className="flex items-center gap-2">
+              <span className="font-mono text-xs text-primary uppercase font-bold tracking-wider">Console Vận hành</span>
+              <span className="w-1.5 h-1.5 rounded-full bg-primary" />
+              <span className="text-xs text-on-surface-variant font-medium">Nhập kho</span>
+            </div>
+            <h1 className="text-2xl sm:text-4xl font-extrabold text-on-surface tracking-tight mt-0.5">
+              Nhập kho Thành phẩm
+            </h1>
+          </div>
         </div>
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
-        {/* Form */}
+        {/* Form Container */}
         <div className="lg:col-span-7">
-          <div className="bg-surface-container-lowest p-6 rounded-xl shadow-sm">
+          <div className="bg-surface-container-lowest p-6 sm:p-7 rounded-2xl shadow-sm border border-outline-variant/50">
             <form className="space-y-6" onSubmit={handleSubmit}>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
                 <div>
-                  <label className="block font-mono text-xs text-on-surface-variant uppercase mb-2">Mã cuộn thép (Coil ID)</label>
-                  <input
-                    className="w-full bg-surface-container-low border border-outline-variant/50 rounded-lg px-4 py-2.5 text-sm focus:border-primary focus:ring-1 focus:ring-primary/20 outline-none transition-all"
-                    placeholder="HS-YYYYMMDD-XXX"
-                    value={formData.coilId}
-                    onChange={(e) => setFormData({ ...formData, coilId: e.target.value })}
-                    required
-                  />
+                  <label className="block text-xs font-semibold text-on-surface-variant uppercase tracking-wider mb-1.5">
+                    Mã cuộn thép (Coil ID)
+                  </label>
+                  <div className="relative">
+                    <input
+                      className="w-full bg-surface-container-lowest border border-outline-variant/60 rounded-xl px-4 py-2.5 text-sm font-mono focus:border-primary focus:ring-3 focus:ring-primary/15 outline-none transition-all duration-200"
+                      placeholder="HS-20260815-001"
+                      value={formData.coilId}
+                      onChange={(e) => setFormData({ ...formData, coilId: e.target.value })}
+                      required
+                    />
+                  </div>
                 </div>
+
                 <div>
-                  <label className="block font-mono text-xs text-on-surface-variant uppercase mb-2">Khối lượng (Tấn)</label>
-                  <input
-                    type="number"
-                    step="0.001"
-                    className="w-full bg-surface-container-low border border-outline-variant/50 rounded-lg px-4 py-2.5 text-sm focus:border-primary focus:ring-1 focus:ring-primary/20 outline-none transition-all"
-                    placeholder="0.000"
-                    value={formData.weight}
-                    onChange={(e) => setFormData({ ...formData, weight: e.target.value })}
-                    required
-                  />
+                  <label className="block text-xs font-semibold text-on-surface-variant uppercase tracking-wider mb-1.5">
+                    Khối lượng tịnh (Tấn)
+                  </label>
+                  <div className="relative">
+                    <input
+                      type="number"
+                      step="0.001"
+                      className="w-full bg-surface-container-lowest border border-outline-variant/60 rounded-xl px-4 py-2.5 text-sm font-mono focus:border-primary focus:ring-3 focus:ring-primary/15 outline-none transition-all duration-200"
+                      placeholder="24.500"
+                      value={formData.weight}
+                      onChange={(e) => setFormData({ ...formData, weight: e.target.value })}
+                      required
+                    />
+                  </div>
                 </div>
               </div>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
                 <div>
-                  <label className="block font-mono text-xs text-on-surface-variant uppercase mb-2">Vị trí kho</label>
-                  <select
-                    className="w-full bg-surface-container-low border border-outline-variant/50 rounded-lg px-4 py-2.5 text-sm focus:border-primary outline-none transition-all"
+                  <CustomSelect
+                    label="Vị trí kho lưu trữ"
+                    icon={<Warehouse size={16} />}
+                    options={warehouseOptions}
                     value={formData.location}
-                    onChange={(e) => setFormData({ ...formData, location: e.target.value })}
-                    required
-                  >
-                    <option value="">-- Chọn kho --</option>
-                    <option value="Kho TP-1">Kho TP-1</option>
-                    <option value="Kho TP-2">Kho TP-2</option>
-                    <option value="Kho A1">Kho A1</option>
-                    <option value="Kho B2">Kho B2</option>
-                  </select>
-                </div>
-                <div>
-                  <label className="block font-mono text-xs text-on-surface-variant uppercase mb-2">Ngày nhập</label>
-                  <input
-                    type="date"
-                    className="w-full bg-surface-container-low border border-outline-variant/50 rounded-lg px-4 py-2.5 text-sm focus:border-primary outline-none transition-all"
-                    value={formData.date}
-                    onChange={(e) => setFormData({ ...formData, date: e.target.value })}
+                    onChange={(val) => setFormData({ ...formData, location: val })}
                   />
                 </div>
+
+                <div>
+                  <label className="block text-xs font-semibold text-on-surface-variant uppercase tracking-wider mb-1.5">
+                    Ngày nhập kho
+                  </label>
+                  <div className="relative">
+                    <input
+                      type="date"
+                      className="w-full bg-surface-container-lowest border border-outline-variant/60 rounded-xl px-4 py-2.5 text-sm font-mono focus:border-primary focus:ring-3 focus:ring-primary/15 outline-none transition-all duration-200"
+                      value={formData.date}
+                      onChange={(e) => setFormData({ ...formData, date: e.target.value })}
+                    />
+                  </div>
+                </div>
               </div>
+
               <div>
-                <label className="block font-mono text-xs text-on-surface-variant uppercase mb-2">Ghi chú</label>
+                <label className="block text-xs font-semibold text-on-surface-variant uppercase tracking-wider mb-1.5">
+                  Ghi chú kiểm định chất lượng
+                </label>
                 <textarea
-                  className="w-full bg-surface-container-low border border-outline-variant/50 rounded-lg px-4 py-2.5 text-sm focus:border-primary outline-none transition-all h-24 resize-none"
-                  placeholder="Ghi chú bổ sung..."
+                  className="w-full bg-surface-container-lowest border border-outline-variant/60 rounded-xl px-4 py-2.5 text-sm focus:border-primary focus:ring-3 focus:ring-primary/15 outline-none transition-all duration-200 h-24 resize-none"
+                  placeholder="Nhập thông tin bề mặt mạ, độ bóng, độ bám dính..."
                   value={formData.notes}
                   onChange={(e) => setFormData({ ...formData, notes: e.target.value })}
                 />
               </div>
-              <div className="flex gap-4 pt-2">
+
+              <div className="flex items-center gap-4 pt-2 border-t border-outline-variant/40">
                 <button
                   type="submit"
                   disabled={submitting || success}
-                  className={`px-8 py-3 text-on-primary font-semibold rounded-xl transition-all flex items-center gap-2 text-sm shadow-lg ${
-                    success ? 'bg-success' : 'bg-primary hover:bg-on-primary-fixed-variant'
-                  }`}
+                  className={`
+                    px-7 py-3 text-on-primary font-semibold rounded-xl transition-all duration-200 flex items-center gap-2 text-sm shadow-md
+                    ${success
+                      ? 'bg-emerald-600 shadow-emerald-600/20'
+                      : 'bg-primary hover:bg-on-primary-fixed-variant shadow-primary/20 hover:scale-[1.01] active:scale-[0.99]'
+                    }
+                  `}
                 >
-                  {submitting ? <><RefreshCw size={16} className="animate-spin-slow" /> Đang xử lý...</> :
-                   success ? <><CheckCircle2 size={16} /> Thành công</> :
-                   'Xác nhận nhập kho'}
+                  {submitting ? (
+                    <>
+                      <RefreshCw size={16} className="animate-spin-slow" /> Đang xử lý ERP...
+                    </>
+                  ) : success ? (
+                    <>
+                      <CheckCircle2 size={16} /> Đã nhập kho thành công
+                    </>
+                  ) : (
+                    <>
+                      <Layers size={16} /> Xác nhận nhập kho
+                    </>
+                  )}
                 </button>
+
                 <button
                   type="button"
                   onClick={() => navigate('/quan-ly-ton-kho')}
-                  className="px-6 py-3 bg-surface-container text-on-surface-variant font-semibold rounded-xl hover:bg-surface-container-high transition-all text-sm"
+                  className="px-5 py-3 bg-surface-container text-on-surface-variant font-semibold rounded-xl hover:bg-surface-container-high transition-colors text-sm"
                 >
-                  Hủy yêu cầu
+                  Hủy bỏ
                 </button>
               </div>
             </form>
           </div>
         </div>
 
-        {/* Live Preview */}
+        {/* Live Preview Panel */}
         <div className="lg:col-span-5">
-          <div className="bg-surface-container-lowest p-6 rounded-xl shadow-sm sticky top-24">
-            <h3 className="font-mono text-xs text-on-surface-variant uppercase mb-4 tracking-wider">Xem trước dữ liệu</h3>
-            <div className="space-y-4">
-              <div>
-                <p className="text-5xl font-bold text-on-surface leading-tight tracking-tight">
-                  {formData.weight || '0.000'} <span className="text-lg text-on-surface-variant">T</span>
-                </p>
+          <div className="bg-surface-container-lowest p-6 rounded-2xl shadow-sm border border-outline-variant/50 sticky top-24">
+            <div className="flex items-center justify-between mb-4 pb-3 border-b border-outline-variant/40">
+              <div className="flex items-center gap-2">
+                <Sparkles size={16} className="text-primary" />
+                <span className="font-bold text-xs uppercase tracking-wider text-on-surface">Thẻ nhận dạng Barcode</span>
               </div>
-              <div className="border-t border-outline-variant/50 pt-4 space-y-3">
-                <div className="flex justify-between">
-                  <span className="font-mono text-xs text-on-surface-variant uppercase">Coil ID</span>
-                  <span className="text-sm font-semibold text-on-surface">{formData.coilId || '---'}</span>
-                </div>
-                <div className="flex justify-between">
-                  <span className="font-mono text-xs text-on-surface-variant uppercase">Vị trí</span>
-                  <span className="text-sm font-semibold text-on-surface">{formData.location || '---'}</span>
-                </div>
-                <div className="flex justify-between">
-                  <span className="font-mono text-xs text-on-surface-variant uppercase">Ngày</span>
-                  <span className="text-sm font-semibold text-on-surface">{formData.date}</span>
-                </div>
+              <span className="px-2 py-0.5 rounded-full bg-emerald-500/10 text-emerald-700 font-mono text-[10px] font-bold uppercase">
+                Chờ in tem
+              </span>
+            </div>
+
+            <div className="p-5 rounded-xl bg-surface-container-low border border-outline-variant/40 text-center mb-5">
+              <p className="text-[11px] font-mono text-on-surface-variant uppercase font-semibold">Khối lượng xác nhận</p>
+              <p className="text-5xl font-extrabold text-on-surface tracking-tight mt-1">
+                {formData.weight || '0.000'} <span className="text-xl font-normal text-on-surface-variant">T</span>
+              </p>
+            </div>
+
+            <div className="space-y-3 font-mono text-xs">
+              <div className="flex justify-between p-2.5 rounded-xl bg-surface-container/60">
+                <span className="text-on-surface-variant">Mã Cuộn:</span>
+                <span className="font-bold text-primary">{formData.coilId || 'HS-XXXX-XXX'}</span>
+              </div>
+              <div className="flex justify-between p-2.5 rounded-xl bg-surface-container/60">
+                <span className="text-on-surface-variant">Vị trí lưu kho:</span>
+                <span className="font-bold text-on-surface">{formData.location}</span>
+              </div>
+              <div className="flex justify-between p-2.5 rounded-xl bg-surface-container/60">
+                <span className="text-on-surface-variant">Thời điểm:</span>
+                <span className="font-bold text-on-surface">{formData.date}</span>
               </div>
             </div>
           </div>

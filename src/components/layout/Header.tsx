@@ -1,4 +1,5 @@
-import { Menu, Bell, Factory } from 'lucide-react'
+import { useState, useRef, useEffect } from 'react'
+import { Menu, Bell, Factory, Check, Clock, ChevronDown, User, Shield, LogOut, CheckCircle2, AlertTriangle, Info, Sparkles } from 'lucide-react'
 import { decorativeImages } from '../../data/mockData'
 
 interface HeaderProps {
@@ -6,41 +7,259 @@ interface HeaderProps {
   onMenuClick: () => void
 }
 
+interface NotificationItem {
+  id: string
+  title: string
+  desc: string
+  time: string
+  type: 'critical' | 'warning' | 'info'
+  read: boolean
+}
+
+const initialNotifications: NotificationItem[] = [
+  {
+    id: '1',
+    title: 'Cảnh báo rung chấn Line 01',
+    desc: 'Ổ đỡ trục cán chính phát hiện độ rung vượt ngưỡng 12%',
+    time: '2 phút trước',
+    type: 'critical',
+    read: false,
+  },
+  {
+    id: '2',
+    title: 'Mục tiêu Ca 1 hoàn thành 92%',
+    desc: 'Dây chuyền Cán nguội 01 đạt 1,104/1,200 Tấn',
+    time: '25 phút trước',
+    type: 'info',
+    read: false,
+  },
+  {
+    id: '3',
+    title: 'Tồn kho Vòng bi SKF sắp hết',
+    desc: 'Còn 4 cái tại Kho Phụ tùng (mức tối thiểu: 10 cái)',
+    time: '1 giờ trước',
+    type: 'warning',
+    read: true,
+  },
+]
+
 export default function Header({ subtitle, onMenuClick }: HeaderProps) {
+  const [notifOpen, setNotifOpen] = useState(false)
+  const [profileOpen, setProfileOpen] = useState(false)
+  const [notifications, setNotifications] = useState(initialNotifications)
+
+  const notifRef = useRef<HTMLDivElement>(null)
+  const profileRef = useRef<HTMLDivElement>(null)
+
+  const unreadCount = notifications.filter((n) => !n.read).length
+
+  useEffect(() => {
+    const handleClickOutside = (e: MouseEvent) => {
+      if (notifRef.current && !notifRef.current.contains(e.target as Node)) {
+        setNotifOpen(false)
+      }
+      if (profileRef.current && !profileRef.current.contains(e.target as Node)) {
+        setProfileOpen(false)
+      }
+    }
+    document.addEventListener('mousedown', handleClickOutside)
+    return () => document.removeEventListener('mousedown', handleClickOutside)
+  }, [])
+
+  const markAllRead = () => {
+    setNotifications((prev) => prev.map((n) => ({ ...n, read: true })))
+  }
+
   return (
     <header className="fixed top-0 left-0 lg:left-72 right-0 h-16 glass z-30 flex items-center justify-between px-4 lg:px-6 transition-all duration-300 border-b border-outline-variant/50">
-      <div className="flex items-center gap-2 lg:gap-3">
-        {/* Hamburger for mobile */}
+      {/* Left: Brand / View Title */}
+      <div className="flex items-center gap-2 lg:gap-3.5">
         <button
           onClick={onMenuClick}
-          className="lg:hidden p-2 text-on-surface-variant hover:text-primary hover:bg-surface-container-high rounded-lg transition-colors flex items-center"
+          className="lg:hidden p-2 text-on-surface-variant hover:text-primary hover:bg-surface-container-high rounded-xl transition-colors flex items-center"
         >
           <Menu size={22} />
         </button>
-        <Factory size={20} className="text-primary" />
-        <span className="font-mono text-xs sm:text-sm uppercase tracking-[0.15em] text-on-surface-variant truncate max-w-[200px] sm:max-w-none font-medium">
-          {subtitle}
-        </span>
+
+        <div className="flex items-center gap-2.5 px-3 py-1.5 rounded-xl bg-surface-container/60 border border-outline-variant/30">
+          <div className="p-1 rounded-lg bg-primary/10 text-primary">
+            <Factory size={16} />
+          </div>
+          <span className="font-mono text-xs sm:text-sm uppercase tracking-[0.15em] text-on-surface-variant truncate max-w-[180px] sm:max-w-none font-semibold">
+            {subtitle}
+          </span>
+        </div>
+
+        {/* Live Badge */}
+        <div className="hidden md:flex items-center gap-2 px-2.5 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/20 text-emerald-700">
+          <span className="relative flex h-2 w-2">
+            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-500 opacity-75" />
+            <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500" />
+          </span>
+          <span className="font-mono text-[11px] font-bold uppercase tracking-wider">Trực tuyến 30s</span>
+        </div>
       </div>
 
-      <div className="flex items-center gap-3 sm:gap-6">
-        <div className="flex items-center gap-3 sm:pr-4 sm:border-r border-outline-variant">
-          <div className="text-right hidden sm:block">
-            <p className="text-[15px] font-semibold text-on-surface leading-none">Admin User</p>
-            <p className="text-[11px] font-mono text-on-surface-variant uppercase mt-1 tracking-wider">
-              Plant Manager
-            </p>
-          </div>
-          <img
-            alt="Profile"
-            className="w-8 h-8 sm:w-9 sm:h-9 rounded-full object-cover border-2 border-outline-variant/40 hover:border-primary transition-colors"
-            src={decorativeImages.profile}
-          />
+      {/* Right: Notifications & Profile */}
+      <div className="flex items-center gap-3 sm:gap-4">
+        {/* Notifications Popover */}
+        <div className="relative" ref={notifRef}>
+          <button
+            onClick={() => setNotifOpen(!notifOpen)}
+            className={`
+              relative p-2.5 rounded-xl transition-all duration-200 flex items-center justify-center
+              ${notifOpen
+                ? 'bg-primary-container text-on-primary-container shadow-md shadow-primary/15'
+                : 'text-on-surface-variant hover:text-primary hover:bg-surface-container-high'
+              }
+            `}
+          >
+            <Bell size={19} />
+            {unreadCount > 0 && (
+              <span className="absolute top-1.5 right-1.5 flex h-4 w-4 items-center justify-center rounded-full bg-primary text-[10px] font-bold text-on-primary shadow-xs">
+                {unreadCount}
+              </span>
+            )}
+          </button>
+
+          {/* Notifications Dropdown Panel */}
+          {notifOpen && (
+            <div className="absolute right-0 mt-2 w-80 sm:w-96 rounded-2xl bg-surface-container-lowest/95 backdrop-blur-2xl border border-outline-variant/80 shadow-2xl shadow-black/10 py-3 animate-scale-in z-50">
+              <div className="flex items-center justify-between px-4 pb-3 border-b border-outline-variant/50">
+                <div className="flex items-center gap-2">
+                  <span className="font-bold text-sm text-on-surface">Thông báo hệ thống</span>
+                  {unreadCount > 0 && (
+                    <span className="px-2 py-0.5 rounded-full bg-primary/10 text-primary font-mono text-[10px] font-bold">
+                      {unreadCount} mới
+                    </span>
+                  )}
+                </div>
+                {unreadCount > 0 && (
+                  <button
+                    onClick={markAllRead}
+                    className="text-xs text-primary hover:underline font-medium flex items-center gap-1"
+                  >
+                    <Check size={13} /> Đánh dấu đã đọc
+                  </button>
+                )}
+              </div>
+
+              <div className="max-h-80 overflow-y-auto divide-y divide-outline-variant/30">
+                {notifications.map((n) => (
+                  <div
+                    key={n.id}
+                    className={`
+                      p-3.5 hover:bg-surface-container transition-colors flex gap-3 cursor-pointer
+                      ${!n.read ? 'bg-primary/5' : ''}
+                    `}
+                  >
+                    <div className="shrink-0 mt-0.5">
+                      {n.type === 'critical' ? (
+                        <div className="p-2 rounded-xl bg-error/10 text-error">
+                          <AlertTriangle size={16} />
+                        </div>
+                      ) : n.type === 'warning' ? (
+                        <div className="p-2 rounded-xl bg-amber-500/10 text-amber-600">
+                          <Clock size={16} />
+                        </div>
+                      ) : (
+                        <div className="p-2 rounded-xl bg-sky-500/10 text-sky-600">
+                          <Info size={16} />
+                        </div>
+                      )}
+                    </div>
+                    <div className="flex-1 min-w-0">
+                      <div className="flex justify-between items-start gap-1">
+                        <p className="text-xs font-semibold text-on-surface truncate">{n.title}</p>
+                        <span className="font-mono text-[10px] text-on-surface-variant/70 shrink-0">{n.time}</span>
+                      </div>
+                      <p className="text-[12px] text-on-surface-variant line-clamp-2 mt-0.5">{n.desc}</p>
+                    </div>
+                  </div>
+                ))}
+              </div>
+
+              <div className="pt-2 px-3 text-center border-t border-outline-variant/40">
+                <button className="w-full py-1.5 text-xs font-semibold text-primary hover:bg-surface-container rounded-xl transition-colors">
+                  Xem tất cả thông báo
+                </button>
+              </div>
+            </div>
+          )}
         </div>
-        <button className="relative text-on-surface-variant hover:text-primary transition-colors flex items-center p-1">
-          <Bell size={20} />
-          <span className="absolute -top-0.5 -right-0.5 w-2.5 h-2.5 bg-primary rounded-full border-2 border-surface-container-lowest" />
-        </button>
+
+        {/* User Profile Dropdown */}
+        <div className="relative" ref={profileRef}>
+          <button
+            onClick={() => setProfileOpen(!profileOpen)}
+            className={`
+              flex items-center gap-2.5 p-1 sm:pl-3 sm:pr-2.5 sm:py-1.5 rounded-2xl transition-all duration-200 border
+              ${profileOpen
+                ? 'border-primary ring-2 ring-primary/15 bg-surface-container-low shadow-sm'
+                : 'border-outline-variant/40 hover:border-primary/40 hover:bg-surface-container-high/60'
+              }
+            `}
+          >
+            <div className="text-right hidden sm:block">
+              <p className="text-[13px] font-bold text-on-surface leading-tight">Admin User</p>
+              <p className="text-[10px] font-mono text-on-surface-variant uppercase tracking-wider">
+                Plant Manager
+              </p>
+            </div>
+            <img
+              alt="Profile"
+              className="w-8 h-8 rounded-xl object-cover border border-outline-variant/60 shadow-xs"
+              src={decorativeImages.profile}
+            />
+            <ChevronDown
+              size={15}
+              className={`text-on-surface-variant transition-transform duration-200 hidden sm:block ${
+                profileOpen ? 'rotate-180 text-primary' : ''
+              }`}
+            />
+          </button>
+
+          {/* Profile Menu */}
+          {profileOpen && (
+            <div className="absolute right-0 mt-2 w-64 rounded-2xl bg-surface-container-lowest/95 backdrop-blur-2xl border border-outline-variant/80 shadow-2xl shadow-black/10 p-2 animate-scale-in z-50">
+              <div className="p-3 border-b border-outline-variant/40 mb-1">
+                <div className="flex items-center gap-3">
+                  <img
+                    alt="Profile"
+                    className="w-10 h-10 rounded-xl object-cover border border-outline-variant"
+                    src={decorativeImages.profile}
+                  />
+                  <div>
+                    <p className="text-sm font-bold text-on-surface">Võ Văn Duy</p>
+                    <p className="text-xs text-on-surface-variant">Giám đốc Nhà máy</p>
+                  </div>
+                </div>
+                <div className="mt-3 flex items-center justify-between p-2 rounded-xl bg-surface-container text-xs font-mono">
+                  <span className="text-on-surface-variant">Khu vực:</span>
+                  <span className="font-bold text-primary">Nhà máy Phú Mỹ</span>
+                </div>
+              </div>
+
+              <div className="space-y-0.5">
+                <button className="w-full flex items-center gap-2.5 px-3 py-2 text-xs font-medium text-on-surface hover:bg-surface-container hover:text-primary rounded-xl transition-colors">
+                  <User size={15} /> Hồ sơ cá nhân
+                </button>
+                <button className="w-full flex items-center gap-2.5 px-3 py-2 text-xs font-medium text-on-surface hover:bg-surface-container hover:text-primary rounded-xl transition-colors">
+                  <Shield size={15} /> Phân quyền bảo mật
+                </button>
+                <button className="w-full flex items-center gap-2.5 px-3 py-2 text-xs font-medium text-on-surface hover:bg-surface-container hover:text-primary rounded-xl transition-colors">
+                  <Sparkles size={15} /> Trợ lý AI Sản xuất
+                </button>
+              </div>
+
+              <div className="border-t border-outline-variant/40 mt-1 pt-1">
+                <button className="w-full flex items-center gap-2.5 px-3 py-2 text-xs font-semibold text-error hover:bg-error/10 rounded-xl transition-colors">
+                  <LogOut size={15} /> Đăng xuất
+                </button>
+              </div>
+            </div>
+          )}
+        </div>
       </div>
     </header>
   )
