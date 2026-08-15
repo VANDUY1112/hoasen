@@ -19,34 +19,35 @@ export default function Badge({
 }: BadgeProps) {
   const variantStyles: Record<BadgeVariant, { container: string; dot: string }> = {
     success: {
-      container: 'bg-emerald-500/10 text-emerald-700 border-emerald-500/25',
+      container: 'bg-emerald-500/10 text-emerald-700 border-emerald-500/30',
       dot: 'bg-emerald-500 shadow-emerald-500/50',
     },
     warning: {
-      container: 'bg-amber-500/10 text-amber-700 border-amber-500/25',
+      container: 'bg-amber-500/10 text-amber-700 border-amber-500/30',
       dot: 'bg-amber-500 shadow-amber-500/50',
     },
     error: {
-      container: 'bg-rose-500/10 text-rose-700 border-rose-500/25',
+      container: 'bg-rose-500/10 text-rose-700 border-rose-500/30',
       dot: 'bg-rose-500 shadow-rose-500/50',
     },
     primary: {
-      container: 'bg-primary/10 text-primary border-primary/25',
+      container: 'bg-primary/10 text-primary border-primary/30',
       dot: 'bg-primary shadow-primary/50',
     },
     info: {
-      container: 'bg-sky-500/10 text-sky-700 border-sky-500/25',
+      container: 'bg-sky-500/10 text-sky-700 border-sky-500/30',
       dot: 'bg-sky-500 shadow-sky-500/50',
     },
     neutral: {
-      container: 'bg-surface-container text-on-surface-variant border-outline-variant/50',
+      container: 'bg-surface-container text-on-surface-variant border-outline-variant/60',
       dot: 'bg-on-surface-variant/60 shadow-none',
     },
   }
 
+  // Sized comfortably for PC screens (12px sm, 13-14px md)
   const sizeStyles = {
-    sm: 'text-[10px] px-2 py-0.5 font-medium gap-1.5 tracking-wider',
-    md: 'text-xs px-2.5 py-1 font-semibold gap-2 tracking-wide',
+    sm: 'text-xs px-2.5 py-1 font-semibold gap-1.5 tracking-wide',
+    md: 'text-sm px-3 py-1.5 font-bold gap-2 tracking-wide',
   }
 
   const current = variantStyles[variant]

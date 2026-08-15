@@ -6,7 +6,7 @@ interface GaugeChartProps {
   size?: number
 }
 
-export default function GaugeChart({ value, label = 'Chỉ số OEE', size = 220 }: GaugeChartProps) {
+export default function GaugeChart({ value, label = 'Chỉ số OEE', size = 230 }: GaugeChartProps) {
   const data = [
     { name: 'value', value: value },
     { name: 'remaining', value: 100 - value },
@@ -36,8 +36,8 @@ export default function GaugeChart({ value, label = 'Chỉ số OEE', size = 220
         </ResponsiveContainer>
       </div>
       <div className="absolute flex flex-col items-center">
-        <span className="text-4xl sm:text-5xl font-bold text-on-surface">{value}%</span>
-        <span className="text-[11px] font-mono text-on-surface-variant uppercase tracking-wider mt-1">
+        <span className="text-4xl sm:text-5xl font-extrabold text-on-surface font-mono">{value}%</span>
+        <span className="text-xs sm:text-sm font-mono text-on-surface-variant uppercase tracking-wider font-bold mt-1">
           {label}
         </span>
       </div>

@@ -18,7 +18,7 @@ export default function SearchInput({
   return (
     <div className={`relative flex items-center ${className}`}>
       <Search
-        size={16}
+        size={18}
         className="absolute left-3.5 text-on-surface-variant/70 pointer-events-none transition-colors group-focus-within:text-primary"
       />
       <input
@@ -27,23 +27,23 @@ export default function SearchInput({
         onChange={(e) => onChange(e.target.value)}
         placeholder={placeholder}
         className="
-          w-full pl-9 pr-14 py-2 bg-surface-container-lowest/90 border border-outline-variant/60 rounded-xl
-          text-sm text-on-surface placeholder:text-on-surface-variant/50 shadow-xs
+          w-full pl-10 pr-16 py-2.5 bg-surface-container-lowest/90 border border-outline-variant/60 rounded-xl
+          text-sm sm:text-base text-on-surface placeholder:text-on-surface-variant/60 shadow-xs
           focus:border-primary focus:ring-3 focus:ring-primary/15 focus:bg-surface-container-lowest
           hover:border-outline-variant/90 transition-all duration-200 outline-none
         "
       />
-      <div className="absolute right-2.5 flex items-center gap-1">
+      <div className="absolute right-3 flex items-center gap-1">
         {value ? (
           <button
             type="button"
             onClick={() => onChange('')}
             className="p-1 text-on-surface-variant/60 hover:text-on-surface hover:bg-surface-container rounded-lg transition-colors"
           >
-            <X size={14} />
+            <X size={16} />
           </button>
         ) : shortcut ? (
-          <span className="font-mono text-[10px] px-1.5 py-0.5 rounded-md bg-surface-container text-on-surface-variant/70 border border-outline-variant/40">
+          <span className="font-mono text-xs px-2 py-0.5 rounded-md bg-surface-container text-on-surface-variant font-bold border border-outline-variant/40">
             {shortcut}
           </span>
         ) : null}

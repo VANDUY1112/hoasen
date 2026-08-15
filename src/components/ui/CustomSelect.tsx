@@ -49,10 +49,10 @@ export default function CustomSelect({
   return (
     <div className={`relative ${className}`} ref={containerRef}>
       {label && (
-        <label className="block text-xs font-semibold text-on-surface-variant uppercase tracking-wider mb-1.5 flex items-center justify-between">
+        <label className="block text-xs sm:text-sm font-bold text-on-surface-variant uppercase tracking-wider mb-2 flex items-center justify-between">
           <span>{label}</span>
           {selectedOption?.badge && (
-            <span className="font-mono text-[10px] px-2 py-0.5 rounded-full bg-primary/10 text-primary font-bold">
+            <span className="font-mono text-xs px-2.5 py-0.5 rounded-full bg-primary/10 text-primary font-bold">
               {selectedOption.badge}
             </span>
           )}
@@ -64,8 +64,8 @@ export default function CustomSelect({
         type="button"
         onClick={() => setIsOpen(!isOpen)}
         className={`
-          w-full flex items-center justify-between gap-3 px-4 py-2.5 rounded-xl
-          bg-surface-container-lowest border transition-all duration-200 text-left text-sm
+          w-full flex items-center justify-between gap-3 px-4 py-3 rounded-xl
+          bg-surface-container-lowest border transition-all duration-200 text-left text-sm sm:text-base
           ${isOpen
             ? 'border-primary ring-2 ring-primary/15 shadow-md shadow-primary/5 bg-surface-container-lowest'
             : 'border-outline-variant/60 hover:border-primary/50 hover:bg-surface-container-low/60 shadow-xs'
@@ -73,18 +73,18 @@ export default function CustomSelect({
           ${error ? 'border-error ring-1 ring-error/20' : ''}
         `}
       >
-        <div className="flex items-center gap-2.5 truncate flex-1">
+        <div className="flex items-center gap-3 truncate flex-1">
           {icon && <span className="text-on-surface-variant shrink-0">{icon}</span>}
           {selectedOption?.icon && <span className="shrink-0">{selectedOption.icon}</span>}
           {selectedOption ? (
-            <span className="font-medium text-on-surface truncate">{selectedOption.label}</span>
+            <span className="font-semibold text-on-surface truncate">{selectedOption.label}</span>
           ) : (
             <span className="text-on-surface-variant/60 truncate">{placeholder}</span>
           )}
         </div>
 
         <ChevronDown
-          size={18}
+          size={20}
           className={`text-on-surface-variant transition-transform duration-200 shrink-0 ${
             isOpen ? 'rotate-180 text-primary' : ''
           }`}
@@ -93,9 +93,9 @@ export default function CustomSelect({
 
       {/* Dropdown Menu */}
       {isOpen && (
-        <div className="absolute z-50 left-0 right-0 mt-1.5 py-1.5 bg-surface-container-lowest/95 backdrop-blur-xl border border-outline-variant/80 rounded-2xl shadow-xl shadow-black/8 animate-scale-in max-h-60 overflow-y-auto">
+        <div className="absolute z-50 left-0 right-0 mt-1.5 py-2 bg-surface-container-lowest/98 backdrop-blur-xl border border-outline-variant/80 rounded-2xl shadow-2xl shadow-black/10 animate-scale-in max-h-72 overflow-y-auto">
           {options.length === 0 ? (
-            <div className="px-4 py-3 text-xs text-on-surface-variant text-center">Không có tùy chọn</div>
+            <div className="px-4 py-3 text-sm text-on-surface-variant text-center">Không có tùy chọn</div>
           ) : (
             options.map((option) => {
               const isSelected = option.value === value
@@ -108,31 +108,31 @@ export default function CustomSelect({
                     setIsOpen(false)
                   }}
                   className={`
-                    w-full flex items-center justify-between px-3.5 py-2.5 text-left text-sm transition-all duration-150 mx-1 rounded-xl
+                    w-full flex items-center justify-between px-4 py-3 text-left text-sm sm:text-base transition-all duration-150 mx-1 rounded-xl
                     ${isSelected
-                      ? 'bg-primary-container text-on-primary-container font-semibold shadow-xs'
+                      ? 'bg-primary-container text-on-primary-container font-bold shadow-xs'
                       : 'text-on-surface hover:bg-surface-container hover:text-primary'
                     }
                   `}
                   style={{ width: 'calc(100% - 8px)' }}
                 >
-                  <div className="flex items-center gap-2.5 truncate">
+                  <div className="flex items-center gap-3 truncate">
                     {option.icon && <span className="shrink-0">{option.icon}</span>}
                     <div className="truncate">
-                      <div className="truncate">{option.label}</div>
+                      <div className="truncate font-semibold">{option.label}</div>
                       {option.description && (
-                        <div className="text-[11px] font-normal opacity-70 truncate">{option.description}</div>
+                        <div className="text-xs font-normal opacity-75 truncate mt-0.5">{option.description}</div>
                       )}
                     </div>
                   </div>
 
-                  <div className="flex items-center gap-2 shrink-0">
+                  <div className="flex items-center gap-2.5 shrink-0">
                     {option.badge && (
-                      <span className="font-mono text-[10px] px-2 py-0.5 rounded-full bg-surface-container-high text-on-surface-variant">
+                      <span className="font-mono text-xs px-2.5 py-0.5 rounded-full bg-surface-container-high text-on-surface-variant font-bold">
                         {option.badge}
                       </span>
                     )}
-                    {isSelected && <Check size={16} className="text-on-primary-container stroke-[2.5]" />}
+                    {isSelected && <Check size={18} className="text-on-primary-container stroke-[2.5]" />}
                   </div>
                 </button>
               )
@@ -141,7 +141,7 @@ export default function CustomSelect({
         </div>
       )}
 
-      {error && <p className="mt-1 text-[11px] text-error font-medium">{error}</p>}
+      {error && <p className="mt-1.5 text-xs text-error font-semibold">{error}</p>}
     </div>
   )
 }
