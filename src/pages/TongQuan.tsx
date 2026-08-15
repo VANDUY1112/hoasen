@@ -157,7 +157,7 @@ export default function TongQuan() {
       </section>
 
       {/* KPI Cards with Live SCADA Data */}
-      <section className="grid grid-cols-1 md:grid-cols-3 gap-3.5 sm:gap-4 stagger">
+      <section className="grid grid-cols-2 md:grid-cols-3 gap-2.5 sm:gap-4 stagger">
         <KpiCard
           title="Sản lượng trong ngày (Live)"
           value={dailyOutput.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
@@ -166,6 +166,7 @@ export default function TongQuan() {
           trendLabel="so với hôm qua"
           icon={<Layers size={20} className="stroke-[2.2]" />}
           accentColor="primary"
+          className="col-span-2 md:col-span-1"
         />
         <KpiCard
           title="Số lỗi phát hiện"
@@ -175,6 +176,7 @@ export default function TongQuan() {
           trendLabel="mục tiêu giảm lỗi"
           accentColor="error"
           icon={<AlertTriangle size={20} className="stroke-[2.2]" />}
+          className="col-span-1"
         />
         <KpiCard
           title="Dừng máy (Downtime)"
@@ -183,6 +185,7 @@ export default function TongQuan() {
           resolved={true}
           accentColor="success"
           icon={<TimerOff size={20} className="stroke-[2.2]" />}
+          className="col-span-1"
         />
       </section>
 

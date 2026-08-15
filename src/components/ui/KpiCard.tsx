@@ -41,27 +41,27 @@ export default function KpiCard({
   return (
     <div
       className={`
-        group relative bg-surface-container-lowest p-4 sm:p-5 flex flex-col justify-between
+        group relative bg-surface-container-lowest p-3.5 sm:p-5 flex flex-col justify-between
         overflow-hidden shadow-xs hover:shadow-md card-hover border border-outline-variant/35 border-l-4 rounded-2xl
         ${borderColors[accentColor]} ${className}
       `}
     >
-      <div className="flex justify-between items-start gap-3 mb-3">
+      <div className="flex justify-between items-start gap-2 sm:gap-3 mb-2 sm:mb-3">
         <div className="min-w-0">
-          <p className="text-[11px] sm:text-xs font-bold text-on-surface-variant/80 uppercase tracking-wider truncate">
+          <p className="text-[10px] sm:text-xs font-bold text-on-surface-variant/80 uppercase tracking-wider truncate">
             {title}
           </p>
-          <h2 className="text-2xl sm:text-3xl font-mono font-extrabold text-on-surface tracking-tight mt-1 group-hover:text-primary transition-colors animate-counter">
+          <h2 className="text-xl sm:text-3xl font-mono font-extrabold text-on-surface tracking-tight mt-0.5 sm:mt-1 group-hover:text-primary transition-colors animate-counter">
             {value}
           </h2>
           {subtitle && (
-            <p className="text-xs font-medium text-on-surface-variant/85 mt-0.5 truncate">{subtitle}</p>
+            <p className="text-[11px] sm:text-xs font-medium text-on-surface-variant/85 mt-0.5 truncate">{subtitle}</p>
           )}
         </div>
         {icon && (
           <div
             className={`
-              p-2.5 rounded-xl ${iconStyles[accentColor]} shrink-0
+              p-2 sm:p-2.5 rounded-xl ${iconStyles[accentColor]} shrink-0
               shadow-xs group-hover:scale-105 transition-all duration-300
             `}
           >

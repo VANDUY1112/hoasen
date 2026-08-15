@@ -183,44 +183,44 @@ export default function HieuSuatCaTruc() {
         <div className="overflow-x-auto">
           <table className="w-full text-left min-w-[650px]">
             <thead>
-              <tr className="bg-surface-container-low/40 border-b border-outline-variant/30">
-                <th className="px-5 py-4 font-mono text-xs sm:text-sm text-on-surface-variant uppercase tracking-wider font-bold">
+              <tr className="bg-surface-container-low/30 border-b border-outline-variant/20">
+                <th className="px-3.5 py-2.5 font-mono text-xs text-on-surface-variant uppercase tracking-wider font-bold whitespace-nowrap">
                   Công nhân
                 </th>
-                <th className="px-5 py-4 font-mono text-xs sm:text-sm text-on-surface-variant uppercase tracking-wider font-bold">
+                <th className="px-3.5 py-2.5 font-mono text-xs text-on-surface-variant uppercase tracking-wider font-bold whitespace-nowrap">
                   Vị trí máy đảm nhiệm
                 </th>
-                <th className="px-5 py-4 font-mono text-xs sm:text-sm text-on-surface-variant uppercase tracking-wider font-bold text-right">
+                <th className="px-3.5 py-2.5 font-mono text-xs text-on-surface-variant uppercase tracking-wider font-bold text-right whitespace-nowrap">
                   Thực tế / Mục tiêu (Tấn)
                 </th>
-                <th className="px-5 py-4 font-mono text-xs sm:text-sm text-on-surface-variant uppercase tracking-wider font-bold text-right">
+                <th className="px-3.5 py-2.5 font-mono text-xs text-on-surface-variant uppercase tracking-wider font-bold text-right whitespace-nowrap">
                   Chất lượng
                 </th>
-                <th className="px-5 py-4 font-mono text-xs sm:text-sm text-on-surface-variant uppercase tracking-wider font-bold text-center">
+                <th className="px-3.5 py-2.5 font-mono text-xs text-on-surface-variant uppercase tracking-wider font-bold text-center whitespace-nowrap">
                   Xếp loại ca
                 </th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-outline-variant/30 text-sm sm:text-base">
+            <tbody className="divide-y divide-outline-variant/20 text-xs sm:text-[13px]">
               {data.map((d) => (
-                <tr key={d.worker} className="hover:bg-surface-container/60 transition-colors group cursor-pointer">
-                  <td className="px-5 py-4 font-bold text-on-surface flex items-center gap-3.5">
-                    <div className="w-9 h-9 rounded-xl bg-primary/10 text-primary font-mono text-sm font-extrabold flex items-center justify-center border border-primary/20">
+                <tr key={d.worker} className="hover:bg-surface-container/50 transition-colors group cursor-pointer">
+                  <td className="px-3.5 py-2.5 font-bold text-on-surface flex items-center gap-2.5 whitespace-nowrap">
+                    <div className="w-7 h-7 rounded-lg bg-primary/10 text-primary font-mono text-xs font-extrabold flex items-center justify-center border border-primary/20 shrink-0">
                       {d.worker.split(' ').pop()?.[0]}
                     </div>
-                    <span className="text-sm sm:text-base">{d.worker}</span>
+                    <span className="text-xs sm:text-[13px]">{d.worker}</span>
                   </td>
-                  <td className="px-5 py-4 text-sm font-mono text-on-surface-variant font-semibold">
+                  <td className="px-3.5 py-2.5 font-mono text-on-surface-variant/85 font-semibold whitespace-nowrap">
                     {d.role}
                   </td>
-                  <td className="px-5 py-4 text-right font-mono font-extrabold">
-                    <span className="text-on-surface text-base">{d.output}</span>
-                    <span className="text-sm text-on-surface-variant font-normal"> / {d.target} T</span>
+                  <td className="px-3.5 py-2.5 text-right font-mono font-bold whitespace-nowrap">
+                    <span className="text-on-surface">{d.output}</span>
+                    <span className="text-xs text-on-surface-variant/70 font-normal"> / {d.target} T</span>
                   </td>
-                  <td className="px-5 py-4 text-right font-mono font-extrabold text-emerald-600 text-base">
+                  <td className="px-3.5 py-2.5 text-right font-mono font-bold text-emerald-600 whitespace-nowrap">
                     {d.quality}%
                   </td>
-                  <td className="px-5 py-4 text-center">
+                  <td className="px-3.5 py-2.5 text-center whitespace-nowrap">
                     {d.status === 'excellent' ? (
                       <Badge variant="success" size="sm">
                         Xuất sắc

@@ -1,7 +1,8 @@
-import { useState } from 'react'
+import { useState, useMemo } from 'react'
 import { Download, Layers, ShieldCheck, TrendingUp, Filter, Activity, FileSpreadsheet } from 'lucide-react'
 import SearchInput from '../components/ui/SearchInput'
 import Badge from '../components/ui/Badge'
+import Pagination from '../components/ui/Pagination'
 import { useToast } from '../components/ui/Toast'
 import { useLiveSimulation } from '../context/LiveSimulationContext'
 import { exportProductionReport } from '../services/excelExport'
@@ -17,17 +18,36 @@ export default function SanLuong() {
   const [searchTerm, setSearchTerm] = useState('')
   const [activeFilter, setActiveFilter] = useState('all')
   const [exporting, setExporting] = useState(false)
+  const [currentPage, setCurrentPage] = useState(1)
+  const [pageSize, setPageSize] = useState(10)
 
   const { liveLogs, dailyOutput } = useLiveSimulation()
   const { addToast } = useToast()
 
-  const filteredLogs = liveLogs.filter((log) => {
-    const matchesSearch =
-      log.coilId.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      log.steelType.toLowerCase().includes(searchTerm.toLowerCase())
-    const matchesStatus = activeFilter === 'all' || log.status === activeFilter
-    return matchesSearch && matchesStatus
-  })
+  const filteredLogs = useMemo(() => {
+    return liveLogs.filter((log) => {
+      const matchesSearch =
+        log.coilId.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        log.steelType.toLowerCase().includes(searchTerm.toLowerCase())
+      const matchesStatus = activeFilter === 'all' || log.status === activeFilter
+      return matchesSearch && matchesStatus
+    })
+  }, [liveLogs, searchTerm, activeFilter])
+
+  const paginatedLogs = useMemo(() => {
+    const start = (currentPage - 1) * pageSize
+    return filteredLogs.slice(start, start + pageSize)
+  }, [filteredLogs, currentPage, pageSize])
+
+  const handleSearch = (term: string) => {
+    setSearchTerm(term)
+    setCurrentPage(1)
+  }
+
+  const handleFilterChange = (filter: string) => {
+    setActiveFilter(filter)
+    setCurrentPage(1)
+  }
 
   const handleExportExcel = async () => {
     try {
@@ -167,49 +187,49 @@ export default function SanLuong() {
 
         {/* Table */}
         <div className="overflow-x-auto w-full">
-          <table className="w-full text-left min-w-[700px]">
+          <table className="w-full text-left min-w-[650px]">
             <thead>
-              <tr className="bg-surface-container-low/40 border-b border-outline-variant/30">
-                <th className="px-5 py-4 font-mono text-xs sm:text-sm text-on-surface-variant uppercase tracking-wider font-bold">
+              <tr className="bg-surface-container-low/30 border-b border-outline-variant/20">
+                <th className="px-3.5 py-2.5 font-mono text-xs text-on-surface-variant uppercase tracking-wider font-bold whitespace-nowrap">
                   Thời gian
                 </th>
-                <th className="px-5 py-4 font-mono text-xs sm:text-sm text-on-surface-variant uppercase tracking-wider font-bold">
+                <th className="px-3.5 py-2.5 font-mono text-xs text-on-surface-variant uppercase tracking-wider font-bold whitespace-nowrap">
                   Mã Cuộn (Coil ID)
                 </th>
-                <th className="px-5 py-4 font-mono text-xs sm:text-sm text-on-surface-variant uppercase tracking-wider font-bold">
+                <th className="px-3.5 py-2.5 font-mono text-xs text-on-surface-variant uppercase tracking-wider font-bold whitespace-nowrap">
                   Loại Thép
                 </th>
-                <th className="px-5 py-4 font-mono text-xs sm:text-sm text-on-surface-variant uppercase tracking-wider font-bold text-right">
+                <th className="px-3.5 py-2.5 font-mono text-xs text-on-surface-variant uppercase tracking-wider font-bold text-right whitespace-nowrap">
                   Khối lượng (Tấn)
                 </th>
-                <th className="px-5 py-4 font-mono text-xs sm:text-sm text-on-surface-variant uppercase tracking-wider font-bold text-center">
+                <th className="px-3.5 py-2.5 font-mono text-xs text-on-surface-variant uppercase tracking-wider font-bold text-center whitespace-nowrap">
                   Trạng thái
                 </th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-outline-variant/30 text-sm sm:text-base">
-              {filteredLogs.length === 0 ? (
+            <tbody className="divide-y divide-outline-variant/20 text-xs sm:text-[13px]">
+              {paginatedLogs.length === 0 ? (
                 <tr>
-                  <td colSpan={5} className="px-5 py-12 text-center text-on-surface-variant font-medium text-base">
+                  <td colSpan={5} className="px-3.5 py-10 text-center text-on-surface-variant font-medium">
                     Không tìm thấy cuộn tôn nào phù hợp
                   </td>
                 </tr>
               ) : (
-                filteredLogs.map((log, idx) => (
-                  <tr key={log.coilId} className={`hover:bg-surface-container/60 transition-colors group ${idx === 0 ? 'bg-primary/5' : ''}`}>
-                    <td className="px-5 py-4 font-mono text-sm text-on-surface-variant font-semibold">
+                paginatedLogs.map((log, idx) => (
+                  <tr key={log.coilId} className={`hover:bg-surface-container/50 transition-colors group ${idx === 0 ? 'bg-primary/5' : ''}`}>
+                    <td className="px-3.5 py-2.5 font-mono text-on-surface-variant/85 whitespace-nowrap">
                       {log.time}
                     </td>
-                    <td className="px-5 py-4 font-mono text-sm font-extrabold text-primary">
+                    <td className="px-3.5 py-2.5 font-mono font-bold text-primary whitespace-nowrap">
                       {log.coilId}
                     </td>
-                    <td className="px-5 py-4 font-bold text-on-surface text-base">
+                    <td className="px-3.5 py-2.5 font-semibold text-on-surface whitespace-nowrap">
                       {log.steelType}
                     </td>
-                    <td className="px-5 py-4 text-right font-mono font-extrabold text-on-surface text-base">
-                      {log.weight.toFixed(2)} <span className="font-normal text-xs sm:text-sm text-on-surface-variant">T</span>
+                    <td className="px-3.5 py-2.5 text-right font-mono font-bold text-on-surface whitespace-nowrap">
+                      {log.weight.toFixed(2)} <span className="font-normal text-xs text-on-surface-variant/70">T</span>
                     </td>
-                    <td className="px-5 py-4 text-center">
+                    <td className="px-3.5 py-2.5 text-center whitespace-nowrap">
                       {log.status === 'passed' ? (
                         <Badge variant="success" pulse size="sm">
                           Đạt chuẩn
@@ -230,6 +250,21 @@ export default function SanLuong() {
             </tbody>
           </table>
         </div>
+
+        {/* Pagination Footer */}
+        {filteredLogs.length > 0 && (
+          <Pagination
+            currentPage={currentPage}
+            totalItems={filteredLogs.length}
+            pageSize={pageSize}
+            onPageChange={setCurrentPage}
+            onPageSizeChange={(size) => {
+              setPageSize(size)
+              setCurrentPage(1)
+            }}
+            pageSizeOptions={[5, 10, 20]}
+          />
+        )}
       </section>
     </div>
   )
