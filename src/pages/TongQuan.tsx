@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { Layers, AlertTriangle, TimerOff, Share2, Download, Brain, Sparkles, TrendingUp, ArrowUpRight, Zap, RefreshCw, FileSpreadsheet } from 'lucide-react'
-import { BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer, CartesianGrid } from 'recharts'
+import { AreaChart, Area, XAxis, YAxis, Tooltip, ResponsiveContainer, CartesianGrid } from 'recharts'
 import KpiCard from '../components/ui/KpiCard'
 import GaugeChart from '../components/ui/GaugeChart'
 import Badge from '../components/ui/Badge'
@@ -216,9 +216,9 @@ export default function TongQuan() {
           </div>
         </div>
 
-        {/* Weekly Bar Chart */}
+        {/* Weekly Wave Area Chart */}
         <div className="lg:col-span-8 bg-surface-container-lowest p-4 sm:p-5 shadow-xs border border-outline-variant/35 rounded-2xl animate-slide-up">
-          <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-2 mb-4">
+          <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-2 mb-3">
             <div>
               <span className="font-mono text-xs text-on-surface-variant uppercase tracking-wider font-bold">
                 Sản lượng kế hoạch vs Thực tế
@@ -227,17 +227,27 @@ export default function TongQuan() {
             </div>
             <div className="flex gap-4 items-center font-mono text-xs font-bold">
               <span className="flex items-center gap-1.5 text-on-surface">
-                <span className="w-3 h-3 bg-primary rounded shadow-2xs" /> Thực tế
+                <span className="w-3 h-1.5 bg-primary rounded-full shadow-2xs" /> Thực tế
               </span>
               <span className="flex items-center gap-1.5 text-on-surface-variant">
-                <span className="w-3 h-3 bg-surface-container-high rounded" /> Kế hoạch
+                <span className="w-3 h-1.5 bg-slate-400 rounded-full border border-dashed border-slate-400" /> Kế hoạch
               </span>
             </div>
           </div>
 
           <div className="h-56 sm:h-60 w-full">
             <ResponsiveContainer width="100%" height="100%">
-              <BarChart data={weeklyProduction} barGap={5}>
+              <AreaChart data={weeklyProduction} margin={{ top: 10, right: 10, left: 0, bottom: 0 }}>
+                <defs>
+                  <linearGradient id="gradientActual" x1="0" y1="0" x2="0" y2="1">
+                    <stop offset="5%" stopColor="var(--color-primary, #b5000b)" stopOpacity={0.4} />
+                    <stop offset="95%" stopColor="var(--color-primary, #b5000b)" stopOpacity={0.0} />
+                  </linearGradient>
+                  <linearGradient id="gradientPlanned" x1="0" y1="0" x2="0" y2="1">
+                    <stop offset="5%" stopColor="#94a3b8" stopOpacity={0.25} />
+                    <stop offset="95%" stopColor="#94a3b8" stopOpacity={0.0} />
+                  </linearGradient>
+                </defs>
                 <CartesianGrid strokeDasharray="3 3" stroke="var(--color-surface-container-high)" vertical={false} />
                 <XAxis
                   dataKey="day"
@@ -247,17 +257,48 @@ export default function TongQuan() {
                 />
                 <YAxis hide />
                 <Tooltip
-                  contentStyle={{
-                    background: 'var(--color-surface-container-lowest)',
-                    border: '1px solid var(--color-outline-variant)',
-                    borderRadius: '12px',
-                    fontSize: '13px',
-                    boxShadow: '0 8px 20px rgba(0,0,0,0.06)',
+                  content={({ active, payload, label }) => {
+                    if (active && payload && payload.length) {
+                      const actualVal = payload.find((p) => p.dataKey === 'actual')?.value
+                      const plannedVal = payload.find((p) => p.dataKey === 'planned')?.value
+                      return (
+                        <div className="bg-surface-container-lowest p-3 rounded-xl border border-outline-variant/40 shadow-lg text-xs">
+                          <p className="font-mono font-bold text-on-surface uppercase mb-1.5">{label}</p>
+                          <div className="space-y-1 font-mono">
+                            <div className="flex items-center justify-between gap-3 text-primary font-bold">
+                              <span>Thực tế:</span>
+                              <span>{actualVal} Tấn</span>
+                            </div>
+                            <div className="flex items-center justify-between gap-3 text-on-surface-variant font-medium">
+                              <span>Kế hoạch:</span>
+                              <span>{plannedVal} Tấn</span>
+                            </div>
+                          </div>
+                        </div>
+                      )
+                    }
+                    return null
                   }}
                 />
-                <Bar dataKey="planned" fill="var(--color-surface-container-high)" radius={[5, 5, 0, 0]} />
-                <Bar dataKey="actual" fill="var(--color-primary)" radius={[5, 5, 0, 0]} opacity={0.9} />
-              </BarChart>
+                <Area
+                  type="monotone"
+                  dataKey="planned"
+                  stroke="#94a3b8"
+                  strokeWidth={2}
+                  strokeDasharray="4 4"
+                  fillOpacity={1}
+                  fill="url(#gradientPlanned)"
+                />
+                <Area
+                  type="monotone"
+                  dataKey="actual"
+                  stroke="var(--color-primary, #b5000b)"
+                  strokeWidth={3}
+                  fillOpacity={1}
+                  fill="url(#gradientActual)"
+                  activeDot={{ r: 6, fill: 'var(--color-primary, #b5000b)', stroke: '#fff', strokeWidth: 2 }}
+                />
+              </AreaChart>
             </ResponsiveContainer>
           </div>
         </div>
