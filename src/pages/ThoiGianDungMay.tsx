@@ -99,45 +99,45 @@ export default function ThoiGianDungMay() {
         </div>
 
         <div className="overflow-x-auto w-full">
-          <table className="w-full text-left min-w-[650px]">
+          <table className="w-full text-left min-w-[600px]">
             <thead>
               <tr className="bg-surface-container-low/30 border-b border-outline-variant/20">
-                <th className="px-4 py-3 font-mono text-xs text-on-surface-variant uppercase tracking-wider font-bold">
+                <th className="px-3.5 py-2.5 font-mono text-xs text-on-surface-variant uppercase tracking-wider font-bold whitespace-nowrap">
                   Thời điểm ghi nhận
                 </th>
-                <th className="px-4 py-3 font-mono text-xs text-on-surface-variant uppercase tracking-wider font-bold">
+                <th className="px-3.5 py-2.5 font-mono text-xs text-on-surface-variant uppercase tracking-wider font-bold whitespace-nowrap">
                   Thiết bị / Dây chuyền
                 </th>
-                <th className="px-4 py-3 font-mono text-xs text-on-surface-variant uppercase tracking-wider font-bold text-right">
+                <th className="px-3.5 py-2.5 font-mono text-xs text-on-surface-variant uppercase tracking-wider font-bold text-right whitespace-nowrap">
                   Thời lượng dừng
                 </th>
-                <th className="px-4 py-3 font-mono text-xs text-on-surface-variant uppercase tracking-wider font-bold text-center">
+                <th className="px-3.5 py-2.5 font-mono text-xs text-on-surface-variant uppercase tracking-wider font-bold text-center whitespace-nowrap">
                   Trạng thái xử lý
                 </th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-outline-variant/20 text-xs sm:text-sm">
+            <tbody className="divide-y divide-outline-variant/20 text-xs sm:text-[13px]">
               {paginatedItems.length === 0 ? (
                 <tr>
-                  <td colSpan={4} className="px-4 py-10 text-center text-on-surface-variant font-medium">
+                  <td colSpan={4} className="px-3.5 py-10 text-center text-on-surface-variant font-medium">
                     Không tìm thấy sự cố dừng máy phù hợp
                   </td>
                 </tr>
               ) : (
                 paginatedItems.map((r, i) => (
                   <tr key={i} className="hover:bg-surface-container/50 transition-colors group">
-                    <td className="px-4 py-3 font-mono font-semibold text-on-surface-variant/85">
+                    <td className="px-3.5 py-2.5 font-mono font-semibold text-on-surface-variant/85 whitespace-nowrap">
                       {r.time}
                     </td>
-                    <td className="px-4 py-3 font-bold text-on-surface">
+                    <td className="px-3.5 py-2.5 font-bold text-on-surface whitespace-nowrap">
                       {r.equipment}
                     </td>
-                    <td className="px-4 py-3 text-right font-mono font-extrabold">
-                      <span className={r.status === 'repairing' ? 'text-rose-600 font-black' : 'text-on-surface'}>
+                    <td className="px-3.5 py-2.5 text-right font-mono font-bold whitespace-nowrap">
+                      <span className={r.status === 'repairing' ? 'text-rose-600 font-extrabold' : 'text-on-surface'}>
                         {r.duration}
                       </span>
                     </td>
-                    <td className="px-4 py-3 text-center">
+                    <td className="px-3.5 py-2.5 text-center whitespace-nowrap">
                       {r.status === 'repairing' ? (
                         <Badge variant="error" pulse size="sm">
                           Đang sửa chữa

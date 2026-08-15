@@ -121,14 +121,24 @@ export default function CustomSelect({
                     <div className="truncate">
                       <div className="truncate font-semibold text-sm sm:text-base">{option.label}</div>
                       {option.description && (
-                        <div className="text-xs sm:text-[13px] font-medium text-on-surface-variant/85 truncate mt-0.5">{option.description}</div>
+                        <div
+                          className={`text-xs sm:text-[13px] font-medium truncate mt-0.5 ${
+                            isSelected ? 'text-white/90' : 'text-on-surface-variant/85'
+                          }`}
+                        >
+                          {option.description}
+                        </div>
                       )}
                     </div>
                   </div>
 
                   <div className="flex items-center gap-2.5 shrink-0">
                     {option.badge && (
-                      <span className="font-mono text-xs px-2.5 py-0.5 rounded-full bg-surface-container-high text-on-surface-variant font-bold">
+                      <span
+                        className={`font-mono text-xs px-2.5 py-0.5 rounded-full font-bold ${
+                          isSelected ? 'bg-white/20 text-white' : 'bg-surface-container-high text-on-surface-variant'
+                        }`}
+                      >
                         {option.badge}
                       </span>
                     )}

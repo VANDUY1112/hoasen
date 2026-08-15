@@ -214,33 +214,33 @@ export default function QuanLyTonKho() {
           <table className="w-full text-left min-w-[700px]">
             <thead>
               <tr className="bg-surface-container-low/30 border-b border-outline-variant/20">
-                <th className="px-4 py-3 font-mono text-xs text-on-surface-variant uppercase tracking-wider font-bold">
+                <th className="px-3.5 py-2.5 font-mono text-xs text-on-surface-variant uppercase tracking-wider font-bold whitespace-nowrap">
                   Mã VT
                 </th>
-                <th className="px-4 py-3 font-mono text-xs text-on-surface-variant uppercase tracking-wider font-bold">
+                <th className="px-3.5 py-2.5 font-mono text-xs text-on-surface-variant uppercase tracking-wider font-bold whitespace-nowrap">
                   Tên Vật tư / Hàng hóa
                 </th>
-                <th className="px-4 py-3 font-mono text-xs text-on-surface-variant uppercase tracking-wider font-bold">
+                <th className="px-3.5 py-2.5 font-mono text-xs text-on-surface-variant uppercase tracking-wider font-bold whitespace-nowrap">
                   Phân loại
                 </th>
-                <th className="px-4 py-3 font-mono text-xs text-on-surface-variant uppercase tracking-wider font-bold text-right">
+                <th className="px-3.5 py-2.5 font-mono text-xs text-on-surface-variant uppercase tracking-wider font-bold text-right whitespace-nowrap">
                   Số lượng tồn
                 </th>
-                <th className="px-4 py-3 font-mono text-xs text-on-surface-variant uppercase tracking-wider font-bold">
+                <th className="px-3.5 py-2.5 font-mono text-xs text-on-surface-variant uppercase tracking-wider font-bold whitespace-nowrap">
                   Vị trí kho
                 </th>
-                <th className="px-4 py-3 font-mono text-xs text-on-surface-variant uppercase tracking-wider font-bold text-center">
+                <th className="px-3.5 py-2.5 font-mono text-xs text-on-surface-variant uppercase tracking-wider font-bold text-center whitespace-nowrap">
                   Trạng thái
                 </th>
-                <th className="px-4 py-3 font-mono text-xs text-on-surface-variant uppercase tracking-wider font-bold text-center">
+                <th className="px-3.5 py-2.5 font-mono text-xs text-on-surface-variant uppercase tracking-wider font-bold text-center whitespace-nowrap">
                   Thao tác
                 </th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-outline-variant/20 text-xs sm:text-sm">
+            <tbody className="divide-y divide-outline-variant/20 text-xs sm:text-[13px]">
               {paginatedItems.length === 0 ? (
                 <tr>
-                  <td colSpan={7} className="px-4 py-10 text-center text-on-surface-variant font-medium">
+                  <td colSpan={7} className="px-3.5 py-10 text-center text-on-surface-variant font-medium">
                     Không tìm thấy hàng tồn kho phù hợp
                   </td>
                 </tr>
@@ -251,24 +251,24 @@ export default function QuanLyTonKho() {
                     onClick={() => handlePrintItem(item)}
                     className="cursor-pointer hover:bg-surface-container/50 transition-colors group"
                   >
-                    <td className="px-4 py-3 font-mono font-extrabold text-primary">
+                    <td className="px-3.5 py-2.5 font-mono font-bold text-primary whitespace-nowrap">
                       {item.code}
                     </td>
-                    <td className="px-4 py-3 font-bold text-on-surface">
+                    <td className="px-3.5 py-2.5 font-semibold text-on-surface whitespace-nowrap">
                       {item.name}
                     </td>
-                    <td className="px-4 py-3 font-mono text-on-surface-variant/80 font-semibold">
+                    <td className="px-3.5 py-2.5 font-mono text-on-surface-variant/80 font-semibold whitespace-nowrap">
                       {item.type}
                     </td>
-                    <td className="px-4 py-3 text-right font-mono font-extrabold text-on-surface">
+                    <td className="px-3.5 py-2.5 text-right font-mono font-bold text-on-surface whitespace-nowrap">
                       {item.quantity.toLocaleString()} <span className="font-normal text-xs text-on-surface-variant/70">{item.unit}</span>
                     </td>
-                    <td className="px-4 py-3 font-mono font-bold text-on-surface-variant">
-                      <span className="px-2.5 py-0.5 rounded bg-surface-container border border-outline-variant/30 text-xs">
+                    <td className="px-3.5 py-2.5 font-mono font-bold text-on-surface-variant whitespace-nowrap">
+                      <span className="px-2 py-0.5 rounded bg-surface-container border border-outline-variant/30 text-xs">
                         {item.location}
                       </span>
                     </td>
-                    <td className="px-4 py-3 text-center">
+                    <td className="px-3.5 py-2.5 text-center whitespace-nowrap">
                       {item.status === 'sufficient' ? (
                         <Badge variant="success" size="sm">
                           Đủ tồn kho
@@ -279,11 +279,11 @@ export default function QuanLyTonKho() {
                         </Badge>
                       ) : (
                         <Badge variant="error" pulse size="sm">
-                          Đặt hàng gấp
+                          Cạn kiệt
                         </Badge>
                       )}
                     </td>
-                    <td className="px-4 py-3 text-center">
+                    <td className="px-3.5 py-2.5 text-center whitespace-nowrap">
                       <div className="flex items-center justify-center gap-1" onClick={(e) => e.stopPropagation()}>
                         <button
                           onClick={() => handlePrintItem(item)}

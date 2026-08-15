@@ -59,43 +59,22 @@ export default function Pagination({
   return (
     <div
       className={`
-        px-3 sm:px-4 py-3 bg-surface-container-low/50 border-t border-outline-variant/30
-        flex flex-col sm:flex-row items-center justify-between gap-3 sm:gap-4
+        px-3 sm:px-4 py-2.5 bg-surface-container-low/50 border-t border-outline-variant/30
+        flex flex-row items-center justify-between gap-2 sm:gap-4
         ${className}
       `}
     >
-      {/* Left info & Page Size Selector */}
-      <div className="flex flex-wrap items-center justify-between sm:justify-start gap-2.5 sm:gap-4 w-full sm:w-auto text-xs font-mono text-on-surface-variant">
-        <div>
-          <span>Hiển thị </span>
-          <span className="font-bold text-on-surface">
-            {startItem}-{endItem}
-          </span>
-          <span> trong </span>
-          <span className="font-bold text-primary">{totalItems}</span>
-          <span> bản ghi</span>
-        </div>
-
-        {onPageSizeChange && (
-          <div className="flex items-center gap-1.5 pl-2 sm:border-l border-outline-variant/40">
-            <span className="text-[11px] text-on-surface-variant/80">Số dòng:</span>
-            <select
-              value={pageSize}
-              onChange={(e) => onPageSizeChange(Number(e.target.value))}
-              className="bg-surface-container-lowest border border-outline-variant/50 rounded-lg px-2 py-1 text-xs font-bold font-mono text-on-surface outline-none cursor-pointer hover:border-primary focus:border-primary"
-            >
-              {pageSizeOptions.map((opt) => (
-                <option key={opt} value={opt}>
-                  {opt} / trang
-                </option>
-              ))}
-            </select>
-          </div>
-        )}
+      {/* Left record count info */}
+      <div className="text-xs font-mono text-on-surface-variant whitespace-nowrap">
+        <span>Hiển thị </span>
+        <span className="font-bold text-on-surface">
+          {endItem}/{totalItems}
+        </span>
+        <span> bản ghi</span>
       </div>
 
       {/* Right: Page Navigation Controls */}
-      <div className="flex items-center justify-center gap-1 sm:gap-1.5 w-full sm:w-auto">
+      <div className="flex items-center justify-end gap-1 sm:gap-1.5 shrink-0">
         {/* First Page */}
         <button
           type="button"

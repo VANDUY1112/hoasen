@@ -68,12 +68,12 @@ export const kpiData = {
 
 // ===== WEEKLY PRODUCTION =====
 export const weeklyProduction = [
-  { day: 'T2', planned: 100, actual: 85 },
-  { day: 'T3', planned: 95, actual: 90 },
-  { day: 'T4', planned: 100, actual: 95 },
-  { day: 'T5', planned: 80, actual: 98 },
-  { day: 'H.Nay', planned: 100, actual: 100 },
-  { day: 'T7', planned: 100, actual: 0 },
+  { day: 'Thứ 2', fullDay: 'Thứ Hai', planned: 100, actual: 85 },
+  { day: 'Thứ 3', fullDay: 'Thứ Ba', planned: 95, actual: 90 },
+  { day: 'Thứ 4', fullDay: 'Thứ Tư', planned: 100, actual: 95 },
+  { day: 'Thứ 5', fullDay: 'Thứ Năm', planned: 80, actual: 98 },
+  { day: 'Thứ 6', fullDay: 'Thứ Sáu (Hôm nay)', planned: 100, actual: 100 },
+  { day: 'Thứ 7', fullDay: 'Thứ Bảy', planned: 100, actual: 0 },
 ]
 
 // ===== PRODUCTION LOGS =====

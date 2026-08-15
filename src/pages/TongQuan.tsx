@@ -206,11 +206,11 @@ export default function TongQuan() {
 
           <div className="grid grid-cols-2 gap-3 w-full pt-3 border-t border-outline-variant/30">
             <div className="text-center border-r border-outline-variant/30">
-              <p className="text-[11px] font-mono text-on-surface-variant/80 uppercase font-bold">Khả dụng (A)</p>
+              <p className="text-[11px] font-mono text-on-surface-variant/80 uppercase font-bold">Khả dụng (Availability)</p>
               <p className="text-xl sm:text-2xl font-extrabold text-on-surface font-mono">{liveOee > 80 ? '94.2%' : '91.5%'}</p>
             </div>
             <div className="text-center">
-              <p className="text-[11px] font-mono text-on-surface-variant/80 uppercase font-bold">Chất lượng (Q)</p>
+              <p className="text-[11px] font-mono text-on-surface-variant/80 uppercase font-bold">Chất lượng (Quality)</p>
               <p className="text-xl sm:text-2xl font-extrabold text-primary font-mono">98.1%</p>
             </div>
           </div>
@@ -259,18 +259,19 @@ export default function TongQuan() {
                 <Tooltip
                   content={({ active, payload, label }) => {
                     if (active && payload && payload.length) {
+                      const item = payload[0]?.payload
                       const actualVal = payload.find((p) => p.dataKey === 'actual')?.value
                       const plannedVal = payload.find((p) => p.dataKey === 'planned')?.value
                       return (
                         <div className="bg-surface-container-lowest p-3 rounded-xl border border-outline-variant/40 shadow-lg text-xs">
-                          <p className="font-mono font-bold text-on-surface uppercase mb-1.5">{label}</p>
+                          <p className="font-mono font-bold text-on-surface uppercase mb-1.5">{item?.fullDay || label}</p>
                           <div className="space-y-1 font-mono">
                             <div className="flex items-center justify-between gap-3 text-primary font-bold">
-                              <span>Thực tế:</span>
+                              <span>Sản lượng Thực tế:</span>
                               <span>{actualVal} Tấn</span>
                             </div>
                             <div className="flex items-center justify-between gap-3 text-on-surface-variant font-medium">
-                              <span>Kế hoạch:</span>
+                              <span>Mục tiêu Kế hoạch:</span>
                               <span>{plannedVal} Tấn</span>
                             </div>
                           </div>
@@ -319,29 +320,29 @@ export default function TongQuan() {
           </div>
 
           <div className="overflow-x-auto w-full">
-            <table className="w-full text-left min-w-[480px]">
+            <table className="w-full text-left min-w-[460px]">
               <thead>
                 <tr className="bg-surface-container-low/30 border-b border-outline-variant/20">
-                  <th className="px-4 py-2.5 font-mono text-xs text-on-surface-variant uppercase font-bold">Mã lỗi</th>
-                  <th className="px-4 py-2.5 font-mono text-xs text-on-surface-variant uppercase font-bold">Loại lỗi bề mặt</th>
-                  <th className="px-4 py-2.5 font-mono text-xs text-on-surface-variant uppercase font-bold">Tần suất</th>
-                  <th className="px-4 py-2.5 font-mono text-xs text-on-surface-variant uppercase font-bold text-right">Mức độ</th>
+                  <th className="px-3.5 py-2.5 font-mono text-xs text-on-surface-variant uppercase font-bold whitespace-nowrap">Mã lỗi</th>
+                  <th className="px-3.5 py-2.5 font-mono text-xs text-on-surface-variant uppercase font-bold whitespace-nowrap">Loại lỗi bề mặt</th>
+                  <th className="px-3.5 py-2.5 font-mono text-xs text-on-surface-variant uppercase font-bold whitespace-nowrap">Tần suất</th>
+                  <th className="px-3.5 py-2.5 font-mono text-xs text-on-surface-variant uppercase font-bold text-right whitespace-nowrap">Mức độ</th>
                 </tr>
               </thead>
-              <tbody className="divide-y divide-outline-variant/20 text-xs sm:text-sm">
+              <tbody className="divide-y divide-outline-variant/20 text-xs sm:text-[13px]">
                 {defectRecords.map((d) => (
                   <tr key={d.code} className="hover:bg-surface-container/50 transition-colors">
-                    <td className="px-4 py-3 font-mono text-primary font-extrabold">{d.code}</td>
-                    <td className="px-4 py-3 font-semibold text-on-surface">{d.type}</td>
-                    <td className="px-4 py-3">
-                      <div className="flex items-center gap-2.5">
-                        <div className="w-24 h-2 bg-surface-container-high rounded-full overflow-hidden">
+                    <td className="px-3.5 py-2.5 font-mono text-primary font-bold whitespace-nowrap">{d.code}</td>
+                    <td className="px-3.5 py-2.5 font-semibold text-on-surface whitespace-nowrap">{d.type}</td>
+                    <td className="px-3.5 py-2.5 whitespace-nowrap">
+                      <div className="flex items-center gap-2">
+                        <div className="w-20 sm:w-24 h-1.5 bg-surface-container-high rounded-full overflow-hidden">
                           <div className="gradient-primary h-full rounded-full" style={{ width: `${(d.frequency / 50) * 100}%` }} />
                         </div>
-                        <span className="font-mono text-xs font-bold">{d.frequency} lần</span>
+                        <span className="font-mono text-xs font-bold whitespace-nowrap">{d.frequency} lần</span>
                       </div>
                     </td>
-                    <td className="px-4 py-3 text-right">
+                    <td className="px-3.5 py-2.5 text-right whitespace-nowrap">
                       <Badge variant={d.severity === 'high' ? 'error' : d.severity === 'medium' ? 'warning' : 'neutral'} size="sm">
                         {d.severity === 'high' ? 'Nghiêm trọng' : d.severity === 'medium' ? 'Trung bình' : 'Thấp'}
                       </Badge>

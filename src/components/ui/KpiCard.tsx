@@ -47,15 +47,15 @@ export default function KpiCard({
       `}
     >
       <div className="flex justify-between items-start gap-2 sm:gap-3 mb-2 sm:mb-3">
-        <div className="min-w-0">
-          <p className="text-[10px] sm:text-xs font-bold text-on-surface-variant/80 uppercase tracking-wider truncate">
+        <div className="min-w-0 flex-1">
+          <p className="text-[10px] sm:text-xs font-bold text-on-surface-variant/80 uppercase tracking-wider leading-snug">
             {title}
           </p>
           <h2 className="text-xl sm:text-3xl font-mono font-extrabold text-on-surface tracking-tight mt-0.5 sm:mt-1 group-hover:text-primary transition-colors animate-counter">
             {value}
           </h2>
           {subtitle && (
-            <p className="text-[11px] sm:text-xs font-medium text-on-surface-variant/85 mt-0.5 truncate">{subtitle}</p>
+            <p className="text-[11px] sm:text-xs font-medium text-on-surface-variant/85 mt-0.5 leading-snug">{subtitle}</p>
           )}
         </div>
         {icon && (
@@ -71,12 +71,12 @@ export default function KpiCard({
       </div>
 
       {trend !== undefined && (
-        <div className={`flex items-center gap-1.5 pt-2 border-t border-outline-variant/20 text-xs font-bold font-mono ${trend >= 0 ? 'text-emerald-600' : 'text-rose-600'}`}>
-          {trend >= 0 ? <TrendingUp size={14} /> : <TrendingDown size={14} />}
+        <div className={`flex items-center flex-wrap gap-1.5 pt-2 border-t border-outline-variant/20 text-xs font-bold font-mono ${trend >= 0 ? 'text-emerald-600' : 'text-rose-600'}`}>
+          {trend >= 0 ? <TrendingUp size={14} className="shrink-0" /> : <TrendingDown size={14} className="shrink-0" />}
           <span>
             {trend >= 0 ? '+' : ''}{trend}%
           </span>
-          {trendLabel && <span className="font-sans font-medium text-[11px] text-on-surface-variant/70 italic truncate">{trendLabel}</span>}
+          {trendLabel && <span className="font-sans font-medium text-[11px] text-on-surface-variant/70 italic">{trendLabel}</span>}
         </div>
       )}
 
