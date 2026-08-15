@@ -17,9 +17,15 @@ import QuanLyTonKho from './pages/QuanLyTonKho'
 import NhapKhoThanhPham from './pages/NhapKhoThanhPham'
 import ThietLapMucTieuCaTruc from './pages/ThietLapMucTieuCaTruc'
 import LapPhieuSuaChua from './pages/LapPhieuSuaChua'
+import LandingPage from './pages/LandingPage'
+import LoginPage from './pages/LoginPage'
 import CaiDat from './pages/CaiDat'
 
 const viewTitles: Record<string, string> = {
+  'landing': 'Steel Intelligence Landing Page',
+  'trang-chu': 'Steel Intelligence Landing Page',
+  'login': 'Authentication Portal',
+  'dang-nhap': 'Authentication Portal',
   'tong-quan': 'Operational Overview System',
   'san-luong': 'Production Output Metrics',
   'quan-ly-loi': 'Quality & Defect Monitoring',
@@ -38,6 +44,26 @@ function AppContent() {
   const [sidebarOpen, setSidebarOpen] = useState(false)
   const location = useLocation()
   const currentView = location.pathname.replace(/^\//, '') || 'tong-quan'
+  const isLanding = currentView === 'landing' || currentView === 'trang-chu'
+  const isAuth = currentView === 'login' || currentView === 'dang-nhap'
+
+  if (isLanding) {
+    return (
+      <Routes>
+        <Route path="/landing" element={<LandingPage />} />
+        <Route path="/trang-chu" element={<LandingPage />} />
+      </Routes>
+    )
+  }
+
+  if (isAuth) {
+    return (
+      <Routes>
+        <Route path="/login" element={<LoginPage />} />
+        <Route path="/dang-nhap" element={<LoginPage />} />
+      </Routes>
+    )
+  }
 
   return (
     <div className="min-h-screen bg-surface">
@@ -67,6 +93,8 @@ function AppContent() {
         <main className="relative pt-14 pb-16 lg:pb-6 bg-surface min-h-screen overflow-x-hidden">
           <Routes>
             <Route path="/" element={<Navigate to="/tong-quan" replace />} />
+            <Route path="/landing" element={<LandingPage />} />
+            <Route path="/trang-chu" element={<LandingPage />} />
             <Route path="/tong-quan" element={<TongQuan />} />
             <Route path="/san-luong" element={<SanLuong />} />
             <Route path="/quan-ly-loi" element={<QuanLyLoi />} />

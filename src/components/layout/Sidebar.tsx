@@ -14,6 +14,7 @@ import {
   PackagePlus,
   Target,
   FileText,
+  Globe,
 } from 'lucide-react'
 
 interface SidebarProps {
@@ -184,8 +185,18 @@ export default function Sidebar({ isOpen, onClose, currentView, onNavigate }: Si
           </div>
         </div>
 
-        {/* Divider + Settings */}
-        <div className="pt-2 mt-2 border-t border-outline-variant/30">
+        {/* Divider + Landing Page & Settings */}
+        <div className="pt-2 mt-2 border-t border-outline-variant/30 space-y-0.5">
+          <button
+            onClick={() => handleNav('landing')}
+            className="cursor-pointer group w-full flex items-center gap-2.5 px-3 py-2 rounded-xl transition-all duration-200 text-left text-xs sm:text-[13px] font-semibold text-on-surface-variant hover:bg-surface-container hover:text-primary"
+          >
+            <div className="p-1.5 rounded-lg text-on-surface-variant group-hover:text-primary group-hover:bg-primary/10 transition-colors">
+              <Globe size={17} />
+            </div>
+            <span>Trang chủ giới thiệu</span>
+          </button>
+
           <button
             onClick={() => handleNav('cai-dat')}
             className={`

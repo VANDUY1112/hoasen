@@ -1,4 +1,5 @@
 import { useState, useRef, useEffect } from 'react'
+import { useNavigate } from 'react-router-dom'
 import {
   Menu,
   Bell,
@@ -41,10 +42,10 @@ interface NotificationItem {
 const initialNotifications: NotificationItem[] = [
   {
     id: '1',
-    title: 'Cảnh báo rung chấn Line 01',
-    desc: 'Ổ đỡ trục cán chính phát hiện độ rung vượt ngưỡng 12%',
-    time: '2 phút trước',
-    type: 'critical',
+    title: 'Cảnh báo rung động Bạc đạn #3',
+    desc: 'Cụm truyền động F4 vượt 4.5 mm/s (ngưỡng 4.0)',
+    time: '5 phút trước',
+    type: 'warning',
     read: false,
   },
   {
@@ -66,6 +67,7 @@ const initialNotifications: NotificationItem[] = [
 ]
 
 export default function Header({ subtitle, onMenuClick }: HeaderProps) {
+  const navigate = useNavigate()
   const [notifOpen, setNotifOpen] = useState(false)
   const [profileOpen, setProfileOpen] = useState(false)
   const [profileModalOpen, setProfileModalOpen] = useState(false)
@@ -359,7 +361,12 @@ export default function Header({ subtitle, onMenuClick }: HeaderProps) {
                   <button
                     onClick={() => {
                       setProfileOpen(false)
-                      addToast('info', 'Đăng xuất hệ thống', 'Phiên làm việc đã kết thúc an toàn. Tự động chuyển về trang đăng nhập.')
+                      addToast({
+                        type: 'info',
+                        title: 'Đăng xuất hệ thống',
+                        message: 'Phiên làm việc đã kết thúc. Tự động chuyển về cổng đăng nhập.',
+                      })
+                      navigate('/login')
                     }}
                     className="cursor-pointer w-full flex items-center gap-3 px-3.5 py-2.5 text-sm font-bold text-error hover:bg-error/10 rounded-xl transition-colors"
                   >
