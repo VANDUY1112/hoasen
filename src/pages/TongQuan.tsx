@@ -100,11 +100,6 @@ export default function TongQuan() {
       {/* Page Header */}
       <section className="relative flex flex-col md:flex-row md:items-end justify-between gap-3 sm:gap-4">
         <div className="z-10">
-          <div className="flex items-center gap-2 mb-1">
-            <span className="font-mono text-[11px] sm:text-xs text-primary uppercase font-bold tracking-wider">Executive Overview</span>
-            <span className="w-1.5 h-1.5 rounded-full bg-primary" />
-            <span className="text-[11px] sm:text-xs text-on-surface-variant/80 font-semibold">Bảng điều khiển trung tâm</span>
-          </div>
           <h1 className="text-xl sm:text-2xl lg:text-3xl font-extrabold text-on-surface tracking-tight">
             Bảng điều khiển <span className="text-primary">Tổng quan</span>
           </h1>

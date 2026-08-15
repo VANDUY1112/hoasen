@@ -121,12 +121,7 @@ export default function LapPhieuSuaChua() {
             <ArrowLeft size={16} />
           </button>
           <div>
-            <div className="flex items-center gap-2">
-              <span className="font-mono text-[11px] sm:text-xs text-primary uppercase font-bold tracking-wider">Predictive Maintenance</span>
-              <span className="w-1.5 h-1.5 rounded-full bg-primary" />
-              <span className="text-[11px] sm:text-xs text-on-surface-variant/80 font-medium">Phiếu công việc</span>
-            </div>
-            <h1 className="text-xl sm:text-2xl lg:text-3xl font-extrabold text-on-surface tracking-tight mt-0.5">
+            <h1 className="text-xl sm:text-2xl lg:text-3xl font-extrabold text-on-surface tracking-tight">
               Lập phiếu Sửa chữa &amp; Bảo trì
             </h1>
           </div>

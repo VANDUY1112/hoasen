@@ -104,11 +104,6 @@ export default function QuanLyTonKho() {
       {/* Header */}
       <div className="flex flex-col md:flex-row md:items-end justify-between gap-3 sm:gap-4">
         <div className="space-y-1">
-          <div className="flex items-center gap-2 mb-0.5">
-            <span className="font-mono text-[11px] sm:text-xs text-primary uppercase font-bold tracking-wider">Inventory &amp; Supply Chain</span>
-            <span className="w-1.5 h-1.5 rounded-full bg-primary" />
-            <span className="text-[11px] sm:text-xs text-on-surface-variant/80 font-semibold">Quản lý Kho</span>
-          </div>
           <h1 className="text-xl sm:text-2xl lg:text-3xl font-extrabold text-on-surface tracking-tight">
             Quản lý Tồn kho Vật tư &amp; Sản phẩm
           </h1>

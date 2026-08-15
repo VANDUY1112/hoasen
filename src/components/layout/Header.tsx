@@ -123,8 +123,8 @@ export default function Header({ subtitle, onMenuClick }: HeaderProps) {
   return (
     <>
       <header className="fixed top-0 left-0 lg:left-72 right-0 h-14 glass z-30 flex items-center justify-between px-3 sm:px-4 lg:px-5 transition-all duration-300 border-b border-outline-variant/40">
-        {/* Left: View Title & Live Telemetry Controls */}
-        <div className="flex items-center gap-1.5 sm:gap-2.5 min-w-0">
+        {/* Left: Menu & Live Telemetry Controls */}
+        <div className="flex items-center gap-2 sm:gap-2.5 min-w-0">
           <button
             onClick={onMenuClick}
             className="cursor-pointer lg:hidden p-1.5 text-on-surface-variant hover:text-primary hover:bg-surface-container-high rounded-lg transition-colors flex items-center shrink-0"
@@ -132,15 +132,6 @@ export default function Header({ subtitle, onMenuClick }: HeaderProps) {
           >
             <Menu size={20} />
           </button>
-
-          <div className="flex items-center gap-2 px-2.5 py-1 rounded-lg bg-surface-container/60 border border-outline-variant/30 min-w-0">
-            <div className="p-1 rounded bg-primary/10 text-primary shrink-0">
-              <Factory size={15} />
-            </div>
-            <span className="font-mono text-xs sm:text-[13px] uppercase tracking-wider text-on-surface-variant truncate max-w-[120px] xs:max-w-[160px] sm:max-w-none font-bold">
-              {subtitle}
-            </span>
-          </div>
 
           {/* Live SCADA Simulation Toggle - Compact */}
           <button

@@ -35,11 +35,6 @@ export default function CaiDat() {
     <div className="p-3.5 sm:p-5 lg:p-6 animate-fade-in max-w-5xl mx-auto pb-10">
       {/* Title */}
       <div className="mb-4 sm:mb-6">
-        <div className="flex items-center gap-2 mb-1">
-          <span className="font-mono text-[11px] sm:text-xs text-primary uppercase font-bold tracking-wider">System Administration</span>
-          <span className="w-1.5 h-1.5 rounded-full bg-primary" />
-          <span className="text-[11px] sm:text-xs text-on-surface-variant/80 font-semibold">Cấu hình tham số</span>
-        </div>
         <h1 className="text-xl sm:text-2xl lg:text-3xl font-extrabold text-on-surface tracking-tight leading-none mb-1.5">
           Cài đặt &amp; Tham số Hệ thống
         </h1>

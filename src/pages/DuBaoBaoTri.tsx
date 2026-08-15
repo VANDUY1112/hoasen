@@ -56,11 +56,6 @@ export default function DuBaoBaoTri() {
       {/* Header */}
       <section className="flex flex-col md:flex-row justify-between items-start md:items-end gap-3 sm:gap-4">
         <div className="max-w-2xl space-y-1">
-          <div className="flex items-center gap-2 mb-0.5">
-            <span className="font-mono text-[11px] sm:text-xs uppercase tracking-wider text-primary font-bold">Predictive Intelligence &amp; IoT</span>
-            <span className="w-1.5 h-1.5 rounded-full bg-primary" />
-            <span className="text-[11px] sm:text-xs text-on-surface-variant/80 font-semibold">Bảo trì dự đoán</span>
-          </div>
           <h1 className="text-xl sm:text-2xl lg:text-3xl font-extrabold text-on-surface tracking-tight leading-none mb-1">
             Dự báo &amp; Kế hoạch Bảo trì
           </h1>
