@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { Download, Layers, ShieldCheck, TrendingUp, Filter, Sparkles, FileSpreadsheet } from 'lucide-react'
+import { Download, Layers, ShieldCheck, TrendingUp, Filter, Activity, FileSpreadsheet } from 'lucide-react'
 import SearchInput from '../components/ui/SearchInput'
 import Badge from '../components/ui/Badge'
 import { useToast } from '../components/ui/Toast'
@@ -134,7 +134,7 @@ export default function SanLuong() {
         <div className="p-4 sm:p-5 border-b border-outline-variant/40 flex flex-col sm:flex-row sm:items-center justify-between gap-4 bg-surface-container-low/60">
           <div className="flex items-center gap-3">
             <div className="p-2 rounded-xl bg-primary/10 text-primary">
-              <Sparkles size={20} />
+              <Activity size={20} />
             </div>
             <div>
               <h3 className="text-base sm:text-lg font-extrabold text-on-surface">Nhật ký Sản xuất Chi tiết (Live Telemetry)</h3>

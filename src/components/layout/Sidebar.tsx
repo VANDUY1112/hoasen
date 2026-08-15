@@ -64,13 +64,12 @@ export default function Sidebar({ isOpen, onClose, currentView, onNavigate }: Si
       {/* Logo Section */}
       <div className="p-4 sm:p-5 flex items-center justify-between">
         <div className="flex items-center gap-3.5 py-1">
-          <div className="relative group">
+          <div className="relative">
             <img
               alt="Hoa Sen Group Logo"
-              className="h-12 w-12 object-cover rounded-xl shadow-md border border-outline-variant/40 group-hover:scale-105 transition-transform duration-300"
+              className="h-12 w-12 object-cover rounded-xl shadow-md border border-outline-variant/40"
               src="/logo.jpg"
             />
-            <div className="absolute -bottom-1 -right-1 w-3.5 h-3.5 bg-emerald-500 rounded-full border-2 border-surface-container-lowest" />
           </div>
           <div className="flex flex-col justify-center">
             <span className="font-extrabold text-base sm:text-lg text-primary tracking-tight leading-none uppercase">

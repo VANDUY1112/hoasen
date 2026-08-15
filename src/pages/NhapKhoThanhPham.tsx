@@ -280,7 +280,7 @@ export default function NhapKhoThanhPham() {
           <div className="bg-surface-container-lowest p-6 rounded-2xl shadow-sm border border-outline-variant/50 sticky top-24">
             <div className="flex items-center justify-between mb-4 pb-3 border-b border-outline-variant/40">
               <div className="flex items-center gap-2">
-                <Sparkles size={16} className="text-primary" />
+                <QrCode size={16} className="text-primary" />
                 <span className="font-bold text-xs uppercase tracking-wider text-on-surface">Thẻ nhận dạng Barcode</span>
               </div>
               <span className="px-2.5 py-0.5 rounded-full bg-emerald-500/10 text-emerald-700 font-mono text-[11px] font-bold uppercase border border-emerald-500/20">

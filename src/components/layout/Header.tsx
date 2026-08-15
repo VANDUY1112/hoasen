@@ -20,9 +20,12 @@ import {
 import { useLiveSimulation } from '../../context/LiveSimulationContext'
 import { decorativeImages } from '../../data/mockData'
 import CommandPalette from '../ui/CommandPalette'
+import ProfileModal from '../ui/ProfileModal'
+import { useToast } from '../ui/Toast'
 
 interface HeaderProps {
   subtitle: string
+  title: string
   onMenuClick: () => void
 }
 
@@ -65,11 +68,13 @@ const initialNotifications: NotificationItem[] = [
 export default function Header({ subtitle, onMenuClick }: HeaderProps) {
   const [notifOpen, setNotifOpen] = useState(false)
   const [profileOpen, setProfileOpen] = useState(false)
+  const [profileModalOpen, setProfileModalOpen] = useState(false)
   const [paletteOpen, setPaletteOpen] = useState(false)
   const [notifications, setNotifications] = useState(initialNotifications)
   const [currentTime, setCurrentTime] = useState('')
 
   const { isSimulating, toggleSimulation, speedMpm } = useLiveSimulation()
+  const { addToast } = useToast()
 
   const notifRef = useRef<HTMLDivElement>(null)
   const profileRef = useRef<HTMLDivElement>(null)
@@ -329,19 +334,43 @@ export default function Header({ subtitle, onMenuClick }: HeaderProps) {
                 </div>
 
                 <div className="space-y-1">
-                  <button className="cursor-pointer w-full flex items-center gap-3 px-3.5 py-2.5 text-sm font-semibold text-on-surface hover:bg-surface-container hover:text-primary rounded-xl transition-colors">
+                  <button
+                    onClick={() => {
+                      setProfileOpen(false)
+                      setProfileModalOpen(true)
+                    }}
+                    className="cursor-pointer w-full flex items-center gap-3 px-3.5 py-2.5 text-sm font-semibold text-on-surface hover:bg-surface-container hover:text-primary rounded-xl transition-colors"
+                  >
                     <User size={16} /> Hồ sơ cá nhân
                   </button>
-                  <button className="cursor-pointer w-full flex items-center gap-3 px-3.5 py-2.5 text-sm font-semibold text-on-surface hover:bg-surface-container hover:text-primary rounded-xl transition-colors">
+                  <button
+                    onClick={() => {
+                      setProfileOpen(false)
+                      setProfileModalOpen(true)
+                    }}
+                    className="cursor-pointer w-full flex items-center gap-3 px-3.5 py-2.5 text-sm font-semibold text-on-surface hover:bg-surface-container hover:text-primary rounded-xl transition-colors"
+                  >
                     <Shield size={16} /> Phân quyền bảo mật
                   </button>
-                  <button className="cursor-pointer w-full flex items-center gap-3 px-3.5 py-2.5 text-sm font-semibold text-on-surface hover:bg-surface-container hover:text-primary rounded-xl transition-colors">
+                  <button
+                    onClick={() => {
+                      setProfileOpen(false)
+                      addToast('info', 'Trợ lý AI Hoa Sen', 'Đang kết nối mô hình Gemini 2.0 Flash để phân tích telemetry nhà máy...')
+                    }}
+                    className="cursor-pointer w-full flex items-center gap-3 px-3.5 py-2.5 text-sm font-semibold text-on-surface hover:bg-surface-container hover:text-primary rounded-xl transition-colors"
+                  >
                     <Sparkles size={16} /> Trợ lý AI Sản xuất
                   </button>
                 </div>
 
                 <div className="border-t border-outline-variant/40 mt-1.5 pt-1.5">
-                  <button className="cursor-pointer w-full flex items-center gap-3 px-3.5 py-2.5 text-sm font-bold text-error hover:bg-error/10 rounded-xl transition-colors">
+                  <button
+                    onClick={() => {
+                      setProfileOpen(false)
+                      addToast('info', 'Đăng xuất hệ thống', 'Phiên làm việc đã kết thúc an toàn. Tự động chuyển về trang đăng nhập.')
+                    }}
+                    className="cursor-pointer w-full flex items-center gap-3 px-3.5 py-2.5 text-sm font-bold text-error hover:bg-error/10 rounded-xl transition-colors"
+                  >
                     <LogOut size={16} /> Đăng xuất
                   </button>
                 </div>
@@ -353,7 +382,11 @@ export default function Header({ subtitle, onMenuClick }: HeaderProps) {
 
       {/* Global Command Palette (Ctrl+K) */}
       <CommandPalette isOpen={paletteOpen} onClose={() => setPaletteOpen(false)} />
+
+      {/* Profile & Account Management Modal */}
+      <ProfileModal isOpen={profileModalOpen} onClose={() => setProfileModalOpen(false)} />
     </>
   )
 }
+
 
