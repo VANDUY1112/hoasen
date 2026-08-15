@@ -92,9 +92,9 @@ export default function SanLuong() {
         <button
           onClick={handleExportExcel}
           disabled={exporting}
-          className="cursor-pointer px-3.5 sm:px-4 py-2 bg-emerald-700 hover:bg-emerald-800 text-white font-mono text-xs uppercase tracking-wider rounded-xl shadow-xs hover:shadow-emerald-700/20 transition-all w-full sm:w-auto flex items-center justify-center gap-1.5 font-extrabold"
+          className="cursor-pointer px-4 sm:px-5 py-2.5 sm:py-2.5 bg-emerald-700 hover:bg-emerald-800 text-white font-mono text-xs sm:text-[13px] uppercase tracking-wider rounded-xl shadow-xs hover:shadow-emerald-700/20 transition-all w-full sm:w-auto flex items-center justify-center gap-2 font-extrabold"
         >
-          <FileSpreadsheet size={15} className={exporting ? 'animate-spin' : ''} />
+          <FileSpreadsheet size={16} className={exporting ? 'animate-spin' : ''} />
           {exporting ? 'Đang tạo Excel...' : 'Xuất Báo Cáo Excel'}
         </button>
       </section>

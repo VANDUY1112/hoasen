@@ -88,16 +88,16 @@ export default function HieuSuatCaTruc() {
           </button>
           <button
             onClick={handleOpenPrintReport}
-            className="cursor-pointer bg-surface-container-lowest text-on-surface border border-outline-variant/40 hover:bg-surface-container px-3 sm:px-3.5 py-2 rounded-xl font-bold transition-all flex items-center justify-center gap-1.5 shadow-2xs text-xs uppercase font-mono tracking-wider"
+            className="cursor-pointer bg-surface-container-lowest text-on-surface border border-outline-variant/40 hover:bg-surface-container px-4 sm:px-5 py-2.5 sm:py-2.5 rounded-xl font-bold transition-all flex items-center justify-center gap-2 shadow-2xs text-xs sm:text-[13px] uppercase font-mono tracking-wider"
           >
-            <Printer size={15} className="text-primary shrink-0" />
+            <Printer size={16} className="text-primary shrink-0" />
             <span className="truncate">In Báo Cáo</span>
           </button>
           <button
             onClick={() => navigate('/thiet-lap-muc-tieu-ca-truc')}
-            className="cursor-pointer col-span-2 sm:col-span-1 bg-primary text-on-primary px-3.5 sm:px-4 py-2 rounded-xl font-extrabold hover:bg-on-primary-fixed-variant transition-all shadow-xs shadow-primary/20 flex items-center justify-center gap-1.5 text-xs font-mono uppercase tracking-wider"
+            className="cursor-pointer col-span-2 sm:col-span-1 bg-primary text-on-primary px-4 sm:px-5 py-2.5 sm:py-2.5 rounded-xl font-extrabold hover:bg-on-primary-fixed-variant transition-all shadow-xs shadow-primary/20 flex items-center justify-center gap-2 text-xs sm:text-[13px] font-mono uppercase tracking-wider"
           >
-            <Settings size={15} /> Thiết lập Mục tiêu
+            <Settings size={16} /> Thiết lập Mục tiêu
           </button>
         </div>
       </div>

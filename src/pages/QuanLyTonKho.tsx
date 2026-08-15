@@ -112,20 +112,20 @@ export default function QuanLyTonKho() {
           </p>
         </div>
 
-        <div className="grid grid-cols-2 sm:flex gap-2 w-full sm:w-auto">
+        <div className="grid grid-cols-2 sm:flex gap-2 sm:gap-2.5 w-full sm:w-auto">
           <button
             onClick={handleExportExcel}
             disabled={exporting}
-            className="cursor-pointer px-3.5 sm:px-4 py-2 rounded-xl font-bold bg-emerald-700 hover:bg-emerald-800 text-white transition-all shadow-xs flex items-center justify-center gap-1.5 text-xs uppercase font-mono tracking-wider"
+            className="cursor-pointer px-4 sm:px-5 py-2.5 sm:py-2.5 rounded-xl font-bold bg-emerald-700 hover:bg-emerald-800 text-white transition-all shadow-xs flex items-center justify-center gap-2 text-xs sm:text-[13px] uppercase font-mono tracking-wider"
           >
-            <FileSpreadsheet size={15} className={exporting ? 'animate-spin' : ''} />
+            <FileSpreadsheet size={16} className={exporting ? 'animate-spin' : ''} />
             <span className="truncate">{exporting ? 'Đang tạo...' : 'Xuất Excel'}</span>
           </button>
           <button
             onClick={() => navigate('/nhap-kho-thanh-pham')}
-            className="cursor-pointer bg-primary text-on-primary px-3.5 sm:px-4 py-2 rounded-xl font-extrabold hover:bg-on-primary-fixed-variant transition-all shadow-xs shadow-primary/20 flex items-center justify-center gap-1.5 text-xs font-mono uppercase tracking-wider"
+            className="cursor-pointer bg-primary text-on-primary px-4 sm:px-5 py-2.5 sm:py-2.5 rounded-xl font-extrabold hover:bg-on-primary-fixed-variant transition-all shadow-xs shadow-primary/20 flex items-center justify-center gap-2 text-xs sm:text-[13px] font-mono uppercase tracking-wider"
           >
-            <Plus size={15} /> <span className="truncate">Nhập kho mới</span>
+            <Plus size={16} /> <span className="truncate">Nhập kho mới</span>
           </button>
         </div>
       </div>
