@@ -122,76 +122,76 @@ export default function Header({ subtitle, onMenuClick }: HeaderProps) {
 
   return (
     <>
-      <header className="fixed top-0 left-0 lg:left-72 right-0 h-16 glass z-30 flex items-center justify-between px-3 sm:px-4 lg:px-6 transition-all duration-300 border-b border-outline-variant/50">
+      <header className="fixed top-0 left-0 lg:left-72 right-0 h-14 glass z-30 flex items-center justify-between px-3 sm:px-4 lg:px-5 transition-all duration-300 border-b border-outline-variant/40">
         {/* Left: View Title & Live Telemetry Controls */}
-        <div className="flex items-center gap-1.5 sm:gap-2.5 lg:gap-3.5 min-w-0">
+        <div className="flex items-center gap-1.5 sm:gap-2.5 min-w-0">
           <button
             onClick={onMenuClick}
-            className="cursor-pointer lg:hidden p-2 text-on-surface-variant hover:text-primary hover:bg-surface-container-high rounded-xl transition-colors flex items-center shrink-0"
+            className="cursor-pointer lg:hidden p-1.5 text-on-surface-variant hover:text-primary hover:bg-surface-container-high rounded-lg transition-colors flex items-center shrink-0"
             title="Mở Menu"
           >
-            <Menu size={22} />
+            <Menu size={20} />
           </button>
 
-          <div className="flex items-center gap-2 px-2.5 sm:px-3.5 py-1.5 rounded-xl bg-surface-container/60 border border-outline-variant/30 min-w-0">
-            <div className="p-1 sm:p-1.5 rounded-lg bg-primary/10 text-primary shrink-0">
-              <Factory size={16} className="sm:w-[18px] sm:h-[18px]" />
+          <div className="flex items-center gap-2 px-2.5 py-1 rounded-lg bg-surface-container/60 border border-outline-variant/30 min-w-0">
+            <div className="p-1 rounded bg-primary/10 text-primary shrink-0">
+              <Factory size={15} />
             </div>
-            <span className="font-mono text-xs sm:text-sm md:text-base uppercase tracking-wider text-on-surface-variant truncate max-w-[110px] xs:max-w-[150px] sm:max-w-none font-bold">
+            <span className="font-mono text-xs sm:text-[13px] uppercase tracking-wider text-on-surface-variant truncate max-w-[120px] xs:max-w-[160px] sm:max-w-none font-bold">
               {subtitle}
             </span>
           </div>
 
-          {/* Live SCADA Simulation Toggle - Responsive */}
+          {/* Live SCADA Simulation Toggle - Compact */}
           <button
             onClick={toggleSimulation}
             className={`
-              cursor-pointer flex items-center gap-1.5 sm:gap-2 px-2.5 sm:px-3.5 py-1.5 rounded-full border text-xs sm:text-sm font-mono font-bold transition-all duration-200 shadow-xs shrink-0
+              cursor-pointer flex items-center gap-1.5 px-2.5 py-1 rounded-full border text-xs font-mono font-bold transition-all duration-200 shadow-2xs shrink-0
               ${isSimulating
                 ? 'bg-emerald-500/10 border-emerald-500/30 text-emerald-700 hover:bg-emerald-500/20'
-                : 'bg-surface-container border-outline-variant/50 text-on-surface-variant hover:bg-surface-container-high'
+                : 'bg-surface-container border-outline-variant/40 text-on-surface-variant hover:bg-surface-container-high'
               }
             `}
             title="Bật/Tắt mô phỏng dữ liệu SCADA thời gian thực"
           >
-            <span className="relative flex h-2 sm:h-2.5 w-2 sm:w-2.5">
+            <span className="relative flex h-2 w-2">
               {isSimulating && (
                 <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-500 opacity-75" />
               )}
-              <span className={`relative inline-flex rounded-full h-2 sm:h-2.5 w-2 sm:w-2.5 ${isSimulating ? 'bg-emerald-500' : 'bg-on-surface-variant/50'}`} />
+              <span className={`relative inline-flex rounded-full h-2 w-2 ${isSimulating ? 'bg-emerald-500' : 'bg-on-surface-variant/50'}`} />
             </span>
-            <span className="hidden xs:inline">{isSimulating ? 'SCADA LIVE' : 'TẠM DỪNG'}</span>
-            <span className="xs:hidden">{isSimulating ? 'LIVE' : 'DỪNG'}</span>
-            {isSimulating ? <Pause size={13} className="opacity-70 hidden sm:block" /> : <Play size={13} className="opacity-70 hidden sm:block" />}
+            <span className="hidden xs:inline text-[11px]">{isSimulating ? 'SCADA LIVE' : 'TẠM DỪNG'}</span>
+            <span className="xs:hidden text-[11px]">{isSimulating ? 'LIVE' : 'DỪNG'}</span>
+            {isSimulating ? <Pause size={12} className="opacity-70 hidden sm:block" /> : <Play size={12} className="opacity-70 hidden sm:block" />}
           </button>
 
           {/* Realtime Speed Pill */}
           {isSimulating && (
-            <div className="hidden xl:flex items-center gap-2 px-3 py-1.5 rounded-xl bg-primary/10 text-primary font-mono text-xs sm:text-sm font-extrabold border border-primary/20 animate-fade-in">
-              <Zap size={15} />
+            <div className="hidden xl:flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-primary/10 text-primary font-mono text-xs font-extrabold border border-primary/20 animate-fade-in">
+              <Zap size={13} />
               <span>{speedMpm} m/phút</span>
             </div>
           )}
         </div>
 
         {/* Right: Search Spotlight + Clock + Notifications + Profile */}
-        <div className="flex items-center gap-1.5 sm:gap-2.5">
+        <div className="flex items-center gap-1.5 sm:gap-2">
           {/* Spotlight Search Trigger (Ctrl+K) */}
           <button
             onClick={() => setPaletteOpen(true)}
-            className="cursor-pointer flex items-center gap-2 p-2 sm:px-3 sm:py-1.5 rounded-xl bg-surface-container/70 border border-outline-variant/50 hover:border-primary/40 hover:bg-surface-container transition-all text-on-surface-variant hover:text-on-surface"
+            className="cursor-pointer flex items-center gap-2 px-2.5 py-1 rounded-lg bg-surface-container/70 border border-outline-variant/40 hover:border-primary/40 hover:bg-surface-container transition-all text-on-surface-variant hover:text-on-surface"
             title="Tìm kiếm nhanh toàn hệ thống (Ctrl + K)"
           >
-            <Search size={16} className="text-primary" />
+            <Search size={14} className="text-primary" />
             <span className="hidden md:inline text-xs font-semibold text-on-surface-variant">Tìm nhanh...</span>
-            <kbd className="hidden sm:inline-flex items-center gap-0.5 px-1.5 py-0.5 rounded bg-surface-container-highest text-[10px] font-mono font-bold border border-outline-variant/40 text-on-surface-variant">
+            <kbd className="hidden sm:inline-flex items-center gap-0.5 px-1 py-0.2 rounded bg-surface-container-highest text-[9px] font-mono font-bold border border-outline-variant/40 text-on-surface-variant">
               Ctrl K
             </kbd>
           </button>
 
           {/* Real-time Clock */}
-          <div className="hidden md:flex items-center gap-2 px-3 py-1.5 rounded-xl bg-surface-container-lowest/80 border border-outline-variant/40 font-mono text-xs sm:text-sm font-bold text-on-surface shadow-xs">
-            <Clock size={15} className="text-primary" />
+          <div className="hidden md:flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-surface-container-lowest/80 border border-outline-variant/30 font-mono text-xs font-bold text-on-surface shadow-2xs">
+            <Clock size={13} className="text-primary" />
             <span>{currentTime}</span>
           </div>
 
@@ -200,17 +200,17 @@ export default function Header({ subtitle, onMenuClick }: HeaderProps) {
             <button
               onClick={() => setNotifOpen(!notifOpen)}
               className={`
-                cursor-pointer relative p-2 sm:p-2.5 rounded-xl transition-all duration-200 flex items-center justify-center
+                cursor-pointer relative p-1.5 sm:p-2 rounded-lg transition-all duration-200 flex items-center justify-center
                 ${notifOpen
-                  ? 'bg-primary-container text-on-primary-container shadow-md shadow-primary/15'
+                  ? 'bg-primary-container text-on-primary-container shadow-xs shadow-primary/15'
                   : 'text-on-surface-variant hover:text-primary hover:bg-surface-container-high'
                 }
               `}
               title="Thông báo hệ thống"
             >
-              <Bell size={19} />
+              <Bell size={17} />
               {unreadCount > 0 && (
-                <span className="absolute top-1.5 right-1.5 flex h-4 w-4 items-center justify-center rounded-full bg-primary text-[10px] font-bold text-on-primary shadow-xs animate-pulse">
+                <span className="absolute top-1 right-1 flex h-3.5 w-3.5 items-center justify-center rounded-full bg-primary text-[9px] font-bold text-on-primary shadow-xs animate-pulse">
                   {unreadCount}
                 </span>
               )}

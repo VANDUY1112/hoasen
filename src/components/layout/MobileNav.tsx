@@ -48,8 +48,8 @@ export default function MobileNav({ onOpenSidebar }: MobileNavProps) {
   ]
 
   return (
-    <div className="fixed bottom-0 left-0 right-0 z-40 lg:hidden px-3 pb-3 pointer-events-none">
-      <nav className="pointer-events-auto max-w-md mx-auto glass backdrop-blur-2xl bg-surface-container-lowest/92 border border-outline-variant/70 shadow-2xl rounded-2xl p-1.5 flex items-center justify-around">
+    <div className="fixed bottom-0 left-0 right-0 z-40 lg:hidden px-2.5 pb-2.5 pointer-events-none">
+      <nav className="pointer-events-auto max-w-sm mx-auto glass backdrop-blur-2xl bg-surface-container-lowest/95 border border-outline-variant/60 shadow-xl rounded-2xl p-1 flex items-center justify-around">
         {navItems.map((item) => {
           const isActive = currentPath === item.id
           const Icon = item.icon
@@ -59,19 +59,19 @@ export default function MobileNav({ onOpenSidebar }: MobileNavProps) {
               key={item.id}
               onClick={() => navigate(item.path)}
               className={`
-                cursor-pointer relative flex flex-col items-center justify-center py-2 px-2.5 rounded-xl transition-all duration-200 flex-1
+                cursor-pointer relative flex flex-col items-center justify-center py-1.5 px-2 rounded-xl transition-all duration-200 flex-1
                 ${isActive
-                  ? 'bg-primary text-on-primary shadow-md shadow-primary/25 scale-[1.03] font-bold'
-                  : 'text-on-surface-variant hover:text-primary hover:bg-surface-container-high/60 active:scale-95'
+                  ? 'bg-primary text-on-primary shadow-xs shadow-primary/20 scale-[1.02] font-bold'
+                  : 'text-on-surface-variant hover:text-primary hover:bg-surface-container-high/50 active:scale-95'
                 }
               `}
             >
               <div className="relative">
-                <Icon size={20} className={isActive ? 'stroke-[2.5]' : 'stroke-[1.8]'} />
+                <Icon size={18} className={isActive ? 'stroke-[2.5]' : 'stroke-[1.8]'} />
                 {item.badge && (
                   <span
                     className={`
-                      absolute -top-1.5 -right-2.5 font-mono text-[9px] px-1.5 py-0.2 rounded-full font-extrabold leading-tight shadow-xs
+                      absolute -top-1 -right-2.5 font-mono text-[8px] px-1 py-0.1 rounded-full font-extrabold leading-tight shadow-xs
                       ${isActive
                         ? 'bg-on-primary text-primary'
                         : item.id === 'san-luong'
@@ -84,7 +84,7 @@ export default function MobileNav({ onOpenSidebar }: MobileNavProps) {
                   </span>
                 )}
               </div>
-              <span className="text-[11px] mt-1 truncate max-w-[60px] font-semibold leading-none">
+              <span className="text-[10px] mt-0.5 truncate max-w-[56px] font-semibold leading-none">
                 {item.label}
               </span>
             </button>
@@ -94,13 +94,13 @@ export default function MobileNav({ onOpenSidebar }: MobileNavProps) {
         {/* Menu Drawer Toggle Button */}
         <button
           onClick={onOpenSidebar}
-          className="cursor-pointer relative flex flex-col items-center justify-center py-2 px-2.5 rounded-xl text-on-surface-variant hover:text-primary hover:bg-surface-container-high/60 active:scale-95 transition-all duration-200 flex-1"
+          className="cursor-pointer relative flex flex-col items-center justify-center py-1.5 px-2 rounded-xl text-on-surface-variant hover:text-primary hover:bg-surface-container-high/50 active:scale-95 transition-all duration-200 flex-1"
         >
           <div className="relative">
-            <Menu size={20} className="stroke-[2]" />
-            <span className="absolute -top-1 -right-1 w-2 h-2 rounded-full bg-primary" />
+            <Menu size={18} className="stroke-[2]" />
+            <span className="absolute -top-0.5 -right-0.5 w-1.5 h-1.5 rounded-full bg-primary" />
           </div>
-          <span className="text-[11px] mt-1 font-semibold leading-none">Menu</span>
+          <span className="text-[10px] mt-0.5 font-semibold leading-none">Menu</span>
         </button>
       </nav>
     </div>

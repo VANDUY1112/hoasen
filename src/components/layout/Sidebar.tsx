@@ -60,8 +60,8 @@ export default function Sidebar({ isOpen, onClose, currentView, onNavigate }: Si
   return (
     <aside
       className={`
-        fixed left-0 top-0 h-full w-72 bg-surface-container-lowest/95 backdrop-blur-xl z-50
-        flex flex-col border-r border-outline-variant/60
+        fixed left-0 top-0 h-full w-72 bg-surface-container-lowest/96 backdrop-blur-xl z-50
+        flex flex-col border-r border-outline-variant/50
         transform transition-transform duration-300 ease-in-out
         shadow-2xl lg:shadow-none
         ${isOpen ? 'translate-x-0' : '-translate-x-full'} lg:translate-x-0
@@ -71,20 +71,20 @@ export default function Sidebar({ isOpen, onClose, currentView, onNavigate }: Si
       <div className="absolute top-0 left-0 w-full h-1 gradient-primary" />
 
       {/* Logo Section */}
-      <div className="p-4 sm:p-5 flex items-center justify-between">
-        <div className="flex items-center gap-3.5 py-1">
+      <div className="p-3.5 sm:p-4 flex items-center justify-between">
+        <div className="flex items-center gap-3 py-0.5">
           <div className="relative">
             <img
               alt="Hoa Sen Group Logo"
-              className="h-12 w-12 object-cover rounded-xl shadow-md border border-outline-variant/40"
+              className="h-10 w-10 object-cover rounded-xl shadow-xs border border-outline-variant/40"
               src="/logo.jpg"
             />
           </div>
           <div className="flex flex-col justify-center">
-            <span className="font-extrabold text-base sm:text-lg text-primary tracking-tight leading-none uppercase">
+            <span className="font-extrabold text-base text-primary tracking-tight leading-none uppercase">
               Hoa Sen Group
             </span>
-            <span className="text-xs font-mono font-bold text-on-surface-variant/90 tracking-wider uppercase mt-1">
+            <span className="text-[10px] font-mono font-bold text-on-surface-variant/80 tracking-wider uppercase mt-1">
               Quản trị sản xuất
             </span>
           </div>
@@ -92,30 +92,33 @@ export default function Sidebar({ isOpen, onClose, currentView, onNavigate }: Si
 
         <button
           onClick={onClose}
-          className="lg:hidden text-on-surface-variant hover:text-primary p-2 rounded-xl hover:bg-surface-container-high transition-colors"
+          className="lg:hidden text-on-surface-variant hover:text-primary p-1.5 rounded-lg hover:bg-surface-container-high transition-colors"
         >
-          <X size={20} />
+          <X size={18} />
         </button>
       </div>
 
       {/* Plant Location Selector Card */}
-      <div className="px-4 mb-2">
-        <div className="p-3 rounded-2xl bg-surface-container-low border border-outline-variant/40 flex items-center justify-between">
-          <div className="flex items-center gap-2.5">
-            <div className="w-2.5 h-2.5 rounded-full bg-primary" />
+      <div className="px-3.5 mb-2">
+        <div className="p-2.5 rounded-xl bg-surface-container-low/70 border border-outline-variant/40 flex items-center justify-between">
+          <div className="flex items-center gap-2">
+            <div className="w-2 h-2 rounded-full bg-primary" />
             <div>
-              <p className="text-xs font-mono text-on-surface-variant uppercase font-bold">Khu phức hợp</p>
-              <p className="text-sm font-extrabold text-on-surface">Nhà máy Tôn Phú Mỹ</p>
+              <p className="text-[10px] font-mono text-on-surface-variant uppercase font-bold">Khu phức hợp</p>
+              <p className="text-xs font-extrabold text-on-surface">Nhà máy Tôn Phú Mỹ</p>
             </div>
           </div>
-          <span className="text-xs font-mono px-2.5 py-1 rounded-md bg-surface-container-highest text-on-surface-variant font-bold">
+          <span className="text-[10px] font-mono px-2 py-0.5 rounded bg-surface-container-highest text-on-surface-variant font-bold">
             KCN PM1
           </span>
         </div>
       </div>
 
       {/* Navigation Links */}
-      <nav className="flex-1 px-3 mt-2 space-y-1 overflow-y-auto">
+      <nav className="flex-1 px-2.5 mt-1 space-y-0.5 overflow-y-auto">
+        <p className="px-3 pt-1 pb-1.5 text-[10px] font-mono uppercase tracking-wider text-on-surface-variant/70 font-bold">
+          Giám sát &amp; Phân tích
+        </p>
         {navItems.map((item) => {
           const isActive = currentView === item.path
           const Icon = item.icon
@@ -124,24 +127,24 @@ export default function Sidebar({ isOpen, onClose, currentView, onNavigate }: Si
               key={item.path}
               onClick={() => handleNav(item.path)}
               className={`
-                cursor-pointer group w-full flex items-center justify-between px-3.5 py-3 rounded-xl transition-all duration-200 text-left text-sm sm:text-base font-semibold
+                cursor-pointer group w-full flex items-center justify-between px-3 py-2 rounded-xl transition-all duration-200 text-left text-xs sm:text-[13px] font-semibold
                 ${isActive
-                  ? 'bg-primary-container text-on-primary-container font-bold shadow-md shadow-primary/10'
+                  ? 'bg-primary-container text-on-primary-container font-bold shadow-xs shadow-primary/10'
                   : 'text-on-surface-variant hover:bg-surface-container hover:text-on-surface'
                 }
               `}
             >
-              <div className="flex items-center gap-3.5 truncate">
+              <div className="flex items-center gap-2.5 truncate">
                 <div
                   className={`
-                    p-2 rounded-xl transition-colors
+                    p-1.5 rounded-lg transition-colors
                     ${isActive
                       ? 'bg-on-primary-container/10 text-on-primary-container'
                       : 'text-on-surface-variant group-hover:text-primary group-hover:bg-primary/10'
                     }
                   `}
                 >
-                  <Icon size={20} />
+                  <Icon size={17} />
                 </div>
                 <span className="truncate">{item.label}</span>
               </div>
@@ -149,7 +152,7 @@ export default function Sidebar({ isOpen, onClose, currentView, onNavigate }: Si
               {item.badge && (
                 <span
                   className={`
-                    font-mono text-xs px-2.5 py-0.5 rounded-full font-bold uppercase transition-transform group-hover:scale-105
+                    font-mono text-[10px] px-2 py-0.2 rounded-full font-bold uppercase transition-transform group-hover:scale-105
                     ${isActive
                       ? 'bg-on-primary-container text-primary-container'
                       : item.badgeVariant === 'error'
@@ -170,11 +173,11 @@ export default function Sidebar({ isOpen, onClose, currentView, onNavigate }: Si
         })}
 
         {/* Operational Console Section */}
-        <div className="pt-3 mt-3 border-t border-outline-variant/40">
-          <p className="px-3 pb-2 text-[11px] font-mono uppercase tracking-wider text-on-surface-variant/80 font-bold">
+        <div className="pt-2 mt-2 border-t border-outline-variant/30">
+          <p className="px-3 pb-1.5 text-[10px] font-mono uppercase tracking-wider text-on-surface-variant/70 font-bold">
             Nghiệp vụ trực tiếp
           </p>
-          <div className="space-y-1">
+          <div className="space-y-0.5">
             {operationalItems.map((item) => {
               const isActive = currentView === item.path
               const Icon = item.icon
@@ -183,14 +186,14 @@ export default function Sidebar({ isOpen, onClose, currentView, onNavigate }: Si
                   key={item.path}
                   onClick={() => handleNav(item.path)}
                   className={`
-                    cursor-pointer group w-full flex items-center justify-between px-3.5 py-2.5 rounded-xl transition-all duration-200 text-left text-sm font-semibold
+                    cursor-pointer group w-full flex items-center justify-between px-3 py-2 rounded-xl transition-all duration-200 text-left text-xs sm:text-[13px] font-semibold
                     ${isActive
-                      ? 'bg-primary-container text-on-primary-container font-bold shadow-md shadow-primary/10'
+                      ? 'bg-primary-container text-on-primary-container font-bold shadow-xs shadow-primary/10'
                       : 'text-on-surface-variant hover:bg-surface-container hover:text-on-surface'
                     }
                   `}
                 >
-                  <div className="flex items-center gap-3 truncate">
+                  <div className="flex items-center gap-2.5 truncate">
                     <div
                       className={`
                         p-1.5 rounded-lg transition-colors
@@ -200,7 +203,7 @@ export default function Sidebar({ isOpen, onClose, currentView, onNavigate }: Si
                         }
                       `}
                     >
-                      <Icon size={18} />
+                      <Icon size={17} />
                     </div>
                     <span className="truncate">{item.label}</span>
                   </div>
@@ -211,27 +214,27 @@ export default function Sidebar({ isOpen, onClose, currentView, onNavigate }: Si
         </div>
 
         {/* Divider + Settings */}
-        <div className="pt-3 mt-3 border-t border-outline-variant/40">
+        <div className="pt-2 mt-2 border-t border-outline-variant/30">
           <button
             onClick={() => handleNav('cai-dat')}
             className={`
-              cursor-pointer group w-full flex items-center gap-3.5 px-3.5 py-3 rounded-xl transition-all duration-200 text-left text-sm sm:text-base font-semibold
+              cursor-pointer group w-full flex items-center gap-2.5 px-3 py-2 rounded-xl transition-all duration-200 text-left text-xs sm:text-[13px] font-semibold
               ${currentView === 'cai-dat'
-                ? 'bg-primary-container text-on-primary-container font-bold shadow-md shadow-primary/10'
+                ? 'bg-primary-container text-on-primary-container font-bold shadow-xs shadow-primary/10'
                 : 'text-on-surface-variant hover:bg-surface-container hover:text-on-surface'
               }
             `}
           >
             <div
               className={`
-                p-2 rounded-xl transition-colors
+                p-1.5 rounded-lg transition-colors
                 ${currentView === 'cai-dat'
                   ? 'bg-on-primary-container/10 text-on-primary-container'
                   : 'text-on-surface-variant group-hover:text-primary group-hover:bg-primary/10'
                 }
               `}
             >
-              <Settings size={20} />
+              <Settings size={17} />
             </div>
             <span>Cài đặt hệ thống</span>
           </button>

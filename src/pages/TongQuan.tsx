@@ -96,32 +96,32 @@ export default function TongQuan() {
   }
 
   return (
-    <div className="flex flex-col w-full p-4 sm:p-6 gap-6 sm:gap-8 animate-fade-in max-w-7xl mx-auto">
+    <div className="flex flex-col w-full p-3.5 sm:p-5 lg:p-6 gap-4 sm:gap-5 animate-fade-in max-w-7xl mx-auto">
       {/* Page Header */}
-      <section className="relative flex flex-col md:flex-row md:items-end justify-between gap-4">
+      <section className="relative flex flex-col md:flex-row md:items-end justify-between gap-3 sm:gap-4">
         <div className="z-10">
-          <div className="flex items-center gap-2 mb-1.5">
-            <span className="font-mono text-xs sm:text-sm text-primary uppercase font-bold tracking-wider">Executive Overview</span>
-            <span className="w-2 h-2 rounded-full bg-primary" />
-            <span className="text-xs sm:text-sm text-on-surface-variant font-semibold">Bảng điều khiển trung tâm</span>
+          <div className="flex items-center gap-2 mb-1">
+            <span className="font-mono text-[11px] sm:text-xs text-primary uppercase font-bold tracking-wider">Executive Overview</span>
+            <span className="w-1.5 h-1.5 rounded-full bg-primary" />
+            <span className="text-[11px] sm:text-xs text-on-surface-variant/80 font-semibold">Bảng điều khiển trung tâm</span>
           </div>
-          <h1 className="text-2xl sm:text-3xl md:text-5xl font-extrabold text-on-surface tracking-tight">
+          <h1 className="text-xl sm:text-2xl lg:text-3xl font-extrabold text-on-surface tracking-tight">
             Bảng điều khiển <span className="text-primary">Tổng quan</span>
           </h1>
         </div>
 
-        <div className="flex flex-col sm:flex-row sm:flex-wrap items-stretch sm:items-center gap-2.5 sm:gap-3">
+        <div className="flex flex-col sm:flex-row sm:flex-wrap items-stretch sm:items-center gap-2 sm:gap-2.5">
           {/* Time Filter Tabs */}
-          <div className="flex bg-surface-container p-1 rounded-xl gap-1 overflow-x-auto no-scrollbar">
+          <div className="flex bg-surface-container p-0.5 rounded-xl gap-0.5 overflow-x-auto no-scrollbar">
             {timeRanges.map((t) => (
               <button
                 key={t.id}
                 onClick={() => setActiveTimeRange(t.id)}
                 className={`
-                  cursor-pointer px-3 sm:px-3.5 py-2 rounded-lg text-xs sm:text-sm font-bold transition-all duration-150 whitespace-nowrap flex-1 sm:flex-none text-center
+                  cursor-pointer px-3 py-1.5 rounded-lg text-xs font-bold transition-all duration-150 whitespace-nowrap flex-1 sm:flex-none text-center
                   ${activeTimeRange === t.id
                     ? 'bg-surface-container-lowest text-primary shadow-xs'
-                    : 'text-on-surface-variant hover:text-on-surface'
+                    : 'text-on-surface-variant/80 hover:text-on-surface'
                   }
                 `}
               >
@@ -130,31 +130,31 @@ export default function TongQuan() {
             ))}
           </div>
 
-          <div className="grid grid-cols-2 sm:flex sm:flex-wrap items-center gap-2 sm:gap-2.5">
+          <div className="grid grid-cols-2 sm:flex sm:flex-wrap items-center gap-2">
             <button
               onClick={handleRunAiDiagnosis}
               disabled={isDiagnosing}
-              className="cursor-pointer bg-primary/10 text-primary hover:bg-primary/20 border border-primary/20 px-3 sm:px-4 py-2.5 font-mono text-xs sm:text-sm uppercase tracking-wider flex items-center justify-center gap-1.5 font-bold rounded-xl transition-all shadow-xs"
+              className="cursor-pointer bg-primary/10 text-primary hover:bg-primary/20 border border-primary/20 px-3 py-2 font-mono text-xs uppercase tracking-wider flex items-center justify-center gap-1.5 font-bold rounded-xl transition-all shadow-2xs"
             >
-              <Sparkles size={16} className={isDiagnosing ? 'animate-spin' : ''} />
+              <Sparkles size={14} className={isDiagnosing ? 'animate-spin' : ''} />
               <span className="truncate">{isDiagnosing ? 'Đang quét...' : 'Chẩn đoán AI'}</span>
             </button>
 
             <button
               onClick={handleExportProductionExcel}
               disabled={exporting}
-              className="cursor-pointer bg-surface-container-lowest text-on-surface border border-outline-variant/50 px-3 sm:px-4 py-2.5 font-mono text-xs sm:text-sm uppercase tracking-wider flex items-center justify-center gap-1.5 font-bold rounded-xl hover:bg-surface-container transition-colors shadow-xs"
+              className="cursor-pointer bg-surface-container-lowest text-on-surface border border-outline-variant/40 px-3 py-2 font-mono text-xs uppercase tracking-wider flex items-center justify-center gap-1.5 font-bold rounded-xl hover:bg-surface-container transition-colors shadow-2xs"
             >
-              <FileSpreadsheet size={16} className="text-emerald-600 shrink-0" />
+              <FileSpreadsheet size={14} className="text-emerald-600 shrink-0" />
               <span className="truncate">Xuất Excel</span>
             </button>
 
             <button
               onClick={handleExportExcelSummary}
               disabled={exporting}
-              className="cursor-pointer col-span-2 sm:col-span-1 bg-primary text-on-primary px-4 sm:px-5 py-2.5 font-mono text-xs sm:text-sm uppercase tracking-wider flex items-center justify-center gap-2 font-extrabold rounded-xl hover:bg-on-primary-fixed-variant transition-all shadow-md shadow-primary/20"
+              className="cursor-pointer col-span-2 sm:col-span-1 bg-primary text-on-primary px-3.5 sm:px-4 py-2 font-mono text-xs uppercase tracking-wider flex items-center justify-center gap-1.5 font-extrabold rounded-xl hover:bg-on-primary-fixed-variant transition-all shadow-sm shadow-primary/20"
             >
-              <Download size={16} className="shrink-0" /> Báo cáo Giám Đốc
+              <Download size={14} className="shrink-0" /> Báo cáo Giám Đốc
             </button>
           </div>
         </div>
@@ -162,14 +162,14 @@ export default function TongQuan() {
       </section>
 
       {/* KPI Cards with Live SCADA Data */}
-      <section className="grid grid-cols-1 md:grid-cols-3 gap-4 sm:gap-5 stagger">
+      <section className="grid grid-cols-1 md:grid-cols-3 gap-3.5 sm:gap-4 stagger">
         <KpiCard
           title="Sản lượng trong ngày (Live)"
           value={dailyOutput.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
           subtitle="Tấn thành phẩm / 24h"
           trend={12.5}
           trendLabel="so với hôm qua"
-          icon={<Layers size={26} className="stroke-[2.2]" />}
+          icon={<Layers size={20} className="stroke-[2.2]" />}
           accentColor="primary"
         />
         <KpiCard
@@ -179,7 +179,7 @@ export default function TongQuan() {
           trend={-2.4}
           trendLabel="mục tiêu giảm lỗi"
           accentColor="error"
-          icon={<AlertTriangle size={26} className="stroke-[2.2]" />}
+          icon={<AlertTriangle size={20} className="stroke-[2.2]" />}
         />
         <KpiCard
           title="Dừng máy (Downtime)"
@@ -187,63 +187,63 @@ export default function TongQuan() {
           subtitle="Phút vận hành gián đoạn"
           resolved={true}
           accentColor="success"
-          icon={<TimerOff size={26} className="stroke-[2.2]" />}
+          icon={<TimerOff size={20} className="stroke-[2.2]" />}
         />
       </section>
 
       {/* OEE Gauge + Weekly Chart */}
-      <section className="grid grid-cols-1 lg:grid-cols-12 gap-5 sm:gap-6">
+      <section className="grid grid-cols-1 lg:grid-cols-12 gap-3.5 sm:gap-4">
         {/* OEE Gauge */}
-        <div className="lg:col-span-4 bg-surface-container-lowest p-6 shadow-sm border border-outline-variant/40 flex flex-col items-center justify-center relative overflow-hidden rounded-2xl animate-scale-in">
-          <div className="absolute top-4 left-4 flex items-center gap-2">
-            <span className="font-mono text-xs sm:text-sm text-on-surface-variant uppercase tracking-wider font-bold">
+        <div className="lg:col-span-4 bg-surface-container-lowest p-4 sm:p-5 shadow-xs border border-outline-variant/35 flex flex-col items-center justify-center relative overflow-hidden rounded-2xl animate-scale-in">
+          <div className="w-full flex items-center justify-between mb-2">
+            <span className="font-mono text-xs text-on-surface-variant uppercase tracking-wider font-bold">
               Hiệu suất tổng thể OEE
             </span>
             <Badge variant="primary" pulse size="sm">SCADA Stream</Badge>
           </div>
 
-          <div className="mt-8">
+          <div className="my-3">
             <GaugeChart value={Math.round(liveOee)} />
           </div>
 
-          <div className="mt-6 grid grid-cols-2 gap-4 w-full pt-4 border-t border-outline-variant/30">
-            <div className="text-center border-r border-outline-variant/40">
-              <p className="text-xs sm:text-sm font-mono text-on-surface-variant uppercase font-bold">Khả dụng (A)</p>
-              <p className="text-2xl sm:text-3xl font-extrabold text-on-surface font-mono">{liveOee > 80 ? '94.2%' : '91.5%'}</p>
+          <div className="grid grid-cols-2 gap-3 w-full pt-3 border-t border-outline-variant/30">
+            <div className="text-center border-r border-outline-variant/30">
+              <p className="text-[11px] font-mono text-on-surface-variant/80 uppercase font-bold">Khả dụng (A)</p>
+              <p className="text-xl sm:text-2xl font-extrabold text-on-surface font-mono">{liveOee > 80 ? '94.2%' : '91.5%'}</p>
             </div>
             <div className="text-center">
-              <p className="text-xs sm:text-sm font-mono text-on-surface-variant uppercase font-bold">Chất lượng (Q)</p>
-              <p className="text-2xl sm:text-3xl font-extrabold text-primary font-mono">98.1%</p>
+              <p className="text-[11px] font-mono text-on-surface-variant/80 uppercase font-bold">Chất lượng (Q)</p>
+              <p className="text-xl sm:text-2xl font-extrabold text-primary font-mono">98.1%</p>
             </div>
           </div>
         </div>
 
         {/* Weekly Bar Chart */}
-        <div className="lg:col-span-8 bg-surface-container-lowest p-6 shadow-sm border border-outline-variant/40 rounded-2xl animate-slide-up">
-          <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-4 mb-6">
+        <div className="lg:col-span-8 bg-surface-container-lowest p-4 sm:p-5 shadow-xs border border-outline-variant/35 rounded-2xl animate-slide-up">
+          <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-2 mb-4">
             <div>
-              <span className="font-mono text-xs sm:text-sm text-on-surface-variant uppercase tracking-wider font-bold">
+              <span className="font-mono text-xs text-on-surface-variant uppercase tracking-wider font-bold">
                 Sản lượng kế hoạch vs Thực tế
               </span>
-              <h3 className="text-xl sm:text-2xl font-extrabold text-on-surface mt-1">Sản lượng tuần hiện tại (Tấn)</h3>
+              <h3 className="text-base sm:text-lg font-extrabold text-on-surface mt-0.5">Sản lượng tuần hiện tại (Tấn)</h3>
             </div>
-            <div className="flex gap-5 items-center font-mono text-xs sm:text-sm font-bold">
-              <span className="flex items-center gap-2 text-on-surface">
-                <span className="w-3.5 h-3.5 bg-primary rounded-md shadow-xs" /> Thực tế
+            <div className="flex gap-4 items-center font-mono text-xs font-bold">
+              <span className="flex items-center gap-1.5 text-on-surface">
+                <span className="w-3 h-3 bg-primary rounded shadow-2xs" /> Thực tế
               </span>
-              <span className="flex items-center gap-2 text-on-surface-variant">
-                <span className="w-3.5 h-3.5 bg-surface-container-high rounded-md" /> Kế hoạch
+              <span className="flex items-center gap-1.5 text-on-surface-variant">
+                <span className="w-3 h-3 bg-surface-container-high rounded" /> Kế hoạch
               </span>
             </div>
           </div>
 
-          <div className="h-64 w-full">
+          <div className="h-56 sm:h-60 w-full">
             <ResponsiveContainer width="100%" height="100%">
-              <BarChart data={weeklyProduction} barGap={6}>
+              <BarChart data={weeklyProduction} barGap={5}>
                 <CartesianGrid strokeDasharray="3 3" stroke="var(--color-surface-container-high)" vertical={false} />
                 <XAxis
                   dataKey="day"
-                  tick={{ fontSize: 14, fontWeight: 700, fill: 'var(--color-on-surface-variant)' }}
+                  tick={{ fontSize: 12, fontWeight: 700, fill: 'var(--color-on-surface-variant)' }}
                   axisLine={false}
                   tickLine={false}
                 />
@@ -253,12 +253,12 @@ export default function TongQuan() {
                     background: 'var(--color-surface-container-lowest)',
                     border: '1px solid var(--color-outline-variant)',
                     borderRadius: '12px',
-                    fontSize: '14px',
-                    boxShadow: '0 10px 25px rgba(0,0,0,0.08)',
+                    fontSize: '13px',
+                    boxShadow: '0 8px 20px rgba(0,0,0,0.06)',
                   }}
                 />
-                <Bar dataKey="planned" fill="var(--color-surface-container-high)" radius={[6, 6, 0, 0]} />
-                <Bar dataKey="actual" fill="var(--color-primary)" radius={[6, 6, 0, 0]} opacity={0.9} />
+                <Bar dataKey="planned" fill="var(--color-surface-container-high)" radius={[5, 5, 0, 0]} />
+                <Bar dataKey="actual" fill="var(--color-primary)" radius={[5, 5, 0, 0]} opacity={0.9} />
               </BarChart>
             </ResponsiveContainer>
           </div>
@@ -266,43 +266,43 @@ export default function TongQuan() {
       </section>
 
       {/* Error Table + AI Action Card */}
-      <section className="grid grid-cols-1 lg:grid-cols-3 gap-5 sm:gap-6">
+      <section className="grid grid-cols-1 lg:grid-cols-3 gap-3.5 sm:gap-4">
         {/* Error Table */}
-        <div className="lg:col-span-2 bg-surface-container-lowest shadow-sm border border-outline-variant/40 overflow-hidden rounded-2xl animate-slide-up">
-          <div className="p-4 sm:p-5 border-b border-outline-variant/40 flex justify-between items-center bg-surface-container-low/60">
-            <div className="flex items-center gap-2.5">
-              <div className="p-2 rounded-xl bg-primary/10 text-primary">
-                <AlertTriangle size={20} />
+        <div className="lg:col-span-2 bg-surface-container-lowest shadow-xs border border-outline-variant/35 overflow-hidden rounded-2xl animate-slide-up">
+          <div className="px-4 py-3 border-b border-outline-variant/30 flex justify-between items-center bg-surface-container-low/50">
+            <div className="flex items-center gap-2">
+              <div className="p-1.5 rounded-lg bg-primary/10 text-primary">
+                <AlertTriangle size={17} />
               </div>
-              <h3 className="text-base sm:text-lg font-extrabold text-on-surface">Lỗi hệ thống thường gặp</h3>
+              <h3 className="text-sm sm:text-base font-extrabold text-on-surface">Lỗi hệ thống thường gặp</h3>
             </div>
-            <span className="font-mono text-xs sm:text-sm text-on-surface-variant font-bold">30 Ngày gần nhất</span>
+            <span className="font-mono text-xs text-on-surface-variant/80 font-bold">30 Ngày gần nhất</span>
           </div>
 
           <div className="overflow-x-auto w-full">
-            <table className="w-full text-left min-w-[500px]">
+            <table className="w-full text-left min-w-[480px]">
               <thead>
-                <tr className="bg-surface-container-low/40 border-b border-outline-variant/30">
-                  <th className="px-5 py-4 font-mono text-xs sm:text-sm text-on-surface-variant uppercase font-bold">Mã lỗi</th>
-                  <th className="px-5 py-4 font-mono text-xs sm:text-sm text-on-surface-variant uppercase font-bold">Loại lỗi bề mặt</th>
-                  <th className="px-5 py-4 font-mono text-xs sm:text-sm text-on-surface-variant uppercase font-bold">Tần suất</th>
-                  <th className="px-5 py-4 font-mono text-xs sm:text-sm text-on-surface-variant uppercase font-bold text-right">Mức độ</th>
+                <tr className="bg-surface-container-low/30 border-b border-outline-variant/20">
+                  <th className="px-4 py-2.5 font-mono text-xs text-on-surface-variant uppercase font-bold">Mã lỗi</th>
+                  <th className="px-4 py-2.5 font-mono text-xs text-on-surface-variant uppercase font-bold">Loại lỗi bề mặt</th>
+                  <th className="px-4 py-2.5 font-mono text-xs text-on-surface-variant uppercase font-bold">Tần suất</th>
+                  <th className="px-4 py-2.5 font-mono text-xs text-on-surface-variant uppercase font-bold text-right">Mức độ</th>
                 </tr>
               </thead>
-              <tbody className="divide-y divide-outline-variant/30 text-sm sm:text-base">
+              <tbody className="divide-y divide-outline-variant/20 text-xs sm:text-sm">
                 {defectRecords.map((d) => (
-                  <tr key={d.code} className="hover:bg-surface-container/60 transition-colors">
-                    <td className="px-5 py-4 font-mono text-primary font-extrabold text-sm">{d.code}</td>
-                    <td className="px-5 py-4 font-semibold text-on-surface">{d.type}</td>
-                    <td className="px-5 py-4">
-                      <div className="flex items-center gap-3">
-                        <div className="w-28 h-2.5 bg-surface-container-high rounded-full overflow-hidden">
+                  <tr key={d.code} className="hover:bg-surface-container/50 transition-colors">
+                    <td className="px-4 py-3 font-mono text-primary font-extrabold">{d.code}</td>
+                    <td className="px-4 py-3 font-semibold text-on-surface">{d.type}</td>
+                    <td className="px-4 py-3">
+                      <div className="flex items-center gap-2.5">
+                        <div className="w-24 h-2 bg-surface-container-high rounded-full overflow-hidden">
                           <div className="gradient-primary h-full rounded-full" style={{ width: `${(d.frequency / 50) * 100}%` }} />
                         </div>
-                        <span className="font-mono text-sm font-bold">{d.frequency} lần</span>
+                        <span className="font-mono text-xs font-bold">{d.frequency} lần</span>
                       </div>
                     </td>
-                    <td className="px-5 py-4 text-right">
+                    <td className="px-4 py-3 text-right">
                       <Badge variant={d.severity === 'high' ? 'error' : d.severity === 'medium' ? 'warning' : 'neutral'} size="sm">
                         {d.severity === 'high' ? 'Nghiêm trọng' : d.severity === 'medium' ? 'Trung bình' : 'Thấp'}
                       </Badge>
@@ -315,33 +315,33 @@ export default function TongQuan() {
         </div>
 
         {/* AI Operational Insights Card */}
-        <div className="gradient-primary p-6 sm:p-7 flex flex-col justify-between text-on-primary relative overflow-hidden shadow-xl rounded-2xl animate-scale-in">
-          <div className="absolute inset-0 z-0 opacity-30 mix-blend-overlay">
+        <div className="gradient-primary p-4 sm:p-5 flex flex-col justify-between text-on-primary relative overflow-hidden shadow-md rounded-2xl animate-scale-in">
+          <div className="absolute inset-0 z-0 opacity-20 mix-blend-overlay">
             <img className="w-full h-full object-cover" src={decorativeImages.banner} alt="" />
           </div>
           <div className="absolute inset-0 bg-gradient-to-t from-primary via-primary/80 to-transparent z-10" />
 
           <div className="relative z-20">
-            <div className="flex items-center gap-2 text-xs sm:text-sm font-mono font-bold uppercase tracking-wider mb-3 opacity-90">
-              <Zap size={18} /> AI Optimization Engine
+            <div className="flex items-center gap-1.5 text-xs font-mono font-bold uppercase tracking-wider mb-2 opacity-90">
+              <Zap size={16} /> AI Optimization Engine
             </div>
-            <h3 className="text-2xl sm:text-3xl font-extrabold mb-3 leading-tight tracking-tight">
+            <h3 className="text-xl sm:text-2xl font-extrabold mb-2 leading-tight tracking-tight">
               Tối ưu năng lực vận hành
             </h3>
-            <p className="text-sm sm:text-base text-on-primary/90 leading-relaxed font-medium">
-              Mỗi chỉ số ghi nhận từ cảm biến là cơ sở để máy học tinh chỉnh tốc độ kéo tôn và nhiệt độ bể mạ kẽm.
+            <p className="text-xs sm:text-sm text-on-primary/90 leading-relaxed font-medium">
+              Máy học tự động tinh chỉnh tốc độ kéo tôn và nhiệt độ bể mạ kẽm theo từng mốc tải SCADA.
             </p>
           </div>
 
-          <div className="relative z-20 pt-5 border-t border-on-primary/20">
+          <div className="relative z-20 pt-4 mt-4 border-t border-on-primary/20">
             <div className="flex justify-between items-center">
               <div>
-                <p className="text-xs font-mono opacity-90 uppercase font-bold">Tiết kiệm năng lượng</p>
-                <p className="text-2xl font-extrabold font-mono">+8.4% kWh/T</p>
+                <p className="text-[11px] font-mono opacity-90 uppercase font-bold">Tiết kiệm năng lượng</p>
+                <p className="text-xl font-extrabold font-mono">+8.4% kWh/T</p>
               </div>
               <button
                 onClick={handleRunAiDiagnosis}
-                className="px-5 py-2.5 bg-on-primary text-primary font-bold text-xs sm:text-sm rounded-xl shadow-md hover:bg-surface-container-lowest transition-all"
+                className="px-3.5 py-1.5 bg-on-primary text-primary font-bold text-xs rounded-xl shadow-xs hover:bg-surface-container-lowest transition-all"
               >
                 Tối ưu ngay
               </button>

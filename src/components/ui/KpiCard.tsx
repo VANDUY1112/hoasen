@@ -41,28 +41,28 @@ export default function KpiCard({
   return (
     <div
       className={`
-        group relative bg-surface-container-lowest p-5 flex flex-col justify-between
-        overflow-hidden shadow-sm card-hover border-l-4 rounded-xl
+        group relative bg-surface-container-lowest p-4 sm:p-5 flex flex-col justify-between
+        overflow-hidden shadow-xs hover:shadow-md card-hover border border-outline-variant/35 border-l-4 rounded-2xl
         ${borderColors[accentColor]} ${className}
       `}
     >
-      <div className="flex justify-between items-start mb-6">
-        <div>
-          <p className="text-sm sm:text-[13px] font-semibold text-on-surface-variant uppercase tracking-wider">
+      <div className="flex justify-between items-start gap-3 mb-3">
+        <div className="min-w-0">
+          <p className="text-[11px] sm:text-xs font-bold text-on-surface-variant/80 uppercase tracking-wider truncate">
             {title}
           </p>
-          <h2 className="text-4xl md:text-5xl font-bold text-on-surface mt-2 group-hover:text-primary transition-colors animate-counter">
+          <h2 className="text-2xl sm:text-3xl font-mono font-extrabold text-on-surface tracking-tight mt-1 group-hover:text-primary transition-colors animate-counter">
             {value}
           </h2>
           {subtitle && (
-            <p className="text-sm font-medium text-on-surface-variant mt-1">{subtitle}</p>
+            <p className="text-xs font-medium text-on-surface-variant/85 mt-0.5 truncate">{subtitle}</p>
           )}
         </div>
         {icon && (
           <div
             className={`
-              p-3 rounded-2xl ${iconStyles[accentColor]} shrink-0
-              shadow-sm group-hover:scale-110 transition-all duration-300
+              p-2.5 rounded-xl ${iconStyles[accentColor]} shrink-0
+              shadow-xs group-hover:scale-105 transition-all duration-300
             `}
           >
             {icon}
@@ -71,18 +71,19 @@ export default function KpiCard({
       </div>
 
       {trend !== undefined && (
-        <div className={`flex items-center gap-2 mt-2 ${trend >= 0 ? 'text-success' : 'text-error'}`}>
-          {trend >= 0 ? <TrendingUp size={18} /> : <TrendingDown size={18} />}
-          <span className="text-sm font-semibold">
-            {trend >= 0 ? '+' : ''}{trend}% {trendLabel || ''}
+        <div className={`flex items-center gap-1.5 pt-2 border-t border-outline-variant/20 text-xs font-bold font-mono ${trend >= 0 ? 'text-emerald-600' : 'text-rose-600'}`}>
+          {trend >= 0 ? <TrendingUp size={14} /> : <TrendingDown size={14} />}
+          <span>
+            {trend >= 0 ? '+' : ''}{trend}%
           </span>
+          {trendLabel && <span className="font-sans font-medium text-[11px] text-on-surface-variant/70 italic truncate">{trendLabel}</span>}
         </div>
       )}
 
       {resolved && (
-        <div className="flex items-center gap-2 text-success mt-2">
-          <Check size={18} />
-          <span className="text-sm font-semibold">Đã khắc phục 100% sự cố</span>
+        <div className="flex items-center gap-1.5 pt-2 border-t border-outline-variant/20 text-emerald-600 text-xs font-bold font-mono">
+          <Check size={14} className="stroke-[2.5]" />
+          <span className="font-sans text-[11px] font-semibold text-emerald-700">Đã khắc phục 100%</span>
         </div>
       )}
     </div>

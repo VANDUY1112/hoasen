@@ -95,24 +95,24 @@ export default function ThietLapMucTieuCaTruc() {
   }
 
   return (
-    <div className="flex flex-col w-full p-4 sm:p-6 gap-6 animate-fade-in max-w-5xl mx-auto">
+    <div className="flex flex-col w-full p-3.5 sm:p-5 lg:p-6 gap-4 sm:gap-5 animate-fade-in max-w-5xl mx-auto">
       {/* Title */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3.5">
-        <div className="flex items-center gap-3">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+        <div className="flex items-center gap-2.5">
           <button
             onClick={() => navigate('/hieu-suat-ca-truc')}
-            className="cursor-pointer p-2 sm:p-2.5 hover:bg-surface-container-high rounded-xl transition-colors text-on-surface-variant hover:text-primary border border-outline-variant/40 shadow-xs shrink-0"
+            className="cursor-pointer p-2 hover:bg-surface-container-high rounded-xl transition-colors text-on-surface-variant hover:text-primary border border-outline-variant/40 shadow-2xs shrink-0"
             title="Quay lại Hiệu suất ca"
           >
-            <ArrowLeft size={18} />
+            <ArrowLeft size={16} />
           </button>
           <div>
             <div className="flex items-center gap-2">
-              <span className="font-mono text-xs text-primary uppercase font-bold tracking-wider">KPIs &amp; Targets</span>
+              <span className="font-mono text-[11px] sm:text-xs text-primary uppercase font-bold tracking-wider">KPIs &amp; Targets</span>
               <span className="w-1.5 h-1.5 rounded-full bg-primary" />
-              <span className="text-xs text-on-surface-variant font-medium">Thiết lập ca</span>
+              <span className="text-[11px] sm:text-xs text-on-surface-variant/80 font-medium">Thiết lập ca</span>
             </div>
-            <h1 className="text-xl sm:text-3xl md:text-4xl font-extrabold text-on-surface tracking-tight mt-0.5">
+            <h1 className="text-xl sm:text-2xl lg:text-3xl font-extrabold text-on-surface tracking-tight mt-0.5">
               Thiết lập Mục tiêu Ca trực
             </h1>
           </div>
@@ -121,13 +121,13 @@ export default function ThietLapMucTieuCaTruc() {
         <button
           type="button"
           onClick={handleOpenPrint}
-          className="cursor-pointer bg-surface-container-lowest border border-outline-variant/50 text-on-surface px-4 py-2.5 rounded-xl font-mono text-xs font-bold uppercase tracking-wider flex items-center justify-center gap-2 hover:bg-surface-container transition-colors shadow-xs w-full sm:w-auto"
+          className="cursor-pointer bg-surface-container-lowest border border-outline-variant/40 text-on-surface px-3.5 py-2 rounded-xl font-mono text-xs font-bold uppercase tracking-wider flex items-center justify-center gap-1.5 hover:bg-surface-container transition-colors shadow-2xs w-full sm:w-auto"
         >
-          <Printer size={16} className="text-primary" /> Xem lệnh giao ca A4
+          <Printer size={15} className="text-primary" /> Xem lệnh giao ca A4
         </button>
       </div>
 
-      <div className="bg-surface-container-lowest p-4 sm:p-6 md:p-8 rounded-2xl shadow-sm border border-outline-variant/50">
+      <div className="bg-surface-container-lowest p-4 sm:p-6 rounded-2xl shadow-xs border border-outline-variant/35">
         <form className="space-y-6" onSubmit={handleSubmit}>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
             <CustomSelect

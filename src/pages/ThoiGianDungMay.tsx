@@ -22,50 +22,50 @@ export default function ThoiGianDungMay() {
   })
 
   return (
-    <div className="flex flex-col w-full p-4 sm:p-6 gap-6 sm:gap-8 animate-fade-in max-w-7xl mx-auto">
+    <div className="flex flex-col w-full p-3.5 sm:p-5 lg:p-6 gap-4 sm:gap-5 animate-fade-in max-w-7xl mx-auto">
       {/* Header */}
-      <section className="flex flex-col sm:flex-row justify-between items-start sm:items-end gap-4">
-        <div className="space-y-1.5">
-          <div className="flex items-center gap-2 mb-1">
-            <span className="font-mono text-xs sm:text-sm text-primary uppercase font-bold tracking-wider">Live Downtime Telemetry</span>
-            <span className="w-2 h-2 rounded-full bg-primary" />
-            <span className="text-xs sm:text-sm text-on-surface-variant font-semibold">Gián đoạn dây chuyền</span>
+      <section className="flex flex-col sm:flex-row justify-between items-start sm:items-end gap-3 sm:gap-4">
+        <div className="space-y-1">
+          <div className="flex items-center gap-2 mb-0.5">
+            <span className="font-mono text-[11px] sm:text-xs text-primary uppercase font-bold tracking-wider">Live Downtime Telemetry</span>
+            <span className="w-1.5 h-1.5 rounded-full bg-primary" />
+            <span className="text-[11px] sm:text-xs text-on-surface-variant/80 font-semibold">Gián đoạn dây chuyền</span>
           </div>
-          <h1 className="text-2xl sm:text-3xl md:text-5xl font-extrabold text-on-surface tracking-tight">
+          <h1 className="text-xl sm:text-2xl lg:text-3xl font-extrabold text-on-surface tracking-tight">
             Thời gian Dừng máy &amp; Sự cố
           </h1>
-          <p className="text-xs sm:text-base text-on-surface-variant max-w-2xl leading-relaxed font-medium">
+          <p className="text-xs sm:text-sm text-on-surface-variant/80 max-w-2xl leading-relaxed font-medium">
             Theo dõi nhật ký dừng máy tự động từ hệ thống SCADA/PLC và tiến độ khắc phục của kỹ thuật viên.
           </p>
         </div>
 
-        <div className="bg-surface-container-lowest p-4 sm:p-6 rounded-2xl shadow-sm border border-outline-variant/40 flex items-center gap-3.5 sm:gap-4 w-full sm:w-auto">
-          <div className="p-3 sm:p-3.5 rounded-2xl bg-rose-500/10 text-rose-600 shrink-0">
-            <TimerOff size={24} className="sm:w-7 sm:h-7" />
+        <div className="bg-surface-container-lowest p-3 sm:p-4 rounded-2xl shadow-xs border border-outline-variant/35 flex items-center gap-3 w-full sm:w-auto">
+          <div className="p-2.5 rounded-xl bg-rose-500/10 text-rose-600 shrink-0">
+            <TimerOff size={20} />
           </div>
           <div>
-            <p className="font-mono text-xs sm:text-sm text-on-surface-variant uppercase font-bold">Tổng thời gian dừng ca</p>
-            <p className="text-2xl sm:text-4xl font-extrabold text-primary font-mono leading-none mt-1">
-              142 <span className="text-sm sm:text-base font-bold text-on-surface-variant">phút</span>
+            <p className="font-mono text-xs text-on-surface-variant uppercase font-bold">Tổng thời gian dừng ca</p>
+            <p className="text-xl sm:text-2xl font-extrabold text-primary font-mono leading-none mt-0.5">
+              142 <span className="text-xs sm:text-sm font-bold text-on-surface-variant">phút</span>
             </p>
           </div>
         </div>
       </section>
 
       {/* Table Container */}
-      <section className="bg-surface-container-lowest shadow-sm border border-outline-variant/50 rounded-2xl overflow-hidden animate-slide-up">
+      <section className="bg-surface-container-lowest shadow-xs border border-outline-variant/35 rounded-2xl overflow-hidden animate-slide-up">
         {/* Table Controls */}
-        <div className="p-4 sm:p-5 border-b border-outline-variant/40 flex flex-col sm:flex-row sm:items-center justify-between gap-4 bg-surface-container-low/60">
-          <div className="flex bg-surface-container p-1 rounded-xl gap-1 overflow-x-auto no-scrollbar">
+        <div className="p-3 sm:p-4 border-b border-outline-variant/30 flex flex-col sm:flex-row sm:items-center justify-between gap-3 bg-surface-container-low/50">
+          <div className="flex bg-surface-container p-0.5 rounded-xl gap-0.5 overflow-x-auto no-scrollbar">
             {filterTabs.map((tab) => (
               <button
                 key={tab.id}
                 onClick={() => setActiveFilter(tab.id)}
                 className={`
-                  cursor-pointer px-3 sm:px-3.5 py-2 rounded-lg text-xs sm:text-sm font-bold transition-all duration-150 whitespace-nowrap flex-1 sm:flex-none text-center
+                  cursor-pointer px-3 py-1.5 rounded-lg text-xs font-bold transition-all duration-150 whitespace-nowrap flex-1 sm:flex-none text-center
                   ${activeFilter === tab.id
                     ? 'bg-surface-container-lowest text-primary shadow-xs'
-                    : 'text-on-surface-variant hover:text-on-surface'
+                    : 'text-on-surface-variant/80 hover:text-on-surface'
                   }
                 `}
               >

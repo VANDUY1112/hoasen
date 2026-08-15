@@ -65,50 +65,50 @@ export default function HieuSuatCaTruc() {
   }
 
   return (
-    <div className="flex flex-col w-full p-4 sm:p-6 gap-6 sm:gap-8 animate-fade-in max-w-7xl mx-auto">
+    <div className="flex flex-col w-full p-3.5 sm:p-5 lg:p-6 gap-4 sm:gap-5 animate-fade-in max-w-7xl mx-auto">
       {/* Header */}
-      <div className="flex flex-col md:flex-row md:items-end justify-between gap-4">
-        <div className="space-y-1.5">
-          <div className="flex items-center gap-2">
-            <span className="font-mono text-xs sm:text-sm text-primary uppercase font-bold tracking-wider">Workforce &amp; Shift Analytics</span>
-            <span className="w-2 h-2 rounded-full bg-primary" />
-            <span className="text-xs sm:text-sm text-on-surface-variant font-semibold">Đánh giá ca trực</span>
+      <div className="flex flex-col md:flex-row md:items-end justify-between gap-3 sm:gap-4">
+        <div className="space-y-1">
+          <div className="flex items-center gap-2 mb-0.5">
+            <span className="font-mono text-[11px] sm:text-xs text-primary uppercase font-bold tracking-wider">Workforce &amp; Shift Analytics</span>
+            <span className="w-1.5 h-1.5 rounded-full bg-primary" />
+            <span className="text-[11px] sm:text-xs text-on-surface-variant/80 font-semibold">Đánh giá ca trực</span>
           </div>
-          <h1 className="text-2xl sm:text-3xl md:text-5xl font-extrabold text-on-surface tracking-tight">
+          <h1 className="text-xl sm:text-2xl lg:text-3xl font-extrabold text-on-surface tracking-tight">
             Hiệu suất &amp; Năng suất Ca trực
           </h1>
-          <p className="text-xs sm:text-base text-on-surface-variant max-w-2xl leading-relaxed">
+          <p className="text-xs sm:text-sm text-on-surface-variant/80 max-w-2xl leading-relaxed">
             Theo dõi sản lượng đầu ca, tỷ lệ chất lượng sản phẩm và đánh giá năng lực công nhân vận hành máy.
           </p>
         </div>
 
-        <div className="grid grid-cols-2 sm:flex gap-2 sm:gap-3 w-full sm:w-auto">
+        <div className="grid grid-cols-2 sm:flex gap-2 w-full sm:w-auto">
           <button
             onClick={handleExportShiftExcel}
             disabled={exporting}
-            className="cursor-pointer px-3.5 sm:px-5 py-2.5 rounded-xl font-bold bg-emerald-700 hover:bg-emerald-800 text-white transition-all shadow-md flex items-center justify-center gap-2 text-xs sm:text-sm uppercase font-mono tracking-wider"
+            className="cursor-pointer px-3 sm:px-3.5 py-2 rounded-xl font-bold bg-emerald-700 hover:bg-emerald-800 text-white transition-all shadow-xs flex items-center justify-center gap-1.5 text-xs uppercase font-mono tracking-wider"
           >
-            <FileSpreadsheet size={16} className={exporting ? 'animate-spin' : ''} />
+            <FileSpreadsheet size={15} className={exporting ? 'animate-spin' : ''} />
             <span className="truncate">{exporting ? 'Đang tạo...' : 'Xuất Excel'}</span>
           </button>
           <button
             onClick={handleOpenPrintReport}
-            className="cursor-pointer bg-surface-container-lowest text-on-surface border border-outline-variant/50 hover:bg-surface-container px-3 sm:px-4 py-2.5 rounded-xl font-bold transition-all flex items-center justify-center gap-2 shadow-xs text-xs sm:text-sm uppercase font-mono tracking-wider"
+            className="cursor-pointer bg-surface-container-lowest text-on-surface border border-outline-variant/40 hover:bg-surface-container px-3 sm:px-3.5 py-2 rounded-xl font-bold transition-all flex items-center justify-center gap-1.5 shadow-2xs text-xs uppercase font-mono tracking-wider"
           >
-            <Printer size={16} className="text-primary shrink-0" />
+            <Printer size={15} className="text-primary shrink-0" />
             <span className="truncate">In Báo Cáo</span>
           </button>
           <button
             onClick={() => navigate('/thiet-lap-muc-tieu-ca-truc')}
-            className="cursor-pointer col-span-2 sm:col-span-1 bg-primary text-on-primary px-4 sm:px-5 py-2.5 rounded-xl font-extrabold hover:bg-on-primary-fixed-variant transition-all shadow-md shadow-primary/20 flex items-center justify-center gap-2 text-xs sm:text-sm font-mono uppercase tracking-wider"
+            className="cursor-pointer col-span-2 sm:col-span-1 bg-primary text-on-primary px-3.5 sm:px-4 py-2 rounded-xl font-extrabold hover:bg-on-primary-fixed-variant transition-all shadow-xs shadow-primary/20 flex items-center justify-center gap-1.5 text-xs font-mono uppercase tracking-wider"
           >
-            <Settings size={16} /> Thiết lập Mục tiêu Ca
+            <Settings size={15} /> Thiết lập Mục tiêu
           </button>
         </div>
       </div>
 
       {/* Shift Switcher Cards */}
-      <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+      <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
         {shifts.map((shift) => {
           const isActive = activeShift === shift.id
           return (
@@ -116,10 +116,10 @@ export default function HieuSuatCaTruc() {
               key={shift.id}
               onClick={() => setActiveShift(shift.id)}
               className={`
-                cursor-pointer p-5 rounded-2xl border text-left transition-all duration-200 relative overflow-hidden flex items-center justify-between
+                cursor-pointer p-3.5 sm:p-4 rounded-xl border text-left transition-all duration-200 relative overflow-hidden flex items-center justify-between
                 ${isActive
-                  ? 'bg-primary text-on-primary border-primary shadow-xl shadow-primary/20 scale-[1.01]'
-                  : 'bg-surface-container-lowest text-on-surface border-outline-variant/50 hover:bg-surface-container-low/70 hover:border-primary/40'
+                  ? 'bg-primary text-on-primary border-primary shadow-xs shadow-primary/20 scale-[1.01]'
+                  : 'bg-surface-container-lowest text-on-surface border-outline-variant/40 hover:bg-surface-container-low/70 hover:border-primary/40'
                 }
               `}
             >

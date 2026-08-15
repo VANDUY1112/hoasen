@@ -64,7 +64,7 @@ function AppContent() {
           onMenuClick={() => setSidebarOpen(true)}
         />
 
-        <main className="relative pt-16 pb-24 lg:pb-8 bg-surface min-h-screen overflow-x-hidden">
+        <main className="relative pt-14 pb-20 lg:pb-6 bg-surface min-h-screen overflow-x-hidden">
           <Routes>
             <Route path="/" element={<Navigate to="/tong-quan" replace />} />
             <Route path="/tong-quan" element={<TongQuan />} />

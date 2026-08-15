@@ -32,32 +32,32 @@ export default function CaiDat() {
   }
 
   return (
-    <div className="p-4 sm:p-6 animate-fade-in max-w-5xl mx-auto pb-12">
+    <div className="p-3.5 sm:p-5 lg:p-6 animate-fade-in max-w-5xl mx-auto pb-10">
       {/* Title */}
-      <div className="mb-5 sm:mb-8">
-        <div className="flex items-center gap-2 mb-1.5">
-          <span className="font-mono text-xs sm:text-sm text-primary uppercase font-bold tracking-wider">System Administration</span>
-          <span className="w-2 h-2 rounded-full bg-primary" />
-          <span className="text-xs sm:text-sm text-on-surface-variant font-semibold">Cấu hình tham số</span>
+      <div className="mb-4 sm:mb-6">
+        <div className="flex items-center gap-2 mb-1">
+          <span className="font-mono text-[11px] sm:text-xs text-primary uppercase font-bold tracking-wider">System Administration</span>
+          <span className="w-1.5 h-1.5 rounded-full bg-primary" />
+          <span className="text-[11px] sm:text-xs text-on-surface-variant/80 font-semibold">Cấu hình tham số</span>
         </div>
-        <h1 className="text-2xl sm:text-3xl md:text-5xl font-extrabold text-on-surface tracking-tight leading-none mb-2">
+        <h1 className="text-xl sm:text-2xl lg:text-3xl font-extrabold text-on-surface tracking-tight leading-none mb-1.5">
           Cài đặt &amp; Tham số Hệ thống
         </h1>
-        <p className="text-xs sm:text-base text-on-surface-variant max-w-2xl leading-relaxed font-medium">
+        <p className="text-xs sm:text-sm text-on-surface-variant/80 max-w-2xl leading-relaxed font-medium">
           Quản lý tham số cảnh báo SCADA, cấu hình nhà máy và chính sách thông báo đa kênh.
         </p>
       </div>
 
-      <form onSubmit={handleSave} className="space-y-6 sm:space-y-7">
+      <form onSubmit={handleSave} className="space-y-4 sm:space-y-5">
         {/* Factory Selection */}
-        <div className="bg-surface-container-lowest p-6 sm:p-8 shadow-sm rounded-2xl border border-outline-variant/50">
-          <div className="flex items-center gap-3.5 mb-6 pb-4 border-b border-outline-variant/40">
-            <div className="p-2.5 rounded-xl bg-primary/10 text-primary">
-              <Factory size={22} />
+        <div className="bg-surface-container-lowest p-4 sm:p-6 shadow-xs rounded-2xl border border-outline-variant/35">
+          <div className="flex items-center gap-3 mb-4 pb-3 border-b border-outline-variant/30">
+            <div className="p-2 rounded-xl bg-primary/10 text-primary">
+              <Factory size={18} />
             </div>
             <div>
-              <h3 className="text-base sm:text-lg font-extrabold text-on-surface">Khu phức hợp / Nhà máy Vận hành</h3>
-              <p className="text-xs sm:text-sm text-on-surface-variant font-medium mt-0.5">Chọn phân xưởng áp dụng cấu hình giám sát</p>
+              <h3 className="text-sm sm:text-base font-extrabold text-on-surface">Khu phức hợp / Nhà máy Vận hành</h3>
+              <p className="text-xs text-on-surface-variant/80 font-medium mt-0.5">Chọn phân xưởng áp dụng cấu hình giám sát</p>
             </div>
           </div>
 
@@ -72,14 +72,14 @@ export default function CaiDat() {
         </div>
 
         {/* Alert Thresholds */}
-        <div className="bg-surface-container-lowest p-6 sm:p-8 shadow-sm rounded-2xl border border-outline-variant/50">
-          <div className="flex items-center gap-3.5 mb-6 pb-4 border-b border-outline-variant/40">
-            <div className="p-2.5 rounded-xl bg-amber-500/10 text-amber-600">
-              <Sliders size={22} />
+        <div className="bg-surface-container-lowest p-4 sm:p-6 shadow-xs rounded-2xl border border-outline-variant/35">
+          <div className="flex items-center gap-3 mb-4 pb-3 border-b border-outline-variant/30">
+            <div className="p-2 rounded-xl bg-amber-500/10 text-amber-600">
+              <Sliders size={18} />
             </div>
             <div>
-              <h3 className="text-base sm:text-lg font-extrabold text-on-surface">Ngưỡng Giới hạn Cảnh báo Thông minh</h3>
-              <p className="text-xs sm:text-sm text-on-surface-variant font-medium mt-0.5">Khi chỉ số vượt ngưỡng, hệ thống sẽ kích hoạt quy trình ứng phó tự động</p>
+              <h3 className="text-sm sm:text-base font-extrabold text-on-surface">Ngưỡng Giới hạn Cảnh báo Thông minh</h3>
+              <p className="text-xs text-on-surface-variant/80 font-medium mt-0.5">Khi chỉ số vượt ngưỡng, hệ thống sẽ kích hoạt quy trình ứng phó tự động</p>
             </div>
           </div>
 

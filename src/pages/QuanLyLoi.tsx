@@ -49,19 +49,19 @@ export default function QuanLyLoi() {
   }
 
   return (
-    <div className="flex flex-col w-full p-4 sm:p-6 gap-6 sm:gap-8 animate-fade-in max-w-7xl mx-auto">
+    <div className="flex flex-col w-full p-3.5 sm:p-5 lg:p-6 gap-4 sm:gap-5 animate-fade-in max-w-7xl mx-auto">
       {/* Title */}
-      <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4">
-        <div className="space-y-1.5">
-          <div className="flex items-center gap-2 mb-1">
-            <span className="font-mono text-xs sm:text-sm text-primary uppercase font-bold tracking-wider">Quality Assurance &amp; AI Vision</span>
-            <span className="w-2 h-2 rounded-full bg-primary" />
-            <span className="text-xs sm:text-sm text-on-surface-variant font-semibold">Kiểm định chất lượng</span>
+      <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-3 sm:gap-4">
+        <div className="space-y-1">
+          <div className="flex items-center gap-2 mb-0.5">
+            <span className="font-mono text-[11px] sm:text-xs text-primary uppercase font-bold tracking-wider">Quality Assurance &amp; AI Vision</span>
+            <span className="w-1.5 h-1.5 rounded-full bg-primary" />
+            <span className="text-[11px] sm:text-xs text-on-surface-variant/80 font-semibold">Kiểm định chất lượng</span>
           </div>
-          <h1 className="text-2xl sm:text-3xl md:text-5xl font-extrabold text-on-surface tracking-tight">
+          <h1 className="text-xl sm:text-2xl lg:text-3xl font-extrabold text-on-surface tracking-tight">
             Quản lý &amp; Nhận dạng Lỗi AI
           </h1>
-          <p className="text-xs sm:text-base text-on-surface-variant max-w-2xl leading-relaxed font-medium">
+          <p className="text-xs sm:text-sm text-on-surface-variant/80 max-w-2xl leading-relaxed font-medium">
             Hệ thống camera quang học quét bề mặt tôn tốc độ cao kết hợp mô hình AI phân loại khuyết tật tôn cuộn.
           </p>
         </div>
@@ -69,36 +69,36 @@ export default function QuanLyLoi() {
         <button
           onClick={handleSimulateScan}
           disabled={scanning}
-          className="cursor-pointer bg-primary text-on-primary px-5 py-2.5 rounded-xl font-bold shadow-md shadow-primary/20 hover:bg-on-primary-fixed-variant transition-all flex items-center justify-center gap-2 text-xs sm:text-sm uppercase tracking-wider font-mono w-full sm:w-fit"
+          className="cursor-pointer bg-primary text-on-primary px-4 py-2 rounded-xl font-bold shadow-xs hover:bg-on-primary-fixed-variant transition-all flex items-center justify-center gap-1.5 text-xs uppercase tracking-wider font-mono w-full sm:w-auto"
         >
-          <Upload size={18} className={scanning ? 'animate-spin' : ''} />
+          <Upload size={15} className={scanning ? 'animate-spin' : ''} />
           {scanning ? 'Đang quét ảnh...' : 'Quét ảnh AI'}
         </button>
       </div>
 
       {/* KPI Row */}
-      <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 sm:gap-5 stagger">
-        <div className="bg-surface-container-lowest p-6 shadow-sm border border-outline-variant/40 border-l-4 border-l-primary rounded-2xl card-hover">
-          <p className="font-mono text-xs sm:text-sm text-on-surface-variant uppercase font-bold">Tỷ lệ lỗi toàn diện (YTD)</p>
-          <span className="text-4xl sm:text-5xl font-extrabold text-on-surface mt-2 block font-mono">1.42%</span>
-          <p className="text-sm text-emerald-600 mt-1.5 font-bold">-0.3% so với mục tiêu quý</p>
+      <div className="grid grid-cols-1 sm:grid-cols-3 gap-3.5 sm:gap-4 stagger">
+        <div className="bg-surface-container-lowest p-4 sm:p-5 shadow-xs border border-outline-variant/35 border-l-4 border-l-primary rounded-2xl card-hover">
+          <p className="font-mono text-xs text-on-surface-variant uppercase font-bold">Tỷ lệ lỗi toàn diện (YTD)</p>
+          <span className="text-2xl sm:text-3xl font-extrabold text-on-surface mt-1 block font-mono">1.42%</span>
+          <p className="text-xs text-emerald-600 mt-1 font-bold">-0.3% so với mục tiêu quý</p>
         </div>
 
-        <div className="gradient-primary p-6 shadow-xl rounded-2xl text-on-primary card-hover flex justify-between items-start">
+        <div className="gradient-primary p-4 sm:p-5 shadow-md rounded-2xl text-on-primary card-hover flex justify-between items-start">
           <div>
-            <p className="font-mono text-xs sm:text-sm opacity-90 uppercase font-bold">Lỗi nghiêm trọng cần xử lý</p>
-            <span className="text-4xl sm:text-5xl font-extrabold mt-2 block font-mono">04 <span className="text-lg font-normal opacity-90">vụ</span></span>
-            <p className="text-sm opacity-90 mt-1.5 font-medium">Đã khoanh vùng cách ly cuộn lỗi</p>
+            <p className="font-mono text-xs opacity-90 uppercase font-bold">Lỗi nghiêm trọng cần xử lý</p>
+            <span className="text-2xl sm:text-3xl font-extrabold mt-1 block font-mono">04 <span className="text-base font-normal opacity-90">vụ</span></span>
+            <p className="text-xs opacity-90 mt-1 font-medium">Đã khoanh vùng cách ly cuộn lỗi</p>
           </div>
-          <div className="p-3.5 rounded-2xl bg-on-primary/15">
-            <AlertTriangle size={32} />
+          <div className="p-2.5 rounded-xl bg-on-primary/15">
+            <AlertTriangle size={22} />
           </div>
         </div>
 
-        <div className="bg-surface-container-lowest p-6 shadow-sm border border-outline-variant/40 border-l-4 border-l-sky-500 rounded-2xl card-hover">
-          <p className="font-mono text-xs sm:text-sm text-on-surface-variant uppercase font-bold">Thời gian phản hồi TB</p>
-          <span className="text-4xl sm:text-5xl font-extrabold text-on-surface mt-2 block font-mono">18 <span className="text-lg font-normal text-on-surface-variant">phút</span></span>
-          <p className="text-sm text-on-surface-variant mt-1.5 font-medium">Từ lúc phát hiện đến khi hiệu chỉnh máy</p>
+        <div className="bg-surface-container-lowest p-4 sm:p-5 shadow-xs border border-outline-variant/35 border-l-4 border-l-sky-500 rounded-2xl card-hover">
+          <p className="font-mono text-xs text-on-surface-variant uppercase font-bold">Thời gian phản hồi TB</p>
+          <span className="text-2xl sm:text-3xl font-extrabold text-on-surface mt-1 block font-mono">18 <span className="text-base font-normal text-on-surface-variant">phút</span></span>
+          <p className="text-xs text-on-surface-variant/80 mt-1 font-medium">Từ lúc phát hiện đến khi hiệu chỉnh máy</p>
         </div>
       </div>
 

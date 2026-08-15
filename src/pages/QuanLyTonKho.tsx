@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { Plus, Warehouse, AlertTriangle, Package, FileSpreadsheet, Printer, Trash2 } from 'lucide-react'
+import { Plus, Warehouse, AlertTriangle, Package, FileSpreadsheet, Printer, Trash2, CheckCircle2 } from 'lucide-react'
 import SearchInput from '../components/ui/SearchInput'
 import Badge from '../components/ui/Badge'
 import { useToast } from '../components/ui/Toast'
@@ -80,73 +80,84 @@ export default function QuanLyTonKho() {
   }
 
   return (
-    <div className="flex flex-col w-full p-4 sm:p-6 gap-6 sm:gap-8 animate-fade-in max-w-7xl mx-auto">
+    <div className="flex flex-col w-full p-3.5 sm:p-5 lg:p-6 gap-4 sm:gap-5 animate-fade-in max-w-7xl mx-auto">
       {/* Header */}
-      <div className="flex flex-col md:flex-row md:items-end justify-between gap-4">
-        <div className="space-y-1.5">
-          <div className="flex items-center gap-2 mb-1">
-            <span className="font-mono text-xs sm:text-sm text-primary uppercase font-bold tracking-wider">Inventory &amp; Supply Chain</span>
-            <span className="w-2 h-2 rounded-full bg-primary" />
-            <span className="text-xs sm:text-sm text-on-surface-variant font-semibold">Quản lý Kho</span>
+      <div className="flex flex-col md:flex-row md:items-end justify-between gap-3 sm:gap-4">
+        <div className="space-y-1">
+          <div className="flex items-center gap-2 mb-0.5">
+            <span className="font-mono text-[11px] sm:text-xs text-primary uppercase font-bold tracking-wider">Inventory &amp; Supply Chain</span>
+            <span className="w-1.5 h-1.5 rounded-full bg-primary" />
+            <span className="text-[11px] sm:text-xs text-on-surface-variant/80 font-semibold">Quản lý Kho</span>
           </div>
-          <h1 className="text-2xl sm:text-3xl md:text-5xl font-extrabold text-on-surface tracking-tight">
+          <h1 className="text-xl sm:text-2xl lg:text-3xl font-extrabold text-on-surface tracking-tight">
             Quản lý Tồn kho Vật tư &amp; Sản phẩm
           </h1>
-          <p className="text-xs sm:text-base text-on-surface-variant max-w-2xl leading-relaxed font-medium">
+          <p className="text-xs sm:text-sm text-on-surface-variant/80 max-w-2xl leading-relaxed font-medium">
             Giám sát thời gian thực nguyên vật liệu, thành phẩm tôn cuộn và phụ tùng thay thế định kỳ.
           </p>
         </div>
 
-        <div className="grid grid-cols-2 sm:flex gap-2.5 sm:gap-3 w-full sm:w-auto">
+        <div className="grid grid-cols-2 sm:flex gap-2 w-full sm:w-auto">
           <button
             onClick={handleExportExcel}
             disabled={exporting}
-            className="cursor-pointer px-4 sm:px-5 py-2.5 rounded-xl font-bold bg-emerald-700 hover:bg-emerald-800 text-white transition-all shadow-md flex items-center justify-center gap-2 text-xs sm:text-sm uppercase font-mono tracking-wider"
+            className="cursor-pointer px-3.5 sm:px-4 py-2 rounded-xl font-bold bg-emerald-700 hover:bg-emerald-800 text-white transition-all shadow-xs flex items-center justify-center gap-1.5 text-xs uppercase font-mono tracking-wider"
           >
-            <FileSpreadsheet size={18} className={exporting ? 'animate-spin' : ''} />
+            <FileSpreadsheet size={15} className={exporting ? 'animate-spin' : ''} />
             <span className="truncate">{exporting ? 'Đang tạo...' : 'Xuất Excel'}</span>
           </button>
           <button
             onClick={() => navigate('/nhap-kho-thanh-pham')}
-            className="cursor-pointer bg-primary text-on-primary px-4 sm:px-6 py-2.5 rounded-xl font-extrabold hover:bg-on-primary-fixed-variant transition-all shadow-md shadow-primary/20 hover:scale-[1.01] active:scale-[0.99] flex items-center justify-center gap-2 text-xs sm:text-sm font-mono uppercase tracking-wider"
+            className="cursor-pointer bg-primary text-on-primary px-3.5 sm:px-4 py-2 rounded-xl font-extrabold hover:bg-on-primary-fixed-variant transition-all shadow-xs shadow-primary/20 flex items-center justify-center gap-1.5 text-xs font-mono uppercase tracking-wider"
           >
-            <Plus size={18} /> <span className="truncate">Nhập kho mới</span>
+            <Plus size={15} /> <span className="truncate">Nhập kho mới</span>
           </button>
         </div>
       </div>
 
       {/* KPI Summary Cards */}
-      <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 sm:gap-5 stagger">
-        <div className="bg-surface-container-lowest p-5 sm:p-6 rounded-2xl shadow-sm border border-outline-variant/40 border-l-4 border-l-primary card-hover flex justify-between items-start">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3.5 sm:gap-4 stagger">
+        <div className="bg-surface-container-lowest p-4 sm:p-5 rounded-2xl shadow-xs border border-outline-variant/35 border-l-4 border-l-primary card-hover flex justify-between items-start">
           <div>
-            <p className="font-mono text-xs sm:text-sm text-on-surface-variant uppercase font-bold">Tổng mặt hàng</p>
-            <h2 className="text-3xl sm:text-4xl md:text-5xl font-extrabold text-on-surface mt-2 font-mono">{totalItems}</h2>
-            <p className="text-xs sm:text-sm text-on-surface-variant mt-1.5 font-medium">Đang quản lý trên ERP</p>
+            <p className="font-mono text-xs text-on-surface-variant uppercase font-bold">Tổng mặt hàng</p>
+            <h2 className="text-2xl sm:text-3xl font-extrabold text-on-surface mt-1 font-mono">{totalItems}</h2>
+            <p className="text-xs text-on-surface-variant/80 mt-1 font-medium">Đang quản lý trên ERP</p>
           </div>
-          <div className="p-3 sm:p-3.5 rounded-2xl bg-primary/10 text-primary">
-            <Warehouse size={26} className="sm:w-[30px] sm:h-[30px]" />
+          <div className="p-2.5 rounded-xl bg-primary/10 text-primary">
+            <Warehouse size={22} />
           </div>
         </div>
 
-        <div className="bg-surface-container-lowest p-6 rounded-2xl shadow-sm border border-outline-variant/40 border-l-4 border-l-amber-500 card-hover flex justify-between items-start">
+        <div className="bg-surface-container-lowest p-4 sm:p-5 rounded-2xl shadow-xs border border-outline-variant/35 border-l-4 border-l-amber-500 card-hover flex justify-between items-start">
           <div>
-            <p className="font-mono text-xs sm:text-sm text-on-surface-variant uppercase font-bold">Sắp hết hàng (Low Stock)</p>
-            <h2 className="text-4xl sm:text-5xl font-extrabold text-amber-600 mt-2 font-mono">{lowStock}</h2>
-            <p className="text-sm text-on-surface-variant mt-1.5 font-medium">Cần lập đề xuất mua sắm</p>
+            <p className="font-mono text-xs text-on-surface-variant uppercase font-bold">Sắp hết hàng (Low Stock)</p>
+            <h2 className="text-2xl sm:text-3xl font-extrabold text-amber-600 mt-1 font-mono">{lowStock}</h2>
+            <p className="text-xs text-on-surface-variant/80 mt-1 font-medium">Cần lập đề xuất mua sắm</p>
           </div>
-          <div className="p-3.5 rounded-2xl bg-amber-500/10 text-amber-600">
-            <AlertTriangle size={30} />
+          <div className="p-2.5 rounded-xl bg-amber-500/10 text-amber-600">
+            <AlertTriangle size={22} />
           </div>
         </div>
 
-        <div className="bg-surface-container-lowest p-6 rounded-2xl shadow-sm border border-outline-variant/40 border-l-4 border-l-rose-500 card-hover flex justify-between items-start">
+        <div className="bg-surface-container-lowest p-4 sm:p-5 rounded-2xl shadow-xs border border-outline-variant/35 border-l-4 border-l-emerald-500 card-hover flex justify-between items-start">
           <div>
-            <p className="font-mono text-xs sm:text-sm text-on-surface-variant uppercase font-bold">Cần đặt hàng gấp (Critical)</p>
-            <h2 className="text-4xl sm:text-5xl font-extrabold text-rose-600 mt-2 font-mono">{criticalStock}</h2>
-            <p className="text-sm text-on-surface-variant mt-1.5 font-medium">Dưới mức an toàn sản xuất</p>
+            <p className="font-mono text-xs text-on-surface-variant uppercase font-bold">Tồn kho An toàn</p>
+            <h2 className="text-2xl sm:text-3xl font-extrabold text-emerald-600 mt-1 font-mono">{inventory.length - lowStock}</h2>
+            <p className="text-xs text-on-surface-variant/80 mt-1 font-medium">Đạt định mức tối thiểu</p>
           </div>
-          <div className="p-3.5 rounded-2xl bg-rose-500/10 text-rose-600">
-            <Package size={30} />
+          <div className="p-2.5 rounded-xl bg-emerald-500/10 text-emerald-600">
+            <CheckCircle2 size={22} />
+          </div>
+        </div>
+
+        <div className="bg-surface-container-lowest p-4 sm:p-5 rounded-2xl shadow-xs border border-outline-variant/35 border-l-4 border-l-rose-500 card-hover flex justify-between items-start">
+          <div>
+            <p className="font-mono text-xs text-on-surface-variant uppercase font-bold">Cần đặt gấp (Critical)</p>
+            <h2 className="text-2xl sm:text-3xl font-extrabold text-rose-600 mt-1 font-mono">{criticalStock}</h2>
+            <p className="text-xs text-on-surface-variant/80 mt-1 font-medium">Dưới mức an toàn</p>
+          </div>
+          <div className="p-2.5 rounded-xl bg-rose-500/10 text-rose-600">
+            <Package size={22} />
           </div>
         </div>
       </div>
