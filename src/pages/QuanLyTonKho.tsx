@@ -1,11 +1,11 @@
 import { useState, useMemo } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { Plus, Warehouse, AlertTriangle, Package, FileSpreadsheet, Printer, Trash2, CheckCircle2 } from 'lucide-react'
+import { Plus, Warehouse, AlertTriangle, Package, FileSpreadsheet, Printer, Trash2, CheckCircle2, Eye } from 'lucide-react'
 import SearchInput from '../components/ui/SearchInput'
 import Badge from '../components/ui/Badge'
 import Pagination from '../components/ui/Pagination'
 import { useToast } from '../components/ui/Toast'
-import { exportInventoryReport } from '../services/excelExport'
+import ReportPreviewModal from '../components/ui/ReportPreviewModal'
 import { useDataContext } from '../context/DataContext'
 import PrintModal, { PrintDocumentData } from '../components/ui/PrintModal'
 
@@ -18,6 +18,7 @@ const categoryTabs = [
 
 export default function QuanLyTonKho() {
   const [searchTerm, setSearchTerm] = useState('')
+  const [reportModalOpen, setReportModalOpen] = useState(false)
   const [activeCategory, setActiveCategory] = useState('all')
   const [currentPage, setCurrentPage] = useState(1)
   const [pageSize, setPageSize] = useState(10)
@@ -57,19 +58,6 @@ export default function QuanLyTonKho() {
   const totalItems = inventory.length
   const lowStock = inventory.filter((i) => i.status === 'low').length
   const criticalStock = inventory.filter((i) => i.status === 'critical').length
-
-  const handleExportExcel = async () => {
-    try {
-      setExporting(true)
-      addToast('info', 'Đang tạo bảng kiểm kê tồn kho Excel...', 'Tổng hợp số liệu từ các phân xưởng và kho thành phẩm...')
-      await exportInventoryReport(filtered)
-      addToast('success', 'Xuất Excel Thành Công!', 'Tệp báo cáo tồn kho vật tư đã sẵn sàng.')
-    } catch {
-      addToast('error', 'Lỗi xuất file', 'Không thể tạo file Excel.')
-    } finally {
-      setExporting(false)
-    }
-  }
 
   const handlePrintItem = (item: typeof inventory[0]) => {
     setPrintData({
@@ -114,12 +102,11 @@ export default function QuanLyTonKho() {
 
         <div className="grid grid-cols-2 sm:flex gap-2 sm:gap-2.5 w-full sm:w-auto">
           <button
-            onClick={handleExportExcel}
-            disabled={exporting}
+            onClick={() => setReportModalOpen(true)}
             className="cursor-pointer px-4 sm:px-5 py-2.5 sm:py-2.5 rounded-xl font-bold bg-emerald-700 hover:bg-emerald-800 text-white transition-all shadow-xs flex items-center justify-center gap-2 text-xs sm:text-[13px] uppercase font-mono tracking-wider"
           >
-            <FileSpreadsheet size={16} className={exporting ? 'animate-spin' : ''} />
-            <span className="truncate">{exporting ? 'Đang tạo...' : 'Xuất Excel'}</span>
+            <Eye size={16} />
+            <span className="truncate">Xem Báo Cáo</span>
           </button>
           <button
             onClick={() => navigate('/nhap-kho-thanh-pham')}
@@ -326,6 +313,13 @@ export default function QuanLyTonKho() {
 
       {/* Print Modal */}
       <PrintModal isOpen={printOpen} onClose={() => setPrintOpen(false)} data={printData} />
+
+      {/* Report Preview Modal */}
+      <ReportPreviewModal
+        isOpen={reportModalOpen}
+        onClose={() => setReportModalOpen(false)}
+        initialReportType="inventory"
+      />
     </div>
   )
 }

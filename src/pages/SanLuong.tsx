@@ -1,11 +1,11 @@
 import { useState, useMemo } from 'react'
-import { Download, Layers, ShieldCheck, TrendingUp, Filter, Activity, FileSpreadsheet } from 'lucide-react'
+import { Download, Layers, ShieldCheck, TrendingUp, Filter, Activity, FileSpreadsheet, Eye } from 'lucide-react'
 import SearchInput from '../components/ui/SearchInput'
 import Badge from '../components/ui/Badge'
 import Pagination from '../components/ui/Pagination'
+import ReportPreviewModal from '../components/ui/ReportPreviewModal'
 import { useToast } from '../components/ui/Toast'
 import { useLiveSimulation } from '../context/LiveSimulationContext'
-import { exportProductionReport } from '../services/excelExport'
 
 const filterTabs = [
   { id: 'all', label: 'Tất cả' },
@@ -17,7 +17,7 @@ const filterTabs = [
 export default function SanLuong() {
   const [searchTerm, setSearchTerm] = useState('')
   const [activeFilter, setActiveFilter] = useState('all')
-  const [exporting, setExporting] = useState(false)
+  const [reportModalOpen, setReportModalOpen] = useState(false)
   const [currentPage, setCurrentPage] = useState(1)
   const [pageSize, setPageSize] = useState(10)
 
@@ -49,33 +49,6 @@ export default function SanLuong() {
     setCurrentPage(1)
   }
 
-  const handleExportExcel = async () => {
-    try {
-      setExporting(true)
-      addToast({
-        type: 'info',
-        title: 'Đang tạo tệp Excel chuyên nghiệp...',
-        message: 'Áp dụng template màu chuẩn Hoa Sen Group và định dạng dữ liệu...',
-      })
-
-      await exportProductionReport(filteredLogs)
-
-      addToast({
-        type: 'success',
-        title: 'Xuất Excel thành công!',
-        message: 'Tệp báo cáo sản lượng đã được lưu vào máy tính của bạn.',
-      })
-    } catch (error) {
-      addToast({
-        type: 'error',
-        title: 'Lỗi xuất file',
-        message: 'Không thể tạo tệp Excel. Vui lòng thử lại.',
-      })
-    } finally {
-      setExporting(false)
-    }
-  }
-
   return (
     <div className="flex flex-col w-full p-3.5 sm:p-5 lg:p-6 gap-4 sm:gap-5 animate-fade-in max-w-7xl mx-auto">
       {/* Header */}
@@ -90,12 +63,11 @@ export default function SanLuong() {
         </div>
 
         <button
-          onClick={handleExportExcel}
-          disabled={exporting}
+          onClick={() => setReportModalOpen(true)}
           className="cursor-pointer px-4 sm:px-5 py-2.5 sm:py-2.5 bg-emerald-700 hover:bg-emerald-800 text-white font-mono text-xs sm:text-[13px] uppercase tracking-wider rounded-xl shadow-xs hover:shadow-emerald-700/20 transition-all w-full sm:w-auto flex items-center justify-center gap-2 font-extrabold"
         >
-          <FileSpreadsheet size={16} className={exporting ? 'animate-spin' : ''} />
-          {exporting ? 'Đang tạo Excel...' : 'Xuất Báo Cáo Excel'}
+          <Eye size={16} />
+          <span>Xem & Xuất Báo Cáo</span>
         </button>
       </section>
 
@@ -266,6 +238,13 @@ export default function SanLuong() {
           />
         )}
       </section>
+
+      {/* Report Preview Modal */}
+      <ReportPreviewModal
+        isOpen={reportModalOpen}
+        onClose={() => setReportModalOpen(false)}
+        initialReportType="production"
+      />
     </div>
   )
 }

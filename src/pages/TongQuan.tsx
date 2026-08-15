@@ -1,12 +1,12 @@
 import { useState } from 'react'
-import { Layers, AlertTriangle, TimerOff, Share2, Download, Brain, Sparkles, TrendingUp, ArrowUpRight, Zap, RefreshCw, FileSpreadsheet } from 'lucide-react'
+import { Layers, AlertTriangle, TimerOff, Share2, Download, Brain, Sparkles, TrendingUp, ArrowUpRight, Zap, RefreshCw, FileSpreadsheet, Eye } from 'lucide-react'
 import { AreaChart, Area, XAxis, YAxis, Tooltip, ResponsiveContainer, CartesianGrid } from 'recharts'
 import KpiCard from '../components/ui/KpiCard'
 import GaugeChart from '../components/ui/GaugeChart'
 import Badge from '../components/ui/Badge'
+import ReportPreviewModal, { ReportType } from '../components/ui/ReportPreviewModal'
 import { useToast } from '../components/ui/Toast'
 import { useLiveSimulation } from '../context/LiveSimulationContext'
-import { exportExecutiveSummary, exportProductionReport } from '../services/excelExport'
 import { weeklyProduction, defectRecords, decorativeImages } from '../data/mockData'
 
 const timeRanges = [
@@ -18,64 +18,11 @@ const timeRanges = [
 export default function TongQuan() {
   const [activeTimeRange, setActiveTimeRange] = useState('7days')
   const [isDiagnosing, setIsDiagnosing] = useState(false)
-  const [exporting, setExporting] = useState(false)
+  const [reportModalOpen, setReportModalOpen] = useState(false)
+  const [reportType, setReportType] = useState<ReportType>('executive')
 
   const { dailyOutput, liveOee, liveLogs } = useLiveSimulation()
   const { addToast } = useToast()
-
-  const handleExportExcelSummary = async () => {
-    try {
-      setExporting(true)
-      addToast({
-        type: 'info',
-        title: 'Đang tạo Báo cáo Tổng hợp Ban Giám Đốc...',
-        message: 'Áp dụng format tiêu chuẩn Hoa Sen Group...',
-      })
-
-      await exportExecutiveSummary()
-
-      addToast({
-        type: 'success',
-        title: 'Xuất Báo Cáo Thành Công!',
-        message: 'Tệp Excel báo cáo KPI Giám đốc đã được tải về máy.',
-      })
-    } catch (e) {
-      addToast({
-        type: 'error',
-        title: 'Lỗi xuất file',
-        message: 'Vui lòng kiểm tra lại quyền lưu file trên trình duyệt.',
-      })
-    } finally {
-      setExporting(false)
-    }
-  }
-
-  const handleExportProductionExcel = async () => {
-    try {
-      setExporting(true)
-      addToast({
-        type: 'info',
-        title: 'Đang kết xuất dữ liệu sản lượng...',
-        message: 'Tập hợp tất cả cuộn tôn từ ca sáng đến nay...',
-      })
-
-      await exportProductionReport(liveLogs)
-
-      addToast({
-        type: 'success',
-        title: 'Đã xuất tệp Excel Sản lượng!',
-        message: 'Tệp chứa đầy đủ định dạng màu và công thức tính tổng.',
-      })
-    } catch (e) {
-      addToast({
-        type: 'error',
-        title: 'Lỗi xuất file',
-        message: 'Có lỗi xảy ra khi tạo tệp Excel.',
-      })
-    } finally {
-      setExporting(false)
-    }
-  }
 
   const handleRunAiDiagnosis = () => {
     setIsDiagnosing(true)
@@ -136,20 +83,24 @@ export default function TongQuan() {
             </button>
 
             <button
-              onClick={handleExportProductionExcel}
-              disabled={exporting}
+              onClick={() => {
+                setReportType('production')
+                setReportModalOpen(true)
+              }}
               className="cursor-pointer bg-surface-container-lowest text-on-surface border border-outline-variant/40 px-3.5 py-2.5 font-mono text-xs sm:text-[13px] uppercase tracking-wider flex items-center justify-center gap-1.5 font-bold rounded-xl hover:bg-surface-container transition-colors shadow-2xs"
             >
-              <FileSpreadsheet size={15} className="text-emerald-600 shrink-0" />
-              <span className="truncate">Xuất Excel</span>
+              <Eye size={15} className="text-emerald-600 shrink-0" />
+              <span className="truncate">Xem Báo Cáo</span>
             </button>
 
             <button
-              onClick={handleExportExcelSummary}
-              disabled={exporting}
+              onClick={() => {
+                setReportType('executive')
+                setReportModalOpen(true)
+              }}
               className="cursor-pointer col-span-2 sm:col-span-1 bg-primary text-on-primary px-4 py-2.5 sm:py-2.5 font-mono text-xs sm:text-[13px] uppercase tracking-wider flex items-center justify-center gap-2 font-extrabold rounded-xl hover:bg-on-primary-fixed-variant transition-all shadow-sm shadow-primary/20"
             >
-              <Download size={15} className="shrink-0" /> Báo cáo Giám Đốc
+              <FileSpreadsheet size={15} className="shrink-0" /> Báo Cáo Giám Đốc
             </button>
           </div>
         </div>
@@ -389,6 +340,13 @@ export default function TongQuan() {
           </div>
         </div>
       </section>
+
+      {/* Report Preview Modal for Excel Review */}
+      <ReportPreviewModal
+        isOpen={reportModalOpen}
+        onClose={() => setReportModalOpen(false)}
+        initialReportType={reportType}
+      />
     </div>
   )
 }
