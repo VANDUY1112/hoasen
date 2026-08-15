@@ -48,7 +48,7 @@ export default function MobileNav({ onOpenSidebar }: MobileNavProps) {
   ]
 
   return (
-    <div className="fixed bottom-0 left-0 right-0 z-40 lg:hidden bg-surface-container-lowest/95 backdrop-blur-2xl border-t border-outline-variant/40 shadow-[0_-4px_20px_rgba(0,0,0,0.06)] px-1.5 pt-1 pb-safe">
+    <div className="fixed bottom-0 left-0 right-0 z-30 lg:hidden bg-surface-container-lowest/95 backdrop-blur-2xl border-t border-outline-variant/40 shadow-[0_-4px_20px_rgba(0,0,0,0.06)] px-1.5 pt-1 pb-safe">
       <nav className="w-full flex items-center justify-around gap-1">
         {navItems.map((item) => {
           const isActive = currentPath === item.id

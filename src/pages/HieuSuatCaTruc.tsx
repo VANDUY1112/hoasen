@@ -141,28 +141,28 @@ export default function HieuSuatCaTruc() {
       </div>
 
       {/* Shift KPI Summary */}
-      <div className="grid grid-cols-1 sm:grid-cols-3 gap-3.5 sm:gap-4 stagger">
-        <div className="bg-surface-container-lowest p-4 sm:p-5 rounded-2xl shadow-xs border border-outline-variant/35 border-l-4 border-l-primary card-hover">
-          <p className="font-mono text-[11px] sm:text-xs text-on-surface-variant uppercase font-bold">Tổng sản lượng ca</p>
-          <div className="flex items-baseline gap-2 mt-1.5">
-            <h2 className="text-2xl sm:text-3xl font-extrabold text-on-surface font-mono">{totalOutput.toLocaleString()}</h2>
+      <div className="grid grid-cols-2 md:grid-cols-3 gap-2.5 sm:gap-4 stagger">
+        <div className="col-span-2 md:col-span-1 bg-surface-container-lowest p-3.5 sm:p-5 rounded-2xl shadow-xs border border-outline-variant/35 border-l-4 border-l-primary card-hover">
+          <p className="font-mono text-[10px] sm:text-xs text-on-surface-variant uppercase font-bold">Tổng sản lượng ca</p>
+          <div className="flex items-baseline gap-1.5 mt-0.5 sm:mt-1.5">
+            <h2 className="text-xl sm:text-3xl font-extrabold text-on-surface font-mono">{totalOutput.toLocaleString()}</h2>
             <span className="text-xs sm:text-sm font-mono text-on-surface-variant/80 font-bold">/ {totalTarget.toLocaleString()} T</span>
           </div>
-          <div className="mt-2.5">
+          <div className="mt-2 sm:mt-2.5">
             <ProgressBar value={(totalOutput / (totalTarget || 1)) * 100} height="h-1.5" />
           </div>
         </div>
 
-        <div className="bg-surface-container-lowest p-4 sm:p-5 rounded-2xl shadow-xs border border-outline-variant/35 border-l-4 border-l-emerald-500 card-hover">
-          <p className="font-mono text-[11px] sm:text-xs text-on-surface-variant uppercase font-bold">Chất lượng TB</p>
-          <h2 className="text-2xl sm:text-3xl font-extrabold text-emerald-600 mt-1.5 font-mono">{avgQuality}%</h2>
-          <p className="text-xs text-on-surface-variant/80 mt-1 font-medium">Đạt yêu cầu tiêu chuẩn xuất khẩu ISO</p>
+        <div className="col-span-1 bg-surface-container-lowest p-3.5 sm:p-5 rounded-2xl shadow-xs border border-outline-variant/35 border-l-4 border-l-emerald-500 card-hover">
+          <p className="font-mono text-[10px] sm:text-xs text-on-surface-variant uppercase font-bold truncate">Chất lượng TB</p>
+          <h2 className="text-xl sm:text-3xl font-extrabold text-emerald-600 mt-0.5 sm:mt-1.5 font-mono">{avgQuality}%</h2>
+          <p className="text-[11px] sm:text-xs text-on-surface-variant/80 mt-0.5 sm:mt-1 font-medium truncate">Đạt chuẩn ISO</p>
         </div>
 
-        <div className="bg-surface-container-lowest p-4 sm:p-5 rounded-2xl shadow-xs border border-outline-variant/35 border-l-4 border-l-sky-500 card-hover">
-          <p className="font-mono text-[11px] sm:text-xs text-on-surface-variant uppercase font-bold">Quân số vận hành</p>
-          <h2 className="text-2xl sm:text-3xl font-extrabold text-sky-700 mt-1.5 font-mono">{data.length} <span className="text-xs sm:text-sm font-semibold text-on-surface-variant/80">người</span></h2>
-          <p className="text-xs text-on-surface-variant/80 mt-1 font-medium">100% có mặt đúng giờ đầy đủ</p>
+        <div className="col-span-1 bg-surface-container-lowest p-3.5 sm:p-5 rounded-2xl shadow-xs border border-outline-variant/35 border-l-4 border-l-sky-500 card-hover">
+          <p className="font-mono text-[10px] sm:text-xs text-on-surface-variant uppercase font-bold truncate">Quân số vận hành</p>
+          <h2 className="text-xl sm:text-3xl font-extrabold text-sky-700 mt-0.5 sm:mt-1.5 font-mono">{data.length} <span className="text-xs sm:text-sm font-semibold text-on-surface-variant/80">người</span></h2>
+          <p className="text-[11px] sm:text-xs text-on-surface-variant/80 mt-0.5 sm:mt-1 font-medium truncate">100% có mặt</p>
         </div>
       </div>
 

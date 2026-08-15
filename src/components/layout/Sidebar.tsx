@@ -60,7 +60,7 @@ export default function Sidebar({ isOpen, onClose, currentView, onNavigate }: Si
   return (
     <aside
       className={`
-        fixed left-0 top-0 h-full w-72 bg-surface-container-lowest/96 backdrop-blur-xl z-50
+        fixed left-0 top-0 h-screen w-72 max-w-[85vw] bg-surface-container-lowest z-[60]
         flex flex-col border-r border-outline-variant/50
         transform transition-transform duration-300 ease-in-out
         shadow-2xl lg:shadow-none

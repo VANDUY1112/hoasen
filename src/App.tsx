@@ -44,7 +44,7 @@ function AppContent() {
       {/* Mobile Backdrop */}
       {sidebarOpen && (
         <div
-          className="fixed inset-0 bg-black/50 z-40 lg:hidden backdrop-blur-sm transition-opacity duration-300"
+          className="fixed inset-0 bg-black/60 z-50 lg:hidden backdrop-blur-sm transition-opacity duration-300"
           onClick={() => setSidebarOpen(false)}
         />
       )}
