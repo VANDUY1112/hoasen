@@ -54,7 +54,7 @@ export default function QuanLyDinhMuc() {
       </div>
 
       {/* Top Stats */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3.5 sm:gap-4 stagger">
+      <div className="grid grid-cols-2 lg:grid-cols-4 gap-2.5 sm:gap-4 stagger">
         {[
           { label: 'Target Yield', value: '42,500', unit: 'Tấn/tháng', trend: '+4.2%', icon: Factory, border: 'border-l-4 border-l-primary' },
           { label: 'Quality Standard', value: '99.8', unit: '%', progress: 99.8, icon: ShieldCheck, border: 'border-l-4 border-l-emerald-500' },

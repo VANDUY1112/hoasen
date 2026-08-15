@@ -48,8 +48,8 @@ export default function MobileNav({ onOpenSidebar }: MobileNavProps) {
   ]
 
   return (
-    <div className="fixed bottom-0 left-0 right-0 z-40 lg:hidden px-2.5 pb-2.5 pointer-events-none">
-      <nav className="pointer-events-auto max-w-sm mx-auto glass backdrop-blur-2xl bg-surface-container-lowest/95 border border-outline-variant/60 shadow-xl rounded-2xl p-1 flex items-center justify-around">
+    <div className="fixed bottom-0 left-0 right-0 z-40 lg:hidden bg-surface-container-lowest/95 backdrop-blur-2xl border-t border-outline-variant/40 shadow-[0_-4px_20px_rgba(0,0,0,0.06)] px-1.5 pt-1 pb-safe">
+      <nav className="w-full flex items-center justify-around gap-1">
         {navItems.map((item) => {
           const isActive = currentPath === item.id
           const Icon = item.icon
@@ -59,10 +59,10 @@ export default function MobileNav({ onOpenSidebar }: MobileNavProps) {
               key={item.id}
               onClick={() => navigate(item.path)}
               className={`
-                cursor-pointer relative flex flex-col items-center justify-center py-1.5 px-2 rounded-xl transition-all duration-200 flex-1
+                cursor-pointer relative flex flex-col items-center justify-center py-1.5 px-1 rounded-xl transition-all duration-200 flex-1
                 ${isActive
-                  ? 'bg-primary text-on-primary shadow-xs shadow-primary/20 scale-[1.02] font-bold'
-                  : 'text-on-surface-variant hover:text-primary hover:bg-surface-container-high/50 active:scale-95'
+                  ? 'bg-primary text-on-primary shadow-xs font-bold'
+                  : 'text-on-surface-variant hover:text-primary hover:bg-surface-container-high/40 active:scale-95'
                 }
               `}
             >
@@ -84,7 +84,7 @@ export default function MobileNav({ onOpenSidebar }: MobileNavProps) {
                   </span>
                 )}
               </div>
-              <span className="text-[10px] mt-0.5 truncate max-w-[56px] font-semibold leading-none">
+              <span className="text-[10px] mt-0.5 truncate font-semibold leading-none">
                 {item.label}
               </span>
             </button>
@@ -94,7 +94,7 @@ export default function MobileNav({ onOpenSidebar }: MobileNavProps) {
         {/* Menu Drawer Toggle Button */}
         <button
           onClick={onOpenSidebar}
-          className="cursor-pointer relative flex flex-col items-center justify-center py-1.5 px-2 rounded-xl text-on-surface-variant hover:text-primary hover:bg-surface-container-high/50 active:scale-95 transition-all duration-200 flex-1"
+          className="cursor-pointer relative flex flex-col items-center justify-center py-1.5 px-1 rounded-xl text-on-surface-variant hover:text-primary hover:bg-surface-container-high/40 active:scale-95 transition-all duration-200 flex-1"
         >
           <div className="relative">
             <Menu size={18} className="stroke-[2]" />

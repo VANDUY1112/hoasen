@@ -85,8 +85,8 @@ export default function SanLuong() {
       </section>
 
       {/* KPI Cards */}
-      <section className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3.5 sm:gap-4 stagger">
-        <div className="sm:col-span-2 bg-surface-container-lowest p-4 sm:p-5 shadow-xs border border-outline-variant/35 rounded-2xl card-hover relative overflow-hidden">
+      <section className="grid grid-cols-2 lg:grid-cols-4 gap-2.5 sm:gap-4 stagger">
+        <div className="col-span-2 bg-surface-container-lowest p-4 sm:p-5 shadow-xs border border-outline-variant/35 rounded-2xl card-hover relative overflow-hidden">
           <div className="flex justify-between items-start">
             <div>
               <div className="flex items-center gap-2 mb-1.5">

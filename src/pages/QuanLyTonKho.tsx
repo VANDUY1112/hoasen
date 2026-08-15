@@ -116,7 +116,7 @@ export default function QuanLyTonKho() {
       </div>
 
       {/* KPI Summary Cards */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3.5 sm:gap-4 stagger">
+      <div className="grid grid-cols-2 lg:grid-cols-4 gap-2.5 sm:gap-4 stagger">
         <div className="bg-surface-container-lowest p-4 sm:p-5 rounded-2xl shadow-xs border border-outline-variant/35 border-l-4 border-l-primary card-hover flex justify-between items-start">
           <div>
             <p className="font-mono text-xs text-on-surface-variant uppercase font-bold">Tổng mặt hàng</p>
