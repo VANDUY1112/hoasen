@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { Download, FileEdit, Factory, ShieldCheck, TimerOff, Gauge, TrendingUp, Filter, Sparkles, Zap } from 'lucide-react'
-import { BarChart, Bar, XAxis, Tooltip, ResponsiveContainer, CartesianGrid } from 'recharts'
+import { Download, FileEdit, Factory, ShieldCheck, TimerOff, Gauge, TrendingUp, Sparkles, Zap } from 'lucide-react'
+import { AreaChart, Area, XAxis, YAxis, Tooltip, ResponsiveContainer, CartesianGrid } from 'recharts'
 import ProgressBar from '../components/ui/ProgressBar'
 import Badge from '../components/ui/Badge'
 import { useToast } from '../components/ui/Toast'
@@ -48,43 +48,43 @@ export default function QuanLyDinhMuc() {
         </div>
       </div>
 
-      {/* Top Stats */}
+      {/* Top Stats with Vibrant Icon Colors */}
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-2.5 sm:gap-4 stagger">
         {[
-          { label: 'Target Yield', value: '42,500', unit: 'Tấn/tháng', trend: '+4.2%', icon: Factory, border: 'border-l-4 border-l-primary' },
-          { label: 'Quality Standard', value: '99.8', unit: '%', progress: 99.8, icon: ShieldCheck, border: 'border-l-4 border-l-emerald-500' },
-          { label: 'Max Downtime', value: '120', unit: 'Phút/ca', badge: 'Critical Threshold', icon: TimerOff, border: 'border-l-4 border-l-amber-500' },
-          { label: 'OEE Benchmark', value: '85.0', unit: '%', progress: 82, icon: Gauge, border: 'border-l-4 border-l-sky-500' },
+          { label: 'Target Yield', value: '42,500', unit: 'Tấn/tháng', trend: '+4.2%', icon: Factory, border: 'border-l-4 border-l-primary', iconBg: 'bg-primary/10 text-primary' },
+          { label: 'Quality Standard', value: '99.8', unit: '%', progress: 99.8, icon: ShieldCheck, border: 'border-l-4 border-l-emerald-500', iconBg: 'bg-emerald-500/10 text-emerald-600' },
+          { label: 'Max Downtime', value: '120', unit: 'Phút/ca', badge: 'Critical Threshold', icon: TimerOff, border: 'border-l-4 border-l-amber-500', iconBg: 'bg-amber-500/10 text-amber-600' },
+          { label: 'OEE Benchmark', value: '85.0', unit: '%', progress: 82, icon: Gauge, border: 'border-l-4 border-l-sky-500', iconBg: 'bg-sky-500/10 text-sky-600' },
         ].map((item) => (
           <div
             key={item.label}
-            className={`group p-4 sm:p-5 bg-surface-container-lowest rounded-2xl shadow-xs hover:shadow-md transition-shadow card-hover border border-outline-variant/35 ${item.border}`}
+            className={`group p-3.5 sm:p-4 bg-surface-container-lowest rounded-2xl shadow-xs hover:shadow-md transition-shadow card-hover border border-outline-variant/35 ${item.border}`}
           >
-            <div className="flex justify-between items-start mb-2.5">
+            <div className="flex justify-between items-start mb-2">
               <span className="font-mono text-[11px] sm:text-xs text-on-surface-variant uppercase font-bold">{item.label}</span>
-              <div className="p-2 rounded-xl bg-surface-container text-on-surface-variant group-hover:text-primary group-hover:bg-primary/10 transition-colors">
-                <item.icon size={18} />
+              <div className={`p-1.5 sm:p-2 rounded-xl shrink-0 transition-transform group-hover:scale-110 ${item.iconBg}`}>
+                <item.icon size={17} />
               </div>
             </div>
-            <div className="flex items-baseline gap-2">
-              <span className="text-2xl sm:text-3xl font-extrabold text-on-surface font-mono">{item.value}</span>
-              <span className="font-mono text-xs text-on-surface-variant font-bold">{item.unit}</span>
+            <div className="flex items-baseline gap-1.5 sm:gap-2">
+              <span className="text-xl sm:text-2xl lg:text-3xl font-extrabold text-on-surface font-mono">{item.value}</span>
+              <span className="font-mono text-[11px] sm:text-xs text-on-surface-variant font-bold">{item.unit}</span>
             </div>
             {item.trend && (
-              <div className="mt-2.5 flex items-center gap-1.5">
+              <div className="mt-2 flex items-center gap-1.5">
                 <span className="flex items-center text-xs font-bold text-emerald-600 bg-emerald-500/10 px-2 py-0.5 rounded font-mono">
                   <TrendingUp size={13} className="mr-1" /> {item.trend}
                 </span>
-                <span className="text-[11px] text-on-surface-variant/70 italic font-medium">vs tháng trước</span>
+                <span className="text-[10px] sm:text-[11px] text-on-surface-variant/70 italic font-medium">vs tháng trước</span>
               </div>
             )}
             {item.progress !== undefined && (
-              <div className="mt-2.5">
+              <div className="mt-2">
                 <ProgressBar value={item.progress} height="h-1.5" />
               </div>
             )}
             {item.badge && (
-              <div className="mt-2.5">
+              <div className="mt-2">
                 <Badge variant="warning" size="sm">{item.badge}</Badge>
               </div>
             )}
@@ -93,44 +93,86 @@ export default function QuanLyDinhMuc() {
       </div>
 
       {/* Chart & Progress by Line */}
-      <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
-        <div className="lg:col-span-8 space-y-6">
-          {/* Bar Chart */}
-          <div className="p-6 bg-surface-container-lowest rounded-2xl shadow-sm border border-outline-variant/40">
-            <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-4 mb-6">
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-5 sm:gap-6">
+        <div className="lg:col-span-8 space-y-5 sm:space-y-6">
+          {/* Smooth Wave Area Chart */}
+          <div className="p-4 sm:p-6 bg-surface-container-lowest rounded-2xl shadow-sm border border-outline-variant/40">
+            <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-3 sm:gap-4 mb-5">
               <div>
                 <span className="font-mono text-xs sm:text-sm text-on-surface-variant uppercase tracking-wider font-bold">Theo dõi đa kỳ</span>
-                <h3 className="text-lg sm:text-xl font-extrabold text-on-surface mt-1">Thực tế vs Định mức (6 Tháng qua)</h3>
+                <h3 className="text-base sm:text-xl font-extrabold text-on-surface mt-0.5">Thực tế vs Định mức (6 Tháng qua)</h3>
               </div>
-              <div className="flex items-center gap-5 font-mono text-xs sm:text-sm font-bold">
+              <div className="flex items-center gap-4 font-mono text-xs sm:text-sm font-bold">
                 <div className="flex items-center gap-2">
-                  <span className="w-3.5 h-3.5 rounded-md bg-primary" />
+                  <span className="w-3 h-3 rounded-full bg-primary" />
                   <span className="text-on-surface">Thực tế</span>
                 </div>
                 <div className="flex items-center gap-2">
-                  <span className="w-3.5 h-3.5 rounded-md bg-surface-container-highest" />
+                  <span className="w-3 h-3 rounded-full bg-slate-400" />
                   <span className="text-on-surface-variant">Định mức</span>
                 </div>
               </div>
             </div>
 
-            <div className="h-[320px] w-full">
+            <div className="h-[280px] sm:h-[320px] w-full">
               <ResponsiveContainer width="100%" height="100%">
-                <BarChart data={monthlyComparison} barGap={6}>
-                  <CartesianGrid strokeDasharray="3 3" stroke="var(--color-surface-container-high)" vertical={false} />
-                  <XAxis dataKey="month" tick={{ fontSize: 13, fontWeight: 700, fill: 'var(--color-on-surface-variant)' }} axisLine={false} tickLine={false} />
+                <AreaChart data={monthlyComparison} margin={{ top: 10, right: 10, left: -20, bottom: 0 }}>
+                  <defs>
+                    <linearGradient id="dinhMucActualGrad" x1="0" y1="0" x2="0" y2="1">
+                      <stop offset="5%" stopColor="#b5000b" stopOpacity={0.35} />
+                      <stop offset="95%" stopColor="#b5000b" stopOpacity={0.0} />
+                    </linearGradient>
+                    <linearGradient id="dinhMucTargetGrad" x1="0" y1="0" x2="0" y2="1">
+                      <stop offset="5%" stopColor="#94a3b8" stopOpacity={0.25} />
+                      <stop offset="95%" stopColor="#94a3b8" stopOpacity={0.0} />
+                    </linearGradient>
+                  </defs>
+                  <CartesianGrid strokeDasharray="3 3" stroke="var(--color-outline-variant)" strokeOpacity={0.3} vertical={false} />
+                  <XAxis
+                    dataKey="month"
+                    tick={{ fontSize: 12, fontWeight: 700, fill: 'var(--color-on-surface-variant)' }}
+                    axisLine={false}
+                    tickLine={false}
+                  />
+                  <YAxis
+                    tick={{ fontSize: 11, fontWeight: 600, fill: 'var(--color-on-surface-variant)' }}
+                    axisLine={false}
+                    tickLine={false}
+                  />
                   <Tooltip
                     contentStyle={{
                       background: 'var(--color-surface-container-lowest)',
                       border: '1px solid var(--color-outline-variant)',
                       borderRadius: '12px',
-                      fontSize: '14px',
-                      boxShadow: '0 10px 25px rgba(0,0,0,0.08)',
+                      fontSize: '13px',
+                      boxShadow: '0 10px 25px rgba(0,0,0,0.1)',
+                      fontWeight: 600,
                     }}
+                    formatter={(val: any, name: any) => [
+                      `${Number(val ?? 0).toLocaleString()} Tấn`,
+                      name === 'actual' ? 'Thực tế' : name === 'target' ? 'Định mức' : name,
+                    ]}
                   />
-                  <Bar dataKey="target" fill="var(--color-surface-container-highest)" radius={[6, 6, 0, 0]} />
-                  <Bar dataKey="actual" fill="var(--color-primary)" radius={[6, 6, 0, 0]} />
-                </BarChart>
+                  <Area
+                    type="monotone"
+                    dataKey="target"
+                    name="Định mức"
+                    stroke="#94a3b8"
+                    strokeWidth={2.5}
+                    strokeDasharray="4 4"
+                    fill="url(#dinhMucTargetGrad)"
+                  />
+                  <Area
+                    type="monotone"
+                    dataKey="actual"
+                    name="Thực tế"
+                    stroke="#b5000b"
+                    strokeWidth={3}
+                    fill="url(#dinhMucActualGrad)"
+                    dot={{ r: 4, fill: '#b5000b', strokeWidth: 2, stroke: '#fff' }}
+                    activeDot={{ r: 6, stroke: '#fff', strokeWidth: 2 }}
+                  />
+                </AreaChart>
               </ResponsiveContainer>
             </div>
           </div>

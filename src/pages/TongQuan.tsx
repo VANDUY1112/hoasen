@@ -105,15 +105,15 @@ export default function TongQuan() {
           </h1>
         </div>
 
-        <div className="flex flex-col sm:flex-row sm:flex-wrap items-stretch sm:items-center gap-2 sm:gap-2.5">
+        <div className="flex flex-col sm:flex-row sm:flex-wrap items-stretch sm:items-center gap-2.5">
           {/* Time Filter Tabs */}
-          <div className="flex bg-surface-container p-0.5 rounded-xl gap-0.5 overflow-x-auto no-scrollbar">
+          <div className="flex bg-surface-container p-1 rounded-xl gap-1 overflow-x-auto no-scrollbar">
             {timeRanges.map((t) => (
               <button
                 key={t.id}
                 onClick={() => setActiveTimeRange(t.id)}
                 className={`
-                  cursor-pointer px-3 py-1.5 rounded-lg text-xs font-bold transition-all duration-150 whitespace-nowrap flex-1 sm:flex-none text-center
+                  cursor-pointer px-3.5 sm:px-4 py-2 sm:py-2.5 rounded-lg text-xs sm:text-[13px] font-bold transition-all duration-150 whitespace-nowrap flex-1 sm:flex-none text-center
                   ${activeTimeRange === t.id
                     ? 'bg-surface-container-lowest text-primary shadow-xs'
                     : 'text-on-surface-variant/80 hover:text-on-surface'
@@ -125,31 +125,31 @@ export default function TongQuan() {
             ))}
           </div>
 
-          <div className="grid grid-cols-2 sm:flex sm:flex-wrap items-center gap-2">
+          <div className="grid grid-cols-2 sm:flex sm:flex-wrap items-center gap-2 sm:gap-2.5">
             <button
               onClick={handleRunAiDiagnosis}
               disabled={isDiagnosing}
-              className="cursor-pointer bg-primary/10 text-primary hover:bg-primary/20 border border-primary/20 px-3 py-2 font-mono text-xs uppercase tracking-wider flex items-center justify-center gap-1.5 font-bold rounded-xl transition-all shadow-2xs"
+              className="cursor-pointer bg-primary/10 text-primary hover:bg-primary/20 border border-primary/20 px-3.5 py-2.5 font-mono text-xs sm:text-[13px] uppercase tracking-wider flex items-center justify-center gap-1.5 font-bold rounded-xl transition-all shadow-2xs"
             >
-              <Sparkles size={14} className={isDiagnosing ? 'animate-spin' : ''} />
+              <Brain size={16} className={isDiagnosing ? 'animate-pulse text-primary' : 'text-primary'} />
               <span className="truncate">{isDiagnosing ? 'Đang quét...' : 'Chẩn đoán AI'}</span>
             </button>
 
             <button
               onClick={handleExportProductionExcel}
               disabled={exporting}
-              className="cursor-pointer bg-surface-container-lowest text-on-surface border border-outline-variant/40 px-3 py-2 font-mono text-xs uppercase tracking-wider flex items-center justify-center gap-1.5 font-bold rounded-xl hover:bg-surface-container transition-colors shadow-2xs"
+              className="cursor-pointer bg-surface-container-lowest text-on-surface border border-outline-variant/40 px-3.5 py-2.5 font-mono text-xs sm:text-[13px] uppercase tracking-wider flex items-center justify-center gap-1.5 font-bold rounded-xl hover:bg-surface-container transition-colors shadow-2xs"
             >
-              <FileSpreadsheet size={14} className="text-emerald-600 shrink-0" />
+              <FileSpreadsheet size={15} className="text-emerald-600 shrink-0" />
               <span className="truncate">Xuất Excel</span>
             </button>
 
             <button
               onClick={handleExportExcelSummary}
               disabled={exporting}
-              className="cursor-pointer col-span-2 sm:col-span-1 bg-primary text-on-primary px-3.5 sm:px-4 py-2 font-mono text-xs uppercase tracking-wider flex items-center justify-center gap-1.5 font-extrabold rounded-xl hover:bg-on-primary-fixed-variant transition-all shadow-sm shadow-primary/20"
+              className="cursor-pointer col-span-2 sm:col-span-1 bg-primary text-on-primary px-4 py-2.5 sm:py-2.5 font-mono text-xs sm:text-[13px] uppercase tracking-wider flex items-center justify-center gap-2 font-extrabold rounded-xl hover:bg-on-primary-fixed-variant transition-all shadow-sm shadow-primary/20"
             >
-              <Download size={14} className="shrink-0" /> Báo cáo Giám Đốc
+              <Download size={15} className="shrink-0" /> Báo cáo Giám Đốc
             </button>
           </div>
         </div>
