@@ -25,7 +25,7 @@ import { useToast } from '../ui/Toast'
 
 interface HeaderProps {
   subtitle: string
-  title: string
+  title?: string
   onMenuClick: () => void
 }
 
