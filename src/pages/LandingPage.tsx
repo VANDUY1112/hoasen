@@ -490,20 +490,20 @@ export default function LandingPage() {
       </section>
 
       {/* Footer */}
-      <footer id="contact" className="w-full bg-surface-container-lowest border-t border-outline-variant/40 pt-16 pb-8">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-1 md:grid-cols-4 gap-10">
-          <div className="md:col-span-1">
-            <div className="flex items-center gap-3 mb-4">
+      <footer id="contact" className="w-full bg-surface-container-lowest border-t border-outline-variant/40 pt-12 sm:pt-16 pb-8">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-1 md:grid-cols-4 gap-8 sm:gap-10">
+          <div className="md:col-span-1 flex flex-col items-center md:items-start text-center md:text-left">
+            <div className="flex items-center gap-3 mb-3 sm:mb-4">
               <img alt="Hoa Sen Logo" className="h-8 w-8 rounded-lg object-cover" src="/logo.jpg" />
               <span className="font-extrabold text-base text-primary">Hoa Sen Group</span>
             </div>
-            <p className="text-xs sm:text-sm text-on-surface-variant/80 leading-relaxed font-medium">
+            <p className="text-xs sm:text-sm text-on-surface-variant/80 leading-relaxed font-medium max-w-xs md:max-w-none">
               Nền tảng quản trị sản xuất thép hiện đại nhất, được thiết kế riêng cho các tiêu chuẩn công nghiệp của Tập đoàn Hoa Sen.
             </p>
           </div>
 
-          <div>
-            <h4 className="font-bold text-sm text-on-surface uppercase tracking-wider mb-4 font-mono">Về chúng tôi</h4>
+          <div className="flex flex-col items-center md:items-start text-center md:text-left">
+            <h4 className="font-bold text-sm text-on-surface uppercase tracking-wider mb-3 sm:mb-4 font-mono">Về chúng tôi</h4>
             <ul className="space-y-2.5 text-xs sm:text-sm text-on-surface-variant font-medium">
               <li className="hover:text-primary cursor-pointer transition-colors">Tập đoàn Hoa Sen</li>
               <li className="hover:text-primary cursor-pointer transition-colors">Sứ mệnh &amp; Tầm nhìn</li>
@@ -511,8 +511,8 @@ export default function LandingPage() {
             </ul>
           </div>
 
-          <div>
-            <h4 className="font-bold text-sm text-on-surface uppercase tracking-wider mb-4 font-mono">Giải pháp</h4>
+          <div className="flex flex-col items-center md:items-start text-center md:text-left">
+            <h4 className="font-bold text-sm text-on-surface uppercase tracking-wider mb-3 sm:mb-4 font-mono">Giải pháp</h4>
             <ul className="space-y-2.5 text-xs sm:text-sm text-on-surface-variant font-medium">
               <li onClick={() => navigate('/quan-ly-ton-kho')} className="hover:text-primary cursor-pointer transition-colors">Quản lý kho vận</li>
               <li onClick={() => navigate('/quan-ly-loi')} className="hover:text-primary cursor-pointer transition-colors">Kiểm soát chất lượng AI</li>
@@ -520,14 +520,14 @@ export default function LandingPage() {
             </ul>
           </div>
 
-          <div>
-            <h4 className="font-bold text-sm text-on-surface uppercase tracking-wider mb-4 font-mono">Liên hệ</h4>
+          <div className="flex flex-col items-center md:items-start text-center md:text-left">
+            <h4 className="font-bold text-sm text-on-surface uppercase tracking-wider mb-3 sm:mb-4 font-mono">Liên hệ</h4>
             <ul className="space-y-2.5 text-xs sm:text-sm text-on-surface-variant font-medium">
-              <li className="flex items-center gap-2">
+              <li className="flex items-center justify-center md:justify-start gap-2">
                 <Mail size={15} className="text-primary shrink-0" />
                 <span>info@hoasengroup.vn</span>
               </li>
-              <li className="flex items-center gap-2">
+              <li className="flex items-center justify-center md:justify-start gap-2">
                 <Phone size={15} className="text-primary shrink-0" />
                 <span>1800 1515</span>
               </li>
@@ -538,7 +538,7 @@ export default function LandingPage() {
           </div>
         </div>
 
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-12 pt-6 border-t border-outline-variant/30 flex flex-col sm:flex-row items-center justify-between gap-3 text-center sm:text-left text-xs font-mono text-on-surface-variant/80 font-semibold">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-10 sm:mt-12 pt-6 border-t border-outline-variant/30 flex flex-col sm:flex-row items-center justify-between gap-3 text-center sm:text-left text-xs font-mono text-on-surface-variant/80 font-semibold">
           <p>© 2026 Ho Van Duy - Hoa Sen Group. All rights reserved.</p>
           <p>Phiên bản SCADA Enterprise v2.4</p>
         </div>
