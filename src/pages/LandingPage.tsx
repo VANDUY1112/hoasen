@@ -495,7 +495,7 @@ export default function LandingPage() {
           <div className="md:col-span-1">
             <div className="flex items-center gap-3 mb-4">
               <img alt="Hoa Sen Logo" className="h-8 w-8 rounded-lg object-cover" src="/logo.jpg" />
-              <span className="font-extrabold text-base text-primary">Steel Intelligence</span>
+              <span className="font-extrabold text-base text-primary">Hoa Sen Group</span>
             </div>
             <p className="text-xs sm:text-sm text-on-surface-variant/80 leading-relaxed font-medium">
               Nền tảng quản trị sản xuất thép hiện đại nhất, được thiết kế riêng cho các tiêu chuẩn công nghiệp của Tập đoàn Hoa Sen.

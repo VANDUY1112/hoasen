@@ -127,13 +127,6 @@ export default function LoginPage() {
           <ArrowLeft size={16} className="group-hover:-translate-x-1 transition-transform" />
           <span>Về Trang chủ</span>
         </Link>
-
-        <div className="flex items-center gap-2">
-          <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
-          <span className="font-mono text-xs font-bold text-on-surface-variant/80">
-            SCADA Server Online
-          </span>
-        </div>
       </div>
 
       {/* Main Login Content Card */}
