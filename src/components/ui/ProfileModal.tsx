@@ -71,17 +71,17 @@ export default function ProfileModal({ isOpen, onClose }: ProfileModalProps) {
   }
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-md animate-fade-in">
-      <div className="bg-surface-container-lowest border border-outline-variant/80 rounded-3xl shadow-2xl w-full max-w-4xl max-h-[90vh] flex flex-col overflow-hidden animate-scale-in">
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-4 bg-black/60 backdrop-blur-md animate-fade-in">
+      <div className="bg-surface-container-lowest border border-outline-variant/80 rounded-2xl sm:rounded-3xl shadow-2xl w-full max-w-4xl max-h-[92vh] flex flex-col overflow-hidden animate-scale-in">
         {/* Modal Header */}
-        <div className="p-5 sm:p-6 border-b border-outline-variant/40 flex items-center justify-between bg-surface-container-low/60">
+        <div className="p-4 sm:p-6 border-b border-outline-variant/40 flex items-center justify-between bg-surface-container-low/60">
           <div className="flex items-center gap-3">
-            <div className="p-2.5 rounded-2xl bg-primary/10 text-primary">
-              <User size={22} />
+            <div className="p-2 sm:p-2.5 rounded-2xl bg-primary/10 text-primary shrink-0">
+              <User size={20} className="sm:w-[22px] sm:h-[22px]" />
             </div>
             <div>
-              <h2 className="text-xl sm:text-2xl font-extrabold text-on-surface">Hồ Sơ Cá Nhân &amp; Tài Khoản</h2>
-              <p className="text-xs sm:text-sm text-on-surface-variant font-medium">
+              <h2 className="text-lg sm:text-2xl font-extrabold text-on-surface leading-tight">Hồ Sơ Cá Nhân &amp; Tài Khoản</h2>
+              <p className="text-[11px] sm:text-sm text-on-surface-variant font-medium line-clamp-1 sm:line-clamp-none">
                 Quản lý thông tin định danh cán bộ, phân quyền ERP và thiết lập bảo mật
               </p>
             </div>
@@ -89,14 +89,14 @@ export default function ProfileModal({ isOpen, onClose }: ProfileModalProps) {
 
           <button
             onClick={onClose}
-            className="cursor-pointer p-2 rounded-xl text-on-surface-variant hover:text-on-surface hover:bg-surface-container-high transition-colors"
+            className="cursor-pointer p-2 rounded-xl text-on-surface-variant hover:text-on-surface hover:bg-surface-container-high transition-colors shrink-0"
           >
             <X size={20} />
           </button>
         </div>
 
         {/* Tab Navigation */}
-        <div className="flex px-6 pt-3 border-b border-outline-variant/40 bg-surface-container-lowest overflow-x-auto gap-2">
+        <div className="flex px-3 sm:px-6 pt-2 sm:pt-3 border-b border-outline-variant/40 bg-surface-container-lowest overflow-x-auto no-scrollbar gap-1 sm:gap-2">
           {[
             { id: 'info', label: 'Thông tin chung', icon: User },
             { id: 'roles', label: 'Vai trò & Phân quyền', icon: Shield },
@@ -110,14 +110,14 @@ export default function ProfileModal({ isOpen, onClose }: ProfileModalProps) {
                 key={t.id}
                 onClick={() => setActiveTab(t.id as any)}
                 className={`
-                  cursor-pointer flex items-center gap-2 px-4 py-3 text-sm font-bold border-b-2 transition-all duration-150 whitespace-nowrap
+                  cursor-pointer flex items-center gap-1.5 sm:gap-2 px-3 sm:px-4 py-2.5 sm:py-3 text-xs sm:text-sm font-bold border-b-2 transition-all duration-150 whitespace-nowrap
                   ${isActive
                     ? 'border-primary text-primary font-extrabold'
                     : 'border-transparent text-on-surface-variant hover:text-on-surface hover:border-outline-variant/60'
                   }
                 `}
               >
-                <Icon size={16} />
+                <Icon size={15} />
                 <span>{t.label}</span>
               </button>
             )
@@ -125,12 +125,12 @@ export default function ProfileModal({ isOpen, onClose }: ProfileModalProps) {
         </div>
 
         {/* Modal Body */}
-        <div className="p-6 overflow-y-auto flex-1 space-y-6">
+        <div className="p-4 sm:p-6 overflow-y-auto flex-1 space-y-5 sm:space-y-6">
           {/* TAB 1: INFO */}
           {activeTab === 'info' && (
-            <form onSubmit={handleSaveProfile} className="space-y-6">
+            <form onSubmit={handleSaveProfile} className="space-y-5 sm:space-y-6">
               {/* Profile Card Banner */}
-              <div className="p-5 rounded-2xl gradient-primary text-on-primary shadow-lg flex flex-col sm:flex-row items-center sm:items-start gap-5 relative overflow-hidden">
+              <div className="p-4 sm:p-5 rounded-2xl gradient-primary text-on-primary shadow-lg flex flex-col sm:flex-row items-center sm:items-start gap-4 sm:gap-5 relative overflow-hidden text-center sm:text-left">
                 <div className="relative group shrink-0">
                   <img
                     src={decorativeImages.profile}

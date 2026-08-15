@@ -5,6 +5,7 @@ import { LiveSimulationProvider } from './context/LiveSimulationContext'
 import { DataProvider } from './context/DataContext'
 import Sidebar from './components/layout/Sidebar'
 import Header from './components/layout/Header'
+import MobileNav from './components/layout/MobileNav'
 import TongQuan from './pages/TongQuan'
 import SanLuong from './pages/SanLuong'
 import QuanLyLoi from './pages/QuanLyLoi'
@@ -63,7 +64,7 @@ function AppContent() {
           onMenuClick={() => setSidebarOpen(true)}
         />
 
-        <main className="relative pt-16 bg-surface min-h-screen overflow-hidden">
+        <main className="relative pt-16 pb-24 lg:pb-8 bg-surface min-h-screen overflow-x-hidden">
           <Routes>
             <Route path="/" element={<Navigate to="/tong-quan" replace />} />
             <Route path="/tong-quan" element={<TongQuan />} />
@@ -81,6 +82,9 @@ function AppContent() {
           </Routes>
         </main>
       </div>
+
+      {/* Mobile Bottom Navigation Bar */}
+      <MobileNav onOpenSidebar={() => setSidebarOpen(true)} />
     </div>
   )
 }

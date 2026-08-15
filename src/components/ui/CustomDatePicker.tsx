@@ -274,7 +274,7 @@ export default function CustomDatePicker({
 
       {/* Dropdown Calendar Popover */}
       {isOpen && (
-        <div className="absolute z-50 left-0 mt-1.5 p-4 bg-surface-container-lowest/98 backdrop-blur-xl border border-outline-variant/80 rounded-2xl shadow-2xl shadow-black/15 animate-scale-in w-[320px] sm:w-[340px]">
+        <div className="absolute z-50 left-0 mt-1.5 p-3 sm:p-4 bg-surface-container-lowest/98 backdrop-blur-xl border border-outline-variant/80 rounded-2xl shadow-2xl shadow-black/15 animate-scale-in w-[300px] sm:w-[340px] max-w-[calc(100vw-32px)]">
           {/* Header Navigation */}
           <div className="flex items-center justify-between mb-3 pb-2.5 border-b border-outline-variant/30">
             <div className="flex items-center gap-1.5">

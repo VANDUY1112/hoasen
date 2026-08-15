@@ -89,42 +89,42 @@ export default function QuanLyTonKho() {
             <span className="w-2 h-2 rounded-full bg-primary" />
             <span className="text-xs sm:text-sm text-on-surface-variant font-semibold">Quản lý Kho</span>
           </div>
-          <h1 className="text-3xl md:text-5xl font-extrabold text-on-surface tracking-tight">
+          <h1 className="text-2xl sm:text-3xl md:text-5xl font-extrabold text-on-surface tracking-tight">
             Quản lý Tồn kho Vật tư &amp; Sản phẩm
           </h1>
-          <p className="text-sm sm:text-base text-on-surface-variant max-w-2xl leading-relaxed font-medium">
+          <p className="text-xs sm:text-base text-on-surface-variant max-w-2xl leading-relaxed font-medium">
             Giám sát thời gian thực nguyên vật liệu, thành phẩm tôn cuộn và phụ tùng thay thế định kỳ.
           </p>
         </div>
 
-        <div className="flex gap-3 flex-wrap">
+        <div className="grid grid-cols-2 sm:flex gap-2.5 sm:gap-3 w-full sm:w-auto">
           <button
             onClick={handleExportExcel}
             disabled={exporting}
-            className="cursor-pointer px-5 py-2.5 rounded-xl font-bold bg-emerald-700 hover:bg-emerald-800 text-white transition-all shadow-md flex items-center gap-2 text-xs sm:text-sm uppercase font-mono tracking-wider"
+            className="cursor-pointer px-4 sm:px-5 py-2.5 rounded-xl font-bold bg-emerald-700 hover:bg-emerald-800 text-white transition-all shadow-md flex items-center justify-center gap-2 text-xs sm:text-sm uppercase font-mono tracking-wider"
           >
             <FileSpreadsheet size={18} className={exporting ? 'animate-spin' : ''} />
-            {exporting ? 'Đang tạo...' : 'Xuất Excel'}
+            <span className="truncate">{exporting ? 'Đang tạo...' : 'Xuất Excel'}</span>
           </button>
           <button
             onClick={() => navigate('/nhap-kho-thanh-pham')}
-            className="cursor-pointer bg-primary text-on-primary px-6 py-2.5 rounded-xl font-extrabold hover:bg-on-primary-fixed-variant transition-all shadow-md shadow-primary/20 hover:scale-[1.01] active:scale-[0.99] flex items-center gap-2 text-xs sm:text-sm w-fit font-mono uppercase tracking-wider"
+            className="cursor-pointer bg-primary text-on-primary px-4 sm:px-6 py-2.5 rounded-xl font-extrabold hover:bg-on-primary-fixed-variant transition-all shadow-md shadow-primary/20 hover:scale-[1.01] active:scale-[0.99] flex items-center justify-center gap-2 text-xs sm:text-sm font-mono uppercase tracking-wider"
           >
-            <Plus size={18} /> Nhập kho mới
+            <Plus size={18} /> <span className="truncate">Nhập kho mới</span>
           </button>
         </div>
       </div>
 
       {/* KPI Summary Cards */}
       <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 sm:gap-5 stagger">
-        <div className="bg-surface-container-lowest p-6 rounded-2xl shadow-sm border border-outline-variant/40 border-l-4 border-l-primary card-hover flex justify-between items-start">
+        <div className="bg-surface-container-lowest p-5 sm:p-6 rounded-2xl shadow-sm border border-outline-variant/40 border-l-4 border-l-primary card-hover flex justify-between items-start">
           <div>
             <p className="font-mono text-xs sm:text-sm text-on-surface-variant uppercase font-bold">Tổng mặt hàng</p>
-            <h2 className="text-4xl sm:text-5xl font-extrabold text-on-surface mt-2 font-mono">{totalItems}</h2>
-            <p className="text-sm text-on-surface-variant mt-1.5 font-medium">Đang quản lý trên ERP</p>
+            <h2 className="text-3xl sm:text-4xl md:text-5xl font-extrabold text-on-surface mt-2 font-mono">{totalItems}</h2>
+            <p className="text-xs sm:text-sm text-on-surface-variant mt-1.5 font-medium">Đang quản lý trên ERP</p>
           </div>
-          <div className="p-3.5 rounded-2xl bg-primary/10 text-primary">
-            <Warehouse size={30} />
+          <div className="p-3 sm:p-3.5 rounded-2xl bg-primary/10 text-primary">
+            <Warehouse size={26} className="sm:w-[30px] sm:h-[30px]" />
           </div>
         </div>
 

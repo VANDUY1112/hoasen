@@ -58,10 +58,10 @@ export default function QuanLyLoi() {
             <span className="w-2 h-2 rounded-full bg-primary" />
             <span className="text-xs sm:text-sm text-on-surface-variant font-semibold">Kiểm định chất lượng</span>
           </div>
-          <h1 className="text-3xl md:text-5xl font-extrabold text-on-surface tracking-tight">
+          <h1 className="text-2xl sm:text-3xl md:text-5xl font-extrabold text-on-surface tracking-tight">
             Quản lý &amp; Nhận dạng Lỗi AI
           </h1>
-          <p className="text-sm sm:text-base text-on-surface-variant max-w-2xl leading-relaxed font-medium">
+          <p className="text-xs sm:text-base text-on-surface-variant max-w-2xl leading-relaxed font-medium">
             Hệ thống camera quang học quét bề mặt tôn tốc độ cao kết hợp mô hình AI phân loại khuyết tật tôn cuộn.
           </p>
         </div>
@@ -69,7 +69,7 @@ export default function QuanLyLoi() {
         <button
           onClick={handleSimulateScan}
           disabled={scanning}
-          className="cursor-pointer bg-primary text-on-primary px-5 py-2.5 rounded-xl font-bold shadow-md shadow-primary/20 hover:bg-on-primary-fixed-variant transition-all flex items-center gap-2 text-xs sm:text-sm uppercase tracking-wider font-mono w-fit"
+          className="cursor-pointer bg-primary text-on-primary px-5 py-2.5 rounded-xl font-bold shadow-md shadow-primary/20 hover:bg-on-primary-fixed-variant transition-all flex items-center justify-center gap-2 text-xs sm:text-sm uppercase tracking-wider font-mono w-full sm:w-fit"
         >
           <Upload size={18} className={scanning ? 'animate-spin' : ''} />
           {scanning ? 'Đang quét ảnh...' : 'Quét ảnh AI'}

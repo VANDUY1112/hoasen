@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { Save, Bell, Shield, Sliders, CheckCircle2, Globe, Factory, Mail, Smartphone } from 'lucide-react'
 import CustomSelect, { SelectOption } from '../components/ui/CustomSelect'
+import { useToast } from '../components/ui/Toast'
 
 const factoryOptions: SelectOption[] = [
   { value: 'pm1', label: 'Nhà máy Tôn Hoa Sen Phú Mỹ (Bà Rịa - Vũng Tàu)', badge: 'Khu A', description: 'Tổ hợp cán nguội & mạ màu' },
@@ -21,26 +22,28 @@ export default function CaiDat() {
   const [emailDaily, setEmailDaily] = useState(true)
   const [autoOrderSpare, setAutoOrderSpare] = useState(false)
   const [saved, setSaved] = useState(false)
+  const { addToast } = useToast()
 
   const handleSave = (e: React.FormEvent) => {
     e.preventDefault()
     setSaved(true)
+    addToast('success', 'Lưu cấu hình thành công!', 'Các tham số giám sát SCADA và kênh cảnh báo đã được cập nhật.')
     setTimeout(() => setSaved(false), 2500)
   }
 
   return (
     <div className="p-4 sm:p-6 animate-fade-in max-w-5xl mx-auto pb-12">
       {/* Title */}
-      <div className="mb-6 sm:mb-8">
+      <div className="mb-5 sm:mb-8">
         <div className="flex items-center gap-2 mb-1.5">
           <span className="font-mono text-xs sm:text-sm text-primary uppercase font-bold tracking-wider">System Administration</span>
           <span className="w-2 h-2 rounded-full bg-primary" />
           <span className="text-xs sm:text-sm text-on-surface-variant font-semibold">Cấu hình tham số</span>
         </div>
-        <h1 className="text-3xl md:text-5xl font-extrabold text-on-surface tracking-tight leading-none mb-2.5">
+        <h1 className="text-2xl sm:text-3xl md:text-5xl font-extrabold text-on-surface tracking-tight leading-none mb-2">
           Cài đặt &amp; Tham số Hệ thống
         </h1>
-        <p className="text-sm sm:text-base text-on-surface-variant max-w-2xl leading-relaxed font-medium">
+        <p className="text-xs sm:text-base text-on-surface-variant max-w-2xl leading-relaxed font-medium">
           Quản lý tham số cảnh báo SCADA, cấu hình nhà máy và chính sách thông báo đa kênh.
         </p>
       </div>

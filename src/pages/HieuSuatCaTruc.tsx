@@ -74,34 +74,35 @@ export default function HieuSuatCaTruc() {
             <span className="w-2 h-2 rounded-full bg-primary" />
             <span className="text-xs sm:text-sm text-on-surface-variant font-semibold">Đánh giá ca trực</span>
           </div>
-          <h1 className="text-3xl md:text-5xl font-extrabold text-on-surface tracking-tight">
+          <h1 className="text-2xl sm:text-3xl md:text-5xl font-extrabold text-on-surface tracking-tight">
             Hiệu suất &amp; Năng suất Ca trực
           </h1>
-          <p className="text-sm sm:text-base text-on-surface-variant max-w-2xl leading-relaxed">
+          <p className="text-xs sm:text-base text-on-surface-variant max-w-2xl leading-relaxed">
             Theo dõi sản lượng đầu ca, tỷ lệ chất lượng sản phẩm và đánh giá năng lực công nhân vận hành máy.
           </p>
         </div>
 
-        <div className="flex gap-3 flex-wrap">
+        <div className="grid grid-cols-2 sm:flex gap-2 sm:gap-3 w-full sm:w-auto">
           <button
             onClick={handleExportShiftExcel}
             disabled={exporting}
-            className="cursor-pointer px-5 py-2.5 rounded-xl font-bold bg-emerald-700 hover:bg-emerald-800 text-white transition-all shadow-md flex items-center gap-2 text-xs sm:text-sm uppercase font-mono tracking-wider"
+            className="cursor-pointer px-3.5 sm:px-5 py-2.5 rounded-xl font-bold bg-emerald-700 hover:bg-emerald-800 text-white transition-all shadow-md flex items-center justify-center gap-2 text-xs sm:text-sm uppercase font-mono tracking-wider"
           >
-            <FileSpreadsheet size={18} className={exporting ? 'animate-spin' : ''} />
-            {exporting ? 'Đang tạo...' : 'Xuất Excel'}
+            <FileSpreadsheet size={16} className={exporting ? 'animate-spin' : ''} />
+            <span className="truncate">{exporting ? 'Đang tạo...' : 'Xuất Excel'}</span>
           </button>
           <button
             onClick={handleOpenPrintReport}
-            className="cursor-pointer bg-surface-container-lowest text-on-surface border border-outline-variant/50 hover:bg-surface-container px-4 py-2.5 rounded-xl font-bold transition-all flex items-center gap-2 shadow-xs text-xs sm:text-sm uppercase font-mono tracking-wider"
+            className="cursor-pointer bg-surface-container-lowest text-on-surface border border-outline-variant/50 hover:bg-surface-container px-3 sm:px-4 py-2.5 rounded-xl font-bold transition-all flex items-center justify-center gap-2 shadow-xs text-xs sm:text-sm uppercase font-mono tracking-wider"
           >
-            <Printer size={18} className="text-primary" /> In Báo Cáo A4
+            <Printer size={16} className="text-primary shrink-0" />
+            <span className="truncate">In Báo Cáo</span>
           </button>
           <button
             onClick={() => navigate('/thiet-lap-muc-tieu-ca-truc')}
-            className="cursor-pointer bg-primary text-on-primary hover:bg-on-primary-fixed-variant px-5 py-2.5 rounded-xl font-bold transition-all flex items-center gap-2 w-fit shadow-md shadow-primary/20 text-xs sm:text-sm uppercase font-mono tracking-wider"
+            className="cursor-pointer col-span-2 sm:col-span-1 bg-primary text-on-primary px-4 sm:px-5 py-2.5 rounded-xl font-extrabold hover:bg-on-primary-fixed-variant transition-all shadow-md shadow-primary/20 flex items-center justify-center gap-2 text-xs sm:text-sm font-mono uppercase tracking-wider"
           >
-            <Settings size={18} /> Thiết Lập Ca
+            <Settings size={16} /> Thiết lập Mục tiêu Ca
           </button>
         </div>
       </div>

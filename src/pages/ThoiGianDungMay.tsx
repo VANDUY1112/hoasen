@@ -31,22 +31,22 @@ export default function ThoiGianDungMay() {
             <span className="w-2 h-2 rounded-full bg-primary" />
             <span className="text-xs sm:text-sm text-on-surface-variant font-semibold">Gián đoạn dây chuyền</span>
           </div>
-          <h1 className="text-3xl md:text-5xl font-extrabold text-on-surface tracking-tight">
+          <h1 className="text-2xl sm:text-3xl md:text-5xl font-extrabold text-on-surface tracking-tight">
             Thời gian Dừng máy &amp; Sự cố
           </h1>
-          <p className="text-sm sm:text-base text-on-surface-variant max-w-2xl leading-relaxed font-medium">
+          <p className="text-xs sm:text-base text-on-surface-variant max-w-2xl leading-relaxed font-medium">
             Theo dõi nhật ký dừng máy tự động từ hệ thống SCADA/PLC và tiến độ khắc phục của kỹ thuật viên.
           </p>
         </div>
 
-        <div className="bg-surface-container-lowest p-5 sm:p-6 rounded-2xl shadow-sm border border-outline-variant/40 flex items-center gap-4 w-full sm:w-auto">
-          <div className="p-3.5 rounded-2xl bg-rose-500/10 text-rose-600">
-            <TimerOff size={28} />
+        <div className="bg-surface-container-lowest p-4 sm:p-6 rounded-2xl shadow-sm border border-outline-variant/40 flex items-center gap-3.5 sm:gap-4 w-full sm:w-auto">
+          <div className="p-3 sm:p-3.5 rounded-2xl bg-rose-500/10 text-rose-600 shrink-0">
+            <TimerOff size={24} className="sm:w-7 sm:h-7" />
           </div>
           <div>
             <p className="font-mono text-xs sm:text-sm text-on-surface-variant uppercase font-bold">Tổng thời gian dừng ca</p>
-            <p className="text-3xl sm:text-4xl font-extrabold text-primary font-mono leading-none mt-1">
-              142 <span className="text-base font-bold text-on-surface-variant">phút</span>
+            <p className="text-2xl sm:text-4xl font-extrabold text-primary font-mono leading-none mt-1">
+              142 <span className="text-sm sm:text-base font-bold text-on-surface-variant">phút</span>
             </p>
           </div>
         </div>
@@ -56,13 +56,13 @@ export default function ThoiGianDungMay() {
       <section className="bg-surface-container-lowest shadow-sm border border-outline-variant/50 rounded-2xl overflow-hidden animate-slide-up">
         {/* Table Controls */}
         <div className="p-4 sm:p-5 border-b border-outline-variant/40 flex flex-col sm:flex-row sm:items-center justify-between gap-4 bg-surface-container-low/60">
-          <div className="flex bg-surface-container p-1 rounded-xl gap-1">
+          <div className="flex bg-surface-container p-1 rounded-xl gap-1 overflow-x-auto no-scrollbar">
             {filterTabs.map((tab) => (
               <button
                 key={tab.id}
                 onClick={() => setActiveFilter(tab.id)}
                 className={`
-                  cursor-pointer px-3.5 py-2 rounded-lg text-xs sm:text-sm font-bold transition-all duration-150
+                  cursor-pointer px-3 sm:px-3.5 py-2 rounded-lg text-xs sm:text-sm font-bold transition-all duration-150 whitespace-nowrap flex-1 sm:flex-none text-center
                   ${activeFilter === tab.id
                     ? 'bg-surface-container-lowest text-primary shadow-xs'
                     : 'text-on-surface-variant hover:text-on-surface'

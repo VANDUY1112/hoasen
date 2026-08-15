@@ -122,31 +122,31 @@ export default function Header({ subtitle, onMenuClick }: HeaderProps) {
 
   return (
     <>
-      <header className="fixed top-0 left-0 lg:left-72 right-0 h-16 glass z-30 flex items-center justify-between px-4 lg:px-6 transition-all duration-300 border-b border-outline-variant/50">
+      <header className="fixed top-0 left-0 lg:left-72 right-0 h-16 glass z-30 flex items-center justify-between px-3 sm:px-4 lg:px-6 transition-all duration-300 border-b border-outline-variant/50">
         {/* Left: View Title & Live Telemetry Controls */}
-        <div className="flex items-center gap-2 lg:gap-3.5">
+        <div className="flex items-center gap-1.5 sm:gap-2.5 lg:gap-3.5 min-w-0">
           <button
             onClick={onMenuClick}
-            className="cursor-pointer lg:hidden p-2 text-on-surface-variant hover:text-primary hover:bg-surface-container-high rounded-xl transition-colors flex items-center"
+            className="cursor-pointer lg:hidden p-2 text-on-surface-variant hover:text-primary hover:bg-surface-container-high rounded-xl transition-colors flex items-center shrink-0"
             title="Mở Menu"
           >
             <Menu size={22} />
           </button>
 
-          <div className="flex items-center gap-2.5 px-3.5 py-1.5 rounded-xl bg-surface-container/60 border border-outline-variant/30">
-            <div className="p-1.5 rounded-lg bg-primary/10 text-primary">
-              <Factory size={18} />
+          <div className="flex items-center gap-2 px-2.5 sm:px-3.5 py-1.5 rounded-xl bg-surface-container/60 border border-outline-variant/30 min-w-0">
+            <div className="p-1 sm:p-1.5 rounded-lg bg-primary/10 text-primary shrink-0">
+              <Factory size={16} className="sm:w-[18px] sm:h-[18px]" />
             </div>
-            <span className="font-mono text-sm sm:text-base uppercase tracking-wider text-on-surface-variant truncate max-w-[160px] sm:max-w-none font-bold">
+            <span className="font-mono text-xs sm:text-sm md:text-base uppercase tracking-wider text-on-surface-variant truncate max-w-[110px] xs:max-w-[150px] sm:max-w-none font-bold">
               {subtitle}
             </span>
           </div>
 
-          {/* Live SCADA Simulation Toggle */}
+          {/* Live SCADA Simulation Toggle - Responsive */}
           <button
             onClick={toggleSimulation}
             className={`
-              cursor-pointer hidden md:flex items-center gap-2 px-3.5 py-1.5 rounded-full border text-xs sm:text-sm font-mono font-bold transition-all duration-200 shadow-xs
+              cursor-pointer flex items-center gap-1.5 sm:gap-2 px-2.5 sm:px-3.5 py-1.5 rounded-full border text-xs sm:text-sm font-mono font-bold transition-all duration-200 shadow-xs shrink-0
               ${isSimulating
                 ? 'bg-emerald-500/10 border-emerald-500/30 text-emerald-700 hover:bg-emerald-500/20'
                 : 'bg-surface-container border-outline-variant/50 text-on-surface-variant hover:bg-surface-container-high'
@@ -154,14 +154,15 @@ export default function Header({ subtitle, onMenuClick }: HeaderProps) {
             `}
             title="Bật/Tắt mô phỏng dữ liệu SCADA thời gian thực"
           >
-            <span className="relative flex h-2.5 w-2.5">
+            <span className="relative flex h-2 sm:h-2.5 w-2 sm:w-2.5">
               {isSimulating && (
                 <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-500 opacity-75" />
               )}
-              <span className={`relative inline-flex rounded-full h-2.5 w-2.5 ${isSimulating ? 'bg-emerald-500' : 'bg-on-surface-variant/50'}`} />
+              <span className={`relative inline-flex rounded-full h-2 sm:h-2.5 w-2 sm:w-2.5 ${isSimulating ? 'bg-emerald-500' : 'bg-on-surface-variant/50'}`} />
             </span>
-            <span>{isSimulating ? 'SCADA LIVE' : 'TẠM DỪNG'}</span>
-            {isSimulating ? <Pause size={14} className="opacity-70" /> : <Play size={14} className="opacity-70" />}
+            <span className="hidden xs:inline">{isSimulating ? 'SCADA LIVE' : 'TẠM DỪNG'}</span>
+            <span className="xs:hidden">{isSimulating ? 'LIVE' : 'DỪNG'}</span>
+            {isSimulating ? <Pause size={13} className="opacity-70 hidden sm:block" /> : <Play size={13} className="opacity-70 hidden sm:block" />}
           </button>
 
           {/* Realtime Speed Pill */}
@@ -174,11 +175,11 @@ export default function Header({ subtitle, onMenuClick }: HeaderProps) {
         </div>
 
         {/* Right: Search Spotlight + Clock + Notifications + Profile */}
-        <div className="flex items-center gap-2 sm:gap-3">
+        <div className="flex items-center gap-1.5 sm:gap-2.5">
           {/* Spotlight Search Trigger (Ctrl+K) */}
           <button
             onClick={() => setPaletteOpen(true)}
-            className="cursor-pointer flex items-center gap-2.5 px-3 py-1.5 rounded-xl bg-surface-container/70 border border-outline-variant/50 hover:border-primary/40 hover:bg-surface-container transition-all text-on-surface-variant hover:text-on-surface"
+            className="cursor-pointer flex items-center gap-2 p-2 sm:px-3 sm:py-1.5 rounded-xl bg-surface-container/70 border border-outline-variant/50 hover:border-primary/40 hover:bg-surface-container transition-all text-on-surface-variant hover:text-on-surface"
             title="Tìm kiếm nhanh toàn hệ thống (Ctrl + K)"
           >
             <Search size={16} className="text-primary" />
@@ -189,7 +190,7 @@ export default function Header({ subtitle, onMenuClick }: HeaderProps) {
           </button>
 
           {/* Real-time Clock */}
-          <div className="hidden sm:flex items-center gap-2 px-3 py-1.5 rounded-xl bg-surface-container-lowest/80 border border-outline-variant/40 font-mono text-xs sm:text-sm font-bold text-on-surface shadow-xs">
+          <div className="hidden md:flex items-center gap-2 px-3 py-1.5 rounded-xl bg-surface-container-lowest/80 border border-outline-variant/40 font-mono text-xs sm:text-sm font-bold text-on-surface shadow-xs">
             <Clock size={15} className="text-primary" />
             <span>{currentTime}</span>
           </div>
@@ -199,7 +200,7 @@ export default function Header({ subtitle, onMenuClick }: HeaderProps) {
             <button
               onClick={() => setNotifOpen(!notifOpen)}
               className={`
-                cursor-pointer relative p-2.5 rounded-xl transition-all duration-200 flex items-center justify-center
+                cursor-pointer relative p-2 sm:p-2.5 rounded-xl transition-all duration-200 flex items-center justify-center
                 ${notifOpen
                   ? 'bg-primary-container text-on-primary-container shadow-md shadow-primary/15'
                   : 'text-on-surface-variant hover:text-primary hover:bg-surface-container-high'
@@ -207,9 +208,9 @@ export default function Header({ subtitle, onMenuClick }: HeaderProps) {
               `}
               title="Thông báo hệ thống"
             >
-              <Bell size={20} />
+              <Bell size={19} />
               {unreadCount > 0 && (
-                <span className="absolute top-1.5 right-1.5 flex h-4 w-4 items-center justify-center rounded-full bg-primary text-[10px] font-bold text-on-primary shadow-xs">
+                <span className="absolute top-1.5 right-1.5 flex h-4 w-4 items-center justify-center rounded-full bg-primary text-[10px] font-bold text-on-primary shadow-xs animate-pulse">
                   {unreadCount}
                 </span>
               )}
@@ -217,7 +218,7 @@ export default function Header({ subtitle, onMenuClick }: HeaderProps) {
 
             {/* Notifications Dropdown Panel */}
             {notifOpen && (
-              <div className="absolute right-0 mt-2 w-80 sm:w-96 rounded-2xl bg-surface-container-lowest/98 backdrop-blur-2xl border border-outline-variant/80 shadow-2xl shadow-black/10 py-3 animate-scale-in z-50">
+              <div className="fixed left-3 right-3 sm:left-auto sm:right-0 sm:absolute top-16 sm:top-full mt-2 w-auto sm:w-96 rounded-2xl bg-surface-container-lowest/98 backdrop-blur-2xl border border-outline-variant/80 shadow-2xl shadow-black/15 py-3 animate-scale-in z-50">
                 <div className="flex items-center justify-between px-4 pb-3 border-b border-outline-variant/50">
                   <div className="flex items-center gap-2">
                     <span className="font-extrabold text-sm sm:text-base text-on-surface">Thông báo hệ thống</span>
@@ -237,7 +238,7 @@ export default function Header({ subtitle, onMenuClick }: HeaderProps) {
                   )}
                 </div>
 
-                <div className="max-h-80 overflow-y-auto divide-y divide-outline-variant/30">
+                <div className="max-h-72 sm:max-h-80 overflow-y-auto divide-y divide-outline-variant/30">
                   {notifications.map((n) => (
                     <div
                       key={n.id}
@@ -286,7 +287,7 @@ export default function Header({ subtitle, onMenuClick }: HeaderProps) {
             <button
               onClick={() => setProfileOpen(!profileOpen)}
               className={`
-                cursor-pointer flex items-center gap-2.5 p-1 sm:pl-3 sm:pr-2.5 sm:py-1.5 rounded-2xl transition-all duration-200 border
+                cursor-pointer flex items-center gap-2 p-1 sm:pl-3 sm:pr-2.5 sm:py-1.5 rounded-2xl transition-all duration-200 border
                 ${profileOpen
                   ? 'border-primary ring-2 ring-primary/15 bg-surface-container-low shadow-sm'
                   : 'border-outline-variant/40 hover:border-primary/40 hover:bg-surface-container-high/60'
@@ -301,11 +302,11 @@ export default function Header({ subtitle, onMenuClick }: HeaderProps) {
               </div>
               <img
                 alt="Profile"
-                className="w-9 h-9 rounded-xl object-cover border border-outline-variant/60 shadow-xs"
+                className="w-8 h-8 sm:w-9 sm:h-9 rounded-xl object-cover border border-outline-variant/60 shadow-xs"
                 src={decorativeImages.profile}
               />
               <ChevronDown
-                size={16}
+                size={15}
                 className={`text-on-surface-variant transition-transform duration-200 hidden sm:block ${
                   profileOpen ? 'rotate-180 text-primary' : ''
                 }`}
@@ -314,7 +315,7 @@ export default function Header({ subtitle, onMenuClick }: HeaderProps) {
 
             {/* Profile Menu */}
             {profileOpen && (
-              <div className="absolute right-0 mt-2 w-68 rounded-2xl bg-surface-container-lowest/98 backdrop-blur-2xl border border-outline-variant/80 shadow-2xl shadow-black/10 p-2.5 animate-scale-in z-50">
+              <div className="fixed left-3 right-3 sm:left-auto sm:right-0 sm:absolute top-16 sm:top-full mt-2 w-auto sm:w-68 rounded-2xl bg-surface-container-lowest/98 backdrop-blur-2xl border border-outline-variant/80 shadow-2xl shadow-black/15 p-2.5 animate-scale-in z-50">
                 <div className="p-3 border-b border-outline-variant/40 mb-1">
                   <div className="flex items-center gap-3">
                     <img

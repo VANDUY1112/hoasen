@@ -108,13 +108,13 @@ export default function NhapKhoThanhPham() {
 
   return (
     <div className="flex flex-col w-full p-4 sm:p-6 gap-6 animate-fade-in max-w-7xl mx-auto">
-      {/* Page Title */}
-      <div className="flex items-center justify-between">
-        <div className="flex items-center gap-3.5">
+      {/* Title & Actions */}
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3.5">
+        <div className="flex items-center gap-3">
           <button
             onClick={() => navigate('/quan-ly-ton-kho')}
-            className="cursor-pointer p-2.5 hover:bg-surface-container-high rounded-xl transition-colors text-on-surface-variant hover:text-primary border border-outline-variant/40 shadow-xs"
-            title="Quay lại Tồn kho"
+            className="cursor-pointer p-2 sm:p-2.5 hover:bg-surface-container-high rounded-xl transition-colors text-on-surface-variant hover:text-primary border border-outline-variant/40 shadow-xs shrink-0"
+            title="Quay lại Quản lý tồn kho"
           >
             <ArrowLeft size={18} />
           </button>
@@ -124,7 +124,7 @@ export default function NhapKhoThanhPham() {
               <span className="w-1.5 h-1.5 rounded-full bg-primary" />
               <span className="text-xs text-on-surface-variant font-medium">Nhập kho</span>
             </div>
-            <h1 className="text-2xl sm:text-4xl font-extrabold text-on-surface tracking-tight mt-0.5">
+            <h1 className="text-xl sm:text-3xl md:text-4xl font-extrabold text-on-surface tracking-tight mt-0.5">
               Nhập kho Thành phẩm
             </h1>
           </div>
@@ -132,7 +132,7 @@ export default function NhapKhoThanhPham() {
 
         <button
           onClick={handleOpenPrint}
-          className="cursor-pointer bg-surface-container-lowest border border-outline-variant/50 text-on-surface px-4 py-2.5 rounded-xl font-mono text-xs font-bold uppercase tracking-wider flex items-center gap-2 hover:bg-surface-container transition-colors shadow-xs"
+          className="cursor-pointer bg-surface-container-lowest border border-outline-variant/50 text-on-surface px-4 py-2.5 rounded-xl font-mono text-xs font-bold uppercase tracking-wider flex items-center justify-center gap-2 hover:bg-surface-container transition-colors shadow-xs w-full sm:w-auto"
         >
           <Printer size={16} className="text-primary" /> Xem mẫu phiếu A4
         </button>
@@ -141,7 +141,7 @@ export default function NhapKhoThanhPham() {
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
         {/* Form Container */}
         <div className="lg:col-span-7">
-          <div className="bg-surface-container-lowest p-6 sm:p-7 rounded-2xl shadow-sm border border-outline-variant/50">
+          <div className="bg-surface-container-lowest p-4 sm:p-6 md:p-7 rounded-2xl shadow-sm border border-outline-variant/50">
             <form className="space-y-6" onSubmit={handleSubmit}>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
                 <div>

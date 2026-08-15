@@ -11,6 +11,9 @@ import {
   Settings,
   X,
   Sparkles,
+  PackagePlus,
+  Target,
+  FileText,
 } from 'lucide-react'
 
 interface SidebarProps {
@@ -37,6 +40,12 @@ const navItems: NavItemConfig[] = [
   { path: 'quan-ly-dinh-muc', label: 'Quản lý Định mức', icon: BarChart3 },
   { path: 'du-bao-bao-tri', label: 'Dự báo Bảo trì', icon: Wrench, badge: '07 vụ', badgeVariant: 'error' },
   { path: 'hieu-suat-ca-truc', label: 'Hiệu suất Ca trực', icon: Users, badge: 'Ca 1', badgeVariant: 'neutral' },
+]
+
+const operationalItems: NavItemConfig[] = [
+  { path: 'nhap-kho-thanh-pham', label: 'Nhập kho Thành phẩm', icon: PackagePlus },
+  { path: 'thiet-lap-muc-tieu-ca-truc', label: 'Thiết lập Mục tiêu Ca', icon: Target },
+  { path: 'lap-phieu-sua-chua', label: 'Lập Phiếu Sửa chữa', icon: FileText },
 ]
 
 export default function Sidebar({ isOpen, onClose, currentView, onNavigate }: SidebarProps) {
@@ -160,6 +169,47 @@ export default function Sidebar({ isOpen, onClose, currentView, onNavigate }: Si
           )
         })}
 
+        {/* Operational Console Section */}
+        <div className="pt-3 mt-3 border-t border-outline-variant/40">
+          <p className="px-3 pb-2 text-[11px] font-mono uppercase tracking-wider text-on-surface-variant/80 font-bold">
+            Nghiệp vụ trực tiếp
+          </p>
+          <div className="space-y-1">
+            {operationalItems.map((item) => {
+              const isActive = currentView === item.path
+              const Icon = item.icon
+              return (
+                <button
+                  key={item.path}
+                  onClick={() => handleNav(item.path)}
+                  className={`
+                    cursor-pointer group w-full flex items-center justify-between px-3.5 py-2.5 rounded-xl transition-all duration-200 text-left text-sm font-semibold
+                    ${isActive
+                      ? 'bg-primary-container text-on-primary-container font-bold shadow-md shadow-primary/10'
+                      : 'text-on-surface-variant hover:bg-surface-container hover:text-on-surface'
+                    }
+                  `}
+                >
+                  <div className="flex items-center gap-3 truncate">
+                    <div
+                      className={`
+                        p-1.5 rounded-lg transition-colors
+                        ${isActive
+                          ? 'bg-on-primary-container/10 text-on-primary-container'
+                          : 'text-on-surface-variant group-hover:text-primary group-hover:bg-primary/10'
+                        }
+                      `}
+                    >
+                      <Icon size={18} />
+                    </div>
+                    <span className="truncate">{item.label}</span>
+                  </div>
+                </button>
+              )
+            })}
+          </div>
+        </div>
+
         {/* Divider + Settings */}
         <div className="pt-3 mt-3 border-t border-outline-variant/40">
           <button
@@ -189,17 +239,17 @@ export default function Sidebar({ isOpen, onClose, currentView, onNavigate }: Si
       </nav>
 
       {/* AI Assistant Banner */}
-      <div className="p-3.5 m-3 rounded-2xl gradient-primary text-on-primary shadow-lg shadow-primary/15 relative overflow-hidden">
+      <div className="p-3.5 m-3 rounded-2xl gradient-primary text-on-primary shadow-lg shadow-primary/15 relative overflow-hidden shrink-0">
         <div className="relative z-10">
           <div className="flex items-center gap-1.5 text-xs font-bold uppercase tracking-wider mb-1 opacity-90 font-mono">
             <Sparkles size={15} /> AI Copilot Sản xuất
           </div>
-          <p className="text-xs sm:text-sm opacity-90 leading-snug">Hệ thống đang tự động tối ưu hóa lịch bảo trì và tiêu hao năng lượng.</p>
+          <p className="text-xs opacity-90 leading-snug">Tối ưu hóa lịch bảo trì và tiêu hao năng lượng tự động.</p>
         </div>
       </div>
 
       {/* Footer */}
-      <div className="p-3.5 border-t border-outline-variant/40 text-center">
+      <div className="p-3 border-t border-outline-variant/40 text-center shrink-0">
         <p className="text-xs font-mono text-on-surface-variant/80 uppercase tracking-widest font-bold">
           HOA SEN ERP 2026
         </p>

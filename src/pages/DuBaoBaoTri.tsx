@@ -54,23 +54,23 @@ export default function DuBaoBaoTri() {
   return (
     <div className="flex flex-col w-full animate-fade-in max-w-7xl mx-auto pb-8">
       {/* Header */}
-      <section className="px-4 sm:px-6 py-6 sm:py-8 flex flex-col md:flex-row justify-between items-start md:items-end gap-6">
+      <section className="px-4 sm:px-6 py-4 sm:py-8 flex flex-col md:flex-row justify-between items-start md:items-end gap-4 sm:gap-6">
         <div className="max-w-2xl">
-          <div className="flex items-center gap-2 mb-2">
+          <div className="flex items-center gap-2 mb-1.5">
             <span className="font-mono text-xs sm:text-sm uppercase tracking-wider text-primary font-bold">Predictive Intelligence &amp; IoT</span>
             <span className="w-2 h-2 rounded-full bg-primary" />
             <span className="text-xs sm:text-sm text-on-surface-variant font-semibold">Bảo trì dự đoán</span>
           </div>
-          <h1 className="text-3xl md:text-5xl font-extrabold text-on-surface tracking-tight leading-none mb-3">
+          <h1 className="text-2xl sm:text-3xl md:text-5xl font-extrabold text-on-surface tracking-tight leading-none mb-2 sm:mb-3">
             Dự báo &amp; Kế hoạch Bảo trì
           </h1>
-          <p className="text-sm sm:text-base text-on-surface-variant max-w-xl leading-relaxed">
+          <p className="text-xs sm:text-base text-on-surface-variant max-w-xl leading-relaxed">
             Hệ thống cảm biến IoT thu thập rung chấn thời gian thực kết hợp thuật toán AI dự báo hao mòn vòng bi và động cơ.
           </p>
         </div>
 
-        <div className="flex gap-4 items-center bg-surface-container-lowest p-5 rounded-2xl shadow-sm border border-outline-variant/40">
-          <div className="relative w-14 h-14 flex items-center justify-center">
+        <div className="flex gap-4 items-center bg-surface-container-lowest p-4 sm:p-5 rounded-2xl shadow-sm border border-outline-variant/40 w-full sm:w-auto">
+          <div className="relative w-12 h-12 sm:w-14 sm:h-14 flex items-center justify-center shrink-0">
             <svg className="absolute inset-0 w-full h-full -rotate-90" viewBox="0 0 36 36">
               <circle className="stroke-surface-container-highest" cx="18" cy="18" fill="none" strokeWidth="3.5" />
               <circle
@@ -84,11 +84,11 @@ export default function DuBaoBaoTri() {
                 strokeWidth="3.5"
               />
             </svg>
-            <span className="font-mono text-sm text-primary font-extrabold">85%</span>
+            <span className="font-mono text-xs sm:text-sm text-primary font-extrabold">85%</span>
           </div>
           <div>
             <p className="font-mono text-xs uppercase text-on-surface-variant font-bold">Chỉ số Sức khỏe TB</p>
-            <p className="text-lg font-extrabold text-on-surface">Vận hành Ổn định</p>
+            <p className="text-base sm:text-lg font-extrabold text-on-surface">Vận hành Ổn định</p>
           </div>
         </div>
       </section>
@@ -97,39 +97,39 @@ export default function DuBaoBaoTri() {
       <section className="px-4 sm:px-6 pb-6">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-5 sm:gap-6">
           {/* Critical Alert Card */}
-          <div className="lg:col-span-8 bg-rose-500/5 rounded-2xl p-6 sm:p-7 flex flex-col md:flex-row gap-6 items-center border border-rose-500/25 relative overflow-hidden group shadow-sm">
+          <div className="lg:col-span-8 bg-rose-500/5 rounded-2xl p-5 sm:p-7 flex flex-col md:flex-row gap-5 sm:gap-6 items-center border border-rose-500/25 relative overflow-hidden group shadow-sm">
             <div className="absolute top-0 right-0 p-4 opacity-5 group-hover:opacity-10 transition-opacity">
               <AlertTriangle size={140} className="text-rose-600" />
             </div>
 
             <div className="relative z-10 w-full md:w-48 shrink-0">
               <div
-                className="aspect-square w-full rounded-2xl bg-cover bg-center shadow-md border border-rose-500/20"
+                className="aspect-video md:aspect-square w-full rounded-2xl bg-cover bg-center shadow-md border border-rose-500/20"
                 style={{ backgroundImage: `url('${decorativeImages.maintenance}')` }}
               />
             </div>
 
-            <div className="relative z-10 flex-1">
-              <div className="flex items-center gap-2.5 mb-2.5">
+            <div className="relative z-10 flex-1 w-full">
+              <div className="flex flex-wrap items-center gap-2 mb-2">
                 <Badge variant="error" pulse size="sm">Cần bảo trì khẩn cấp</Badge>
-                <span className="font-mono text-sm text-rose-700 font-extrabold">Hỏng hóc trong 48h</span>
+                <span className="font-mono text-xs sm:text-sm text-rose-700 font-extrabold">Hỏng hóc trong 48h</span>
               </div>
-              <h3 className="text-2xl sm:text-3xl font-extrabold text-on-surface mb-2.5">Trục cán chính - Line 01</h3>
-              <p className="text-sm sm:text-base text-on-surface-variant mb-5 leading-relaxed font-medium">
+              <h3 className="text-xl sm:text-2xl md:text-3xl font-extrabold text-on-surface mb-2">Trục cán chính - Line 01</h3>
+              <p className="text-xs sm:text-sm md:text-base text-on-surface-variant mb-4 sm:mb-5 leading-relaxed font-medium">
                 Cảm biến phát hiện rung chấn bất thường tại ổ đỡ trục phía Đông. Dự báo mòn rãnh bi SKF 22320 nếu không thay thế trước ca tối.
               </p>
-              <div className="flex flex-wrap gap-3.5">
+              <div className="flex flex-col sm:flex-row gap-2.5 sm:gap-3.5">
                 <button
                   onClick={() => navigate('/lap-phieu-sua-chua')}
-                  className="cursor-pointer bg-primary text-on-primary px-6 py-3 rounded-xl font-mono text-xs sm:text-sm uppercase tracking-wider hover:bg-on-primary-fixed-variant transition-all shadow-md shadow-primary/20 font-bold"
+                  className="cursor-pointer bg-primary text-on-primary px-5 sm:px-6 py-2.5 sm:py-3 rounded-xl font-mono text-xs sm:text-sm uppercase tracking-wider hover:bg-on-primary-fixed-variant transition-all shadow-md shadow-primary/20 font-bold text-center"
                 >
                   Lập phiếu sửa chữa
                 </button>
                 <button
                   onClick={() => handleSensorDetails('Trục cán chính - Line 01')}
-                  className="cursor-pointer bg-surface-container-lowest text-on-surface px-5 py-3 rounded-xl font-mono text-xs sm:text-sm border border-outline-variant/60 uppercase hover:bg-surface-container transition-all font-bold"
+                  className="cursor-pointer bg-surface-container-lowest text-on-surface px-4 sm:px-5 py-2.5 sm:py-3 rounded-xl font-mono text-xs sm:text-sm border border-outline-variant/60 uppercase hover:bg-surface-container transition-all font-bold text-center"
                 >
-                  Chi tiết cảm biến
+                  Dữ liệu Telemetry
                 </button>
               </div>
             </div>

@@ -28,61 +28,61 @@ export default function PrintModal({ isOpen, onClose, data }: PrintModalProps) {
   }
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm animate-fade-in print:p-0 print:bg-transparent">
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-4 bg-black/60 backdrop-blur-sm animate-fade-in print:p-0 print:bg-transparent">
       {/* Modal Card */}
-      <div className="bg-surface-container-lowest w-full max-w-3xl rounded-2xl shadow-2xl border border-outline-variant/60 overflow-hidden flex flex-col max-h-[90vh] print:max-h-none print:shadow-none print:border-none print:w-full print:rounded-none">
+      <div className="bg-surface-container-lowest w-full max-w-3xl rounded-2xl sm:rounded-3xl shadow-2xl border border-outline-variant/60 overflow-hidden flex flex-col max-h-[92vh] print:max-h-none print:shadow-none print:border-none print:w-full print:rounded-none">
         
         {/* Top Action Bar (Hidden on print) */}
-        <div className="p-4 bg-surface-container-low border-b border-outline-variant/40 flex items-center justify-between print:hidden">
+        <div className="p-3.5 sm:p-4 bg-surface-container-low border-b border-outline-variant/40 flex items-center justify-between print:hidden">
           <div className="flex items-center gap-2.5">
             <div className="p-2 rounded-xl bg-primary/10 text-primary">
-              <Printer size={20} />
+              <Printer size={18} />
             </div>
             <div>
-              <h3 className="font-extrabold text-on-surface text-base">Xem trước bản in A4</h3>
-              <p className="text-xs font-mono text-on-surface-variant">Mẫu biểu chuẩn ISO 9001:2015 - Tập đoàn Hoa Sen</p>
+              <h3 className="font-extrabold text-on-surface text-sm sm:text-base">Xem trước bản in A4</h3>
+              <p className="text-[10px] sm:text-xs font-mono text-on-surface-variant line-clamp-1">Mẫu biểu chuẩn ISO 9001:2015 - Hoa Sen Group</p>
             </div>
           </div>
 
           <div className="flex items-center gap-2">
             <button
               onClick={handlePrint}
-              className="cursor-pointer bg-primary text-on-primary px-4 py-2 rounded-xl font-mono text-xs font-bold uppercase tracking-wider flex items-center gap-2 hover:bg-on-primary-fixed-variant transition-colors shadow-sm"
+              className="cursor-pointer bg-primary text-on-primary px-3 sm:px-4 py-2 rounded-xl font-mono text-xs font-bold uppercase tracking-wider flex items-center gap-1.5 hover:bg-on-primary-fixed-variant transition-colors shadow-sm"
             >
-              <Printer size={16} /> In Phiếu Ngay
+              <Printer size={15} /> <span className="hidden xs:inline">In Phiếu</span>
             </button>
             <button
               onClick={onClose}
               className="cursor-pointer p-2 text-on-surface-variant hover:text-primary hover:bg-surface-container-high rounded-xl transition-colors"
             >
-              <X size={20} />
+              <X size={18} />
             </button>
           </div>
         </div>
 
         {/* Printable Document Area */}
-        <div ref={printContentRef} className="p-8 sm:p-12 overflow-y-auto print:p-0 print:overflow-visible font-sans">
+        <div ref={printContentRef} className="p-4 sm:p-8 md:p-12 overflow-y-auto print:p-0 print:overflow-visible font-sans">
           {/* Header Company Details */}
-          <div className="border-b-2 border-primary pb-4 mb-6 flex justify-between items-start">
-            <div className="flex items-center gap-4">
-              <img src="/logo.jpg" alt="Hoa Sen Logo" className="h-14 w-14 object-cover rounded-lg border border-outline-variant/30" />
+          <div className="border-b-2 border-primary pb-4 mb-6 flex flex-col sm:flex-row justify-between items-start gap-4">
+            <div className="flex items-center gap-3.5">
+              <img src="/logo.jpg" alt="Hoa Sen Logo" className="h-12 w-12 sm:h-14 sm:w-14 object-cover rounded-lg border border-outline-variant/30 shrink-0" />
               <div>
-                <h1 className="text-xl font-extrabold text-primary tracking-tight uppercase leading-none">
+                <h1 className="text-base sm:text-xl font-extrabold text-primary tracking-tight uppercase leading-none">
                   Tập Đoàn Hoa Sen (Hoa Sen Group)
                 </h1>
-                <p className="text-xs font-bold text-on-surface uppercase mt-1">
+                <p className="text-[11px] sm:text-xs font-bold text-on-surface uppercase mt-1">
                   Nhà máy Tôn Hoa Sen Phú Mỹ - KCN Phú Mỹ 1, Bà Rịa - Vũng Tàu
                 </p>
-                <p className="text-xs text-on-surface-variant font-mono mt-0.5">
+                <p className="text-[10px] sm:text-xs text-on-surface-variant font-mono mt-0.5">
                   Hotline SCADA: (0254) 3922 888 • Email: scada@hoasengroup.vn
                 </p>
               </div>
             </div>
-            <div className="text-right">
-              <span className="inline-block px-3 py-1 bg-surface-container-high border border-outline-variant/40 rounded text-xs font-mono font-bold text-on-surface">
+            <div className="text-left sm:text-right w-full sm:w-auto flex sm:flex-col justify-between items-center sm:items-end border-t sm:border-t-0 pt-2 sm:pt-0 border-outline-variant/30">
+              <span className="inline-block px-2.5 py-1 bg-surface-container-high border border-outline-variant/40 rounded text-xs font-mono font-bold text-on-surface">
                 {data.code}
               </span>
-              <p className="text-[11px] font-mono text-on-surface-variant mt-1">Ngày lập: {data.date}</p>
+              <p className="text-[10px] sm:text-[11px] font-mono text-on-surface-variant mt-0.5">Ngày: {data.date}</p>
             </div>
           </div>
 

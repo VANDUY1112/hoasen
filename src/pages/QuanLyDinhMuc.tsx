@@ -29,32 +29,32 @@ export default function QuanLyDinhMuc() {
             <span className="w-2 h-2 rounded-full bg-primary" />
             <span className="text-xs sm:text-sm text-on-surface-variant font-semibold">Quản trị Định mức</span>
           </div>
-          <h1 className="text-3xl md:text-5xl font-extrabold text-on-surface tracking-tight">
+          <h1 className="text-2xl sm:text-3xl md:text-5xl font-extrabold text-on-surface tracking-tight">
             Quản lý Định mức &amp; KPIs
           </h1>
-          <p className="text-sm sm:text-base text-on-surface-variant max-w-2xl leading-relaxed font-medium">
+          <p className="text-xs sm:text-base text-on-surface-variant max-w-2xl leading-relaxed font-medium">
             Thiết lập và theo dõi mục tiêu sản xuất thực tế so với kế hoạch. Hệ thống tự động phân tích độ lệch chuẩn và cảnh báo hiệu suất.
           </p>
         </div>
 
-        <div className="flex gap-3 flex-wrap">
+        <div className="grid grid-cols-2 sm:flex gap-2.5 sm:gap-3 w-full sm:w-auto">
           <button
             onClick={handleExport}
-            className="cursor-pointer flex items-center gap-2 px-5 py-2.5 bg-surface-container-highest text-on-surface font-bold rounded-xl hover:bg-surface-container-high transition-all text-xs sm:text-sm uppercase font-mono tracking-wider border border-outline-variant/40"
+            className="cursor-pointer flex items-center justify-center gap-2 px-3.5 sm:px-5 py-2.5 bg-surface-container-highest text-on-surface font-bold rounded-xl hover:bg-surface-container-high transition-all text-xs sm:text-sm uppercase font-mono tracking-wider border border-outline-variant/40"
           >
-            <Download size={18} /> Xuất báo cáo
+            <Download size={16} /> <span className="truncate">Xuất báo cáo</span>
           </button>
           <button
             onClick={() => navigate('/thiet-lap-muc-tieu-ca-truc')}
-            className="cursor-pointer flex items-center gap-2 px-5 py-2.5 bg-primary text-on-primary font-extrabold rounded-xl shadow-md shadow-primary/20 hover:bg-on-primary-fixed-variant transition-all text-xs sm:text-sm uppercase font-mono tracking-wider"
+            className="cursor-pointer flex items-center justify-center gap-2 px-3.5 sm:px-5 py-2.5 bg-primary text-on-primary font-extrabold rounded-xl shadow-md shadow-primary/20 hover:bg-on-primary-fixed-variant transition-all text-xs sm:text-sm uppercase font-mono tracking-wider"
           >
-            <FileEdit size={18} /> Cập nhật Định mức
+            <FileEdit size={16} /> <span className="truncate">Cập nhật Định mức</span>
           </button>
         </div>
       </div>
 
       {/* Top Stats */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-5 stagger">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-5 stagger">
         {[
           { label: 'Target Yield', value: '42,500', unit: 'Tấn/tháng', trend: '+4.2%', icon: Factory, border: 'border-l-4 border-l-primary' },
           { label: 'Quality Standard', value: '99.8', unit: '%', progress: 99.8, icon: ShieldCheck, border: 'border-l-4 border-l-emerald-500' },

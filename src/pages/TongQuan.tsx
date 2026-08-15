@@ -100,25 +100,25 @@ export default function TongQuan() {
       {/* Page Header */}
       <section className="relative flex flex-col md:flex-row md:items-end justify-between gap-4">
         <div className="z-10">
-          <div className="flex items-center gap-2 mb-2">
+          <div className="flex items-center gap-2 mb-1.5">
             <span className="font-mono text-xs sm:text-sm text-primary uppercase font-bold tracking-wider">Executive Overview</span>
             <span className="w-2 h-2 rounded-full bg-primary" />
             <span className="text-xs sm:text-sm text-on-surface-variant font-semibold">Bảng điều khiển trung tâm</span>
           </div>
-          <h1 className="text-3xl md:text-5xl font-extrabold text-on-surface tracking-tight">
+          <h1 className="text-2xl sm:text-3xl md:text-5xl font-extrabold text-on-surface tracking-tight">
             Bảng điều khiển <span className="text-primary">Tổng quan</span>
           </h1>
         </div>
 
-        <div className="flex flex-wrap items-center gap-2.5 sm:gap-3">
+        <div className="flex flex-col sm:flex-row sm:flex-wrap items-stretch sm:items-center gap-2.5 sm:gap-3">
           {/* Time Filter Tabs */}
-          <div className="flex bg-surface-container p-1 rounded-xl gap-1">
+          <div className="flex bg-surface-container p-1 rounded-xl gap-1 overflow-x-auto no-scrollbar">
             {timeRanges.map((t) => (
               <button
                 key={t.id}
                 onClick={() => setActiveTimeRange(t.id)}
                 className={`
-                  cursor-pointer px-3.5 py-2 rounded-lg text-xs sm:text-sm font-bold transition-all duration-150
+                  cursor-pointer px-3 sm:px-3.5 py-2 rounded-lg text-xs sm:text-sm font-bold transition-all duration-150 whitespace-nowrap flex-1 sm:flex-none text-center
                   ${activeTimeRange === t.id
                     ? 'bg-surface-container-lowest text-primary shadow-xs'
                     : 'text-on-surface-variant hover:text-on-surface'
@@ -130,30 +130,33 @@ export default function TongQuan() {
             ))}
           </div>
 
-          <button
-            onClick={handleRunAiDiagnosis}
-            disabled={isDiagnosing}
-            className="cursor-pointer bg-primary/10 text-primary hover:bg-primary/20 border border-primary/20 px-4 py-2.5 font-mono text-xs sm:text-sm uppercase tracking-wider flex items-center gap-2 font-bold rounded-xl transition-all shadow-xs"
-          >
-            <Sparkles size={16} className={isDiagnosing ? 'animate-spin' : ''} />
-            {isDiagnosing ? 'Đang chẩn đoán...' : 'Chẩn đoán AI'}
-          </button>
+          <div className="grid grid-cols-2 sm:flex sm:flex-wrap items-center gap-2 sm:gap-2.5">
+            <button
+              onClick={handleRunAiDiagnosis}
+              disabled={isDiagnosing}
+              className="cursor-pointer bg-primary/10 text-primary hover:bg-primary/20 border border-primary/20 px-3 sm:px-4 py-2.5 font-mono text-xs sm:text-sm uppercase tracking-wider flex items-center justify-center gap-1.5 font-bold rounded-xl transition-all shadow-xs"
+            >
+              <Sparkles size={16} className={isDiagnosing ? 'animate-spin' : ''} />
+              <span className="truncate">{isDiagnosing ? 'Đang quét...' : 'Chẩn đoán AI'}</span>
+            </button>
 
-          <button
-            onClick={handleExportProductionExcel}
-            disabled={exporting}
-            className="cursor-pointer bg-surface-container-lowest text-on-surface border border-outline-variant/50 px-4 py-2.5 font-mono text-xs sm:text-sm uppercase tracking-wider flex items-center gap-2 font-bold rounded-xl hover:bg-surface-container transition-colors shadow-xs"
-          >
-            <FileSpreadsheet size={16} className="text-emerald-600" /> Xuất Excel
-          </button>
+            <button
+              onClick={handleExportProductionExcel}
+              disabled={exporting}
+              className="cursor-pointer bg-surface-container-lowest text-on-surface border border-outline-variant/50 px-3 sm:px-4 py-2.5 font-mono text-xs sm:text-sm uppercase tracking-wider flex items-center justify-center gap-1.5 font-bold rounded-xl hover:bg-surface-container transition-colors shadow-xs"
+            >
+              <FileSpreadsheet size={16} className="text-emerald-600 shrink-0" />
+              <span className="truncate">Xuất Excel</span>
+            </button>
 
-          <button
-            onClick={handleExportExcelSummary}
-            disabled={exporting}
-            className="cursor-pointer bg-primary text-on-primary px-5 py-2.5 font-mono text-xs sm:text-sm uppercase tracking-wider flex items-center gap-2 font-extrabold rounded-xl hover:bg-on-primary-fixed-variant transition-all shadow-md shadow-primary/20"
-          >
-            <Download size={16} /> Báo cáo Giám Đốc
-          </button>
+            <button
+              onClick={handleExportExcelSummary}
+              disabled={exporting}
+              className="cursor-pointer col-span-2 sm:col-span-1 bg-primary text-on-primary px-4 sm:px-5 py-2.5 font-mono text-xs sm:text-sm uppercase tracking-wider flex items-center justify-center gap-2 font-extrabold rounded-xl hover:bg-on-primary-fixed-variant transition-all shadow-md shadow-primary/20"
+            >
+              <Download size={16} className="shrink-0" /> Báo cáo Giám Đốc
+            </button>
+          </div>
         </div>
         <div className="absolute -top-24 -left-24 w-96 h-96 bg-primary/5 rounded-full blur-[100px] pointer-events-none" />
       </section>
