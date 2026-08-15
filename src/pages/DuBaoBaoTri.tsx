@@ -1,40 +1,54 @@
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { AlertTriangle, Wrench, Calendar, Package, Activity, Zap, CheckCircle2, ShoppingCart, Sparkles } from 'lucide-react'
+import { AlertTriangle, Wrench, Calendar, Package, Activity, ShoppingCart, Printer, CheckCircle2, Clock } from 'lucide-react'
 import Badge from '../components/ui/Badge'
 import ProgressBar from '../components/ui/ProgressBar'
 import { useToast } from '../components/ui/Toast'
-import { maintenanceItems, sparePartsForecast, maintenanceTimeline, decorativeImages } from '../data/mockData'
+import { useDataContext } from '../context/DataContext'
+import PrintModal, { PrintDocumentData } from '../components/ui/PrintModal'
+import { sparePartsForecast, decorativeImages } from '../data/mockData'
 
 export default function DuBaoBaoTri() {
   const navigate = useNavigate()
   const { addToast } = useToast()
+  const { tickets, maintenanceList, updateTicketStatus } = useDataContext()
   const [orderingPart, setOrderingPart] = useState<string | null>(null)
+  const [printData, setPrintData] = useState<PrintDocumentData | null>(null)
+  const [printOpen, setPrintOpen] = useState(false)
 
   const handleOrderPart = (partName: string) => {
     setOrderingPart(partName)
-    addToast({
-      type: 'info',
-      title: 'Tạo đề xuất mua sắm ERP',
-      message: `Đang lập Purchase Request cho vật tư: ${partName}...`,
-    })
+    addToast('info', 'Tạo đề xuất mua sắm ERP', `Đang lập Purchase Request cho vật tư: ${partName}...`)
 
     setTimeout(() => {
       setOrderingPart(null)
-      addToast({
-        type: 'success',
-        title: 'Đã phát hành đơn hàng PR-2026-08!',
-        message: `Đơn mua ${partName} đã được gửi tới Phòng Mua hàng.`,
-      })
-    }, 1500)
+      addToast('success', 'Đã phát hành đơn hàng PR-2026-08!', `Đơn mua ${partName} đã được gửi tới Phòng Mua hàng.`)
+    }, 1200)
   }
 
   const handleSensorDetails = (eqName: string) => {
-    addToast({
-      type: 'info',
-      title: `Telemetry: ${eqName}`,
-      message: 'Biên độ rung: 4.8 mm/s RMS | Nhiệt độ ổ bi: 78.5°C | Tần số sóng hài: 120Hz',
+    addToast('info', `Telemetry: ${eqName}`, 'Biên độ rung: 4.8 mm/s RMS | Nhiệt độ ổ bi: 78.5°C | Tần số sóng hài: 120Hz')
+  }
+
+  const handlePrintTicket = (t: typeof tickets[0]) => {
+    setPrintData({
+      type: 'phieu-sua-chua',
+      title: 'PHIẾU YÊU CẦU SỬA CHỮA & BẢO TRÌ THIẾT BỊ',
+      code: t.code,
+      date: t.createdAt,
+      author: t.reporter,
+      notes: t.description,
+      details: [
+        { label: 'Thiết bị gặp sự cố', value: t.equipment, highlight: true },
+        { label: 'Dây chuyền sản xuất', value: t.line },
+        { label: 'Mức độ ưu tiên', value: t.priority === 'urgent' ? 'KHẨN CẤP (P1)' : t.priority === 'high' ? 'CAO (P2)' : 'BÌNH THƯỜNG', highlight: true },
+        { label: 'Kỹ thuật viên phụ trách', value: t.assignedTo },
+        { label: 'Người yêu cầu / Trưởng ca', value: t.reporter },
+        { label: 'Vật tư thay thế đề xuất', value: t.partsNeeded || 'Chưa chỉ định' },
+        { label: 'Thời gian dừng máy dự kiến', value: t.downtimeEst || 'Chưa ước lượng' },
+      ],
     })
+    setPrintOpen(true)
   }
 
   return (
@@ -107,13 +121,13 @@ export default function DuBaoBaoTri() {
               <div className="flex flex-wrap gap-3.5">
                 <button
                   onClick={() => navigate('/lap-phieu-sua-chua')}
-                  className="bg-primary text-on-primary px-6 py-3 rounded-xl font-mono text-xs sm:text-sm uppercase tracking-wider hover:bg-on-primary-fixed-variant transition-all shadow-md shadow-primary/20 font-bold"
+                  className="cursor-pointer bg-primary text-on-primary px-6 py-3 rounded-xl font-mono text-xs sm:text-sm uppercase tracking-wider hover:bg-on-primary-fixed-variant transition-all shadow-md shadow-primary/20 font-bold"
                 >
                   Lập phiếu sửa chữa
                 </button>
                 <button
                   onClick={() => handleSensorDetails('Trục cán chính - Line 01')}
-                  className="bg-surface-container-lowest text-on-surface px-5 py-3 rounded-xl font-mono text-xs sm:text-sm border border-outline-variant/60 uppercase hover:bg-surface-container transition-all font-bold"
+                  className="cursor-pointer bg-surface-container-lowest text-on-surface px-5 py-3 rounded-xl font-mono text-xs sm:text-sm border border-outline-variant/60 uppercase hover:bg-surface-container transition-all font-bold"
                 >
                   Chi tiết cảm biến
                 </button>
@@ -142,7 +156,7 @@ export default function DuBaoBaoTri() {
                       <button
                         onClick={() => handleOrderPart(part.name)}
                         disabled={orderingPart === part.name}
-                        className="text-xs font-mono px-2.5 py-1 rounded-md bg-primary/10 text-primary hover:bg-primary hover:text-on-primary transition-colors font-extrabold uppercase shrink-0 flex items-center gap-1"
+                        className="cursor-pointer text-xs font-mono px-2.5 py-1 rounded-md bg-primary/10 text-primary hover:bg-primary hover:text-on-primary transition-colors font-extrabold uppercase shrink-0 flex items-center gap-1"
                       >
                         <ShoppingCart size={12} /> Đặt hàng
                       </button>
@@ -166,11 +180,11 @@ export default function DuBaoBaoTri() {
         </div>
       </section>
 
-      {/* Equipment Health Cards & Timeline */}
+      {/* Equipment Health Cards & Active Tickets */}
       <section className="px-4 sm:px-6">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-5 sm:gap-6">
           {/* Equipment Health Cards */}
-          <div className="lg:col-span-8">
+          <div className="lg:col-span-7">
             <div className="flex items-center justify-between mb-4">
               <div className="flex items-center gap-2">
                 <Activity size={20} className="text-primary" />
@@ -180,7 +194,7 @@ export default function DuBaoBaoTri() {
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4 stagger">
-              {maintenanceItems.map((item) => (
+              {maintenanceList.map((item) => (
                 <div
                   key={item.equipment}
                   className="bg-surface-container-lowest p-6 rounded-2xl shadow-sm card-hover border border-outline-variant/40"
@@ -207,7 +221,7 @@ export default function DuBaoBaoTri() {
                     <span className="font-mono text-xs sm:text-sm text-on-surface-variant font-bold">Lịch bảo trì: {item.nextMaintenance}</span>
                     <button
                       onClick={() => handleSensorDetails(item.equipment)}
-                      className="text-xs sm:text-sm text-primary font-bold hover:underline"
+                      className="cursor-pointer text-xs sm:text-sm text-primary font-bold hover:underline"
                     >
                       Chi tiết &rarr;
                     </button>
@@ -217,40 +231,70 @@ export default function DuBaoBaoTri() {
             </div>
           </div>
 
-          {/* Maintenance Timeline */}
-          <div className="lg:col-span-4 bg-surface-container-lowest rounded-2xl shadow-sm border border-outline-variant/40 p-6">
-            <div className="flex items-center gap-2 mb-5 pb-3 border-b border-outline-variant/40">
-              <Calendar size={20} className="text-primary" />
-              <h3 className="text-base sm:text-lg font-extrabold text-on-surface">Lịch Trình Bảo Trì Ca</h3>
+          {/* Active Maintenance Tickets */}
+          <div className="lg:col-span-5 bg-surface-container-lowest rounded-2xl shadow-sm border border-outline-variant/40 p-6">
+            <div className="flex items-center justify-between mb-5 pb-3 border-b border-outline-variant/40">
+              <div className="flex items-center gap-2">
+                <Calendar size={20} className="text-primary" />
+                <h3 className="text-base sm:text-lg font-extrabold text-on-surface">Phiếu Sửa Chữa Đang Xử Lý</h3>
+              </div>
+              <button
+                onClick={() => navigate('/lap-phieu-sua-chua')}
+                className="cursor-pointer text-xs font-bold font-mono text-primary hover:underline uppercase"
+              >
+                + Tạo phiếu
+              </button>
             </div>
 
-            <div className="space-y-4">
-              {maintenanceTimeline.map((item, i) => (
-                <div key={i} className="flex gap-3.5 items-start">
-                  <div className="flex flex-col items-center">
-                    <div
-                      className={`w-3.5 h-3.5 rounded-full ${
-                        item.priority === 'urgent'
-                          ? 'bg-rose-600 animate-ping'
-                          : item.priority === 'high'
-                          ? 'bg-amber-500'
-                          : 'bg-emerald-500'
-                      }`}
-                    />
-                    {i < maintenanceTimeline.length - 1 && (
-                      <div className="w-0.5 h-10 bg-outline-variant/40 mt-1" />
-                    )}
-                  </div>
-                  <div className="flex-1 pb-3">
-                    <p className="font-mono text-xs sm:text-sm text-on-surface-variant font-extrabold">{item.date}</p>
-                    <p className="text-sm font-bold text-on-surface mt-0.5">{item.task}</p>
-                  </div>
+            <div className="space-y-3.5">
+              {tickets.length === 0 ? (
+                <div className="p-8 text-center text-on-surface-variant text-sm font-medium">
+                  Hiện không có phiếu sửa chữa nào đang chờ.
                 </div>
-              ))}
+              ) : (
+                tickets.map((ticket) => (
+                  <div
+                    key={ticket.id}
+                    onClick={() => handlePrintTicket(ticket)}
+                    className="cursor-pointer p-4 rounded-xl bg-surface-container-low/60 border border-outline-variant/30 hover:border-primary/40 hover:bg-surface-container transition-all group"
+                  >
+                    <div className="flex justify-between items-start mb-1.5">
+                      <span className="font-mono text-xs font-bold text-primary">{ticket.code}</span>
+                      <span
+                        className={`
+                          text-[11px] font-mono px-2 py-0.5 rounded font-bold uppercase
+                          ${ticket.priority === 'urgent' ? 'bg-rose-500/10 text-rose-600 border border-rose-500/20' : 'bg-amber-500/10 text-amber-600 border border-amber-500/20'}
+                        `}
+                      >
+                        {ticket.priority === 'urgent' ? 'Khẩn cấp' : 'Mức cao'}
+                      </span>
+                    </div>
+
+                    <h4 className="font-bold text-sm text-on-surface mb-1 group-hover:text-primary transition-colors">
+                      {ticket.equipment}
+                    </h4>
+                    <p className="text-xs text-on-surface-variant line-clamp-2 mb-3 leading-snug font-medium">
+                      {ticket.description}
+                    </p>
+
+                    <div className="flex items-center justify-between text-xs font-mono text-on-surface-variant pt-2 border-t border-outline-variant/20">
+                      <span>Phụ trách: {ticket.assignedTo}</span>
+                      <div className="flex items-center gap-1 text-primary font-bold">
+                        <Printer size={13} />
+                        <span>In phiếu</span>
+                      </div>
+                    </div>
+                  </div>
+                ))
+              )}
             </div>
           </div>
         </div>
       </section>
+
+      {/* Print Modal */}
+      <PrintModal isOpen={printOpen} onClose={() => setPrintOpen(false)} data={printData} />
     </div>
   )
 }
+

@@ -1,11 +1,12 @@
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { Settings, Users, Award, TrendingUp, CheckCircle2, AlertCircle, Clock, FileSpreadsheet } from 'lucide-react'
+import { Settings, Award, CheckCircle2, FileSpreadsheet, Printer } from 'lucide-react'
 import Badge from '../components/ui/Badge'
 import ProgressBar from '../components/ui/ProgressBar'
 import { useToast } from '../components/ui/Toast'
 import { exportShiftReport } from '../services/excelExport'
-import { shiftPerformanceData } from '../data/mockData'
+import { useDataContext } from '../context/DataContext'
+import PrintModal, { PrintDocumentData } from '../components/ui/PrintModal'
 
 const shifts = [
   { id: 'ca-1', label: 'Ca 1', time: '06:00 - 14:00', chief: 'Nguyễn Văn An' },
@@ -17,8 +18,12 @@ export default function HieuSuatCaTruc() {
   const [activeShift, setActiveShift] = useState('ca-1')
   const [exporting, setExporting] = useState(false)
   const navigate = useNavigate()
+  const { shiftData } = useDataContext()
   const { addToast } = useToast()
-  const data = shiftPerformanceData[activeShift] || []
+  const [printData, setPrintData] = useState<PrintDocumentData | null>(null)
+  const [printOpen, setPrintOpen] = useState(false)
+
+  const data = shiftData[activeShift] || []
 
   const totalOutput = data.reduce((sum, d) => sum + d.output, 0)
   const totalTarget = data.reduce((sum, d) => sum + d.target, 0)
@@ -29,22 +34,34 @@ export default function HieuSuatCaTruc() {
   const handleExportShiftExcel = async () => {
     try {
       setExporting(true)
-      addToast({
-        type: 'info',
-        title: `Đang tạo Báo cáo Hiệu suất ${activeShiftObj?.label}...`,
-        message: 'Định dạng bảng đánh giá công nhân và chỉ tiêu...',
-      })
+      addToast('info', `Đang tạo Báo cáo Hiệu suất ${activeShiftObj?.label}...`, 'Định dạng bảng đánh giá công nhân và chỉ tiêu...')
       await exportShiftReport(activeShiftObj?.label || 'Ca 1', data)
-      addToast({
-        type: 'success',
-        title: 'Xuất Báo Cáo Ca Thành Công!',
-        message: 'Tệp Excel đã sẵn sàng.',
-      })
+      addToast('success', 'Xuất Báo Cáo Ca Thành Công!', 'Tệp Excel đã sẵn sàng.')
     } catch {
-      addToast({ type: 'error', title: 'Lỗi xuất file', message: 'Không thể tạo file Excel.' })
+      addToast('error', 'Lỗi xuất file', 'Không thể tạo file Excel.')
     } finally {
       setExporting(false)
     }
+  }
+
+  const handleOpenPrintReport = () => {
+    setPrintData({
+      type: 'bao-cao-ca',
+      title: `BÁO CÁO TỔNG HỢP HIỆU SUẤT ${activeShiftObj?.label.toUpperCase()}`,
+      code: `RPT-${activeShift.toUpperCase()}-${new Date().toISOString().slice(0, 10).replace(/-/g, '')}`,
+      date: new Date().toLocaleDateString('vi-VN'),
+      author: `${activeShiftObj?.chief} (Trưởng ca)`,
+      notes: `Toàn bộ ${data.length} nhân sự ca trực có mặt đầy đủ. Dây chuyền vận hành ổn định đạt ${((totalOutput / (totalTarget || 1)) * 100).toFixed(1)}% định mức giao ca.`,
+      details: [
+        { label: 'Ca trực vận hành', value: `${activeShiftObj?.label} (${activeShiftObj?.time})`, highlight: true },
+        { label: 'Trưởng ca phụ trách', value: activeShiftObj?.chief || '' },
+        { label: 'Tổng sản lượng thực tế', value: `${totalOutput.toLocaleString()} Tấn (Chỉ tiêu: ${totalTarget.toLocaleString()} T)`, highlight: true },
+        { label: 'Tỷ lệ hoàn thành định mức', value: `${((totalOutput / (totalTarget || 1)) * 100).toFixed(1)}%` },
+        { label: 'Chất lượng trung bình (Yield)', value: `${avgQuality}%` },
+        { label: 'Quân số vận hành', value: `${data.length} Công nhân (100% có mặt)` },
+      ],
+    })
+    setPrintOpen(true)
   }
 
   return (
@@ -65,18 +82,24 @@ export default function HieuSuatCaTruc() {
           </p>
         </div>
 
-        <div className="flex gap-3">
+        <div className="flex gap-3 flex-wrap">
           <button
             onClick={handleExportShiftExcel}
             disabled={exporting}
-            className="px-5 py-2.5 rounded-xl font-bold bg-emerald-700 hover:bg-emerald-800 text-white transition-all shadow-md flex items-center gap-2 text-xs sm:text-sm uppercase font-mono tracking-wider"
+            className="cursor-pointer px-5 py-2.5 rounded-xl font-bold bg-emerald-700 hover:bg-emerald-800 text-white transition-all shadow-md flex items-center gap-2 text-xs sm:text-sm uppercase font-mono tracking-wider"
           >
             <FileSpreadsheet size={18} className={exporting ? 'animate-spin' : ''} />
             {exporting ? 'Đang tạo...' : 'Xuất Excel'}
           </button>
           <button
+            onClick={handleOpenPrintReport}
+            className="cursor-pointer bg-surface-container-lowest text-on-surface border border-outline-variant/50 hover:bg-surface-container px-4 py-2.5 rounded-xl font-bold transition-all flex items-center gap-2 shadow-xs text-xs sm:text-sm uppercase font-mono tracking-wider"
+          >
+            <Printer size={18} className="text-primary" /> In Báo Cáo A4
+          </button>
+          <button
             onClick={() => navigate('/thiet-lap-muc-tieu-ca-truc')}
-            className="bg-surface-container-highest text-on-surface hover:bg-surface-container-high px-5 py-2.5 rounded-xl font-bold transition-all flex items-center gap-2 w-fit border border-outline-variant/40 shadow-xs text-xs sm:text-sm uppercase font-mono tracking-wider"
+            className="cursor-pointer bg-primary text-on-primary hover:bg-on-primary-fixed-variant px-5 py-2.5 rounded-xl font-bold transition-all flex items-center gap-2 w-fit shadow-md shadow-primary/20 text-xs sm:text-sm uppercase font-mono tracking-wider"
           >
             <Settings size={18} /> Thiết Lập Ca
           </button>
@@ -92,7 +115,7 @@ export default function HieuSuatCaTruc() {
               key={shift.id}
               onClick={() => setActiveShift(shift.id)}
               className={`
-                p-5 rounded-2xl border text-left transition-all duration-200 relative overflow-hidden flex items-center justify-between
+                cursor-pointer p-5 rounded-2xl border text-left transition-all duration-200 relative overflow-hidden flex items-center justify-between
                 ${isActive
                   ? 'bg-primary text-on-primary border-primary shadow-xl shadow-primary/20 scale-[1.01]'
                   : 'bg-surface-container-lowest text-on-surface border-outline-variant/50 hover:bg-surface-container-low/70 hover:border-primary/40'
@@ -130,7 +153,7 @@ export default function HieuSuatCaTruc() {
             <span className="text-base font-mono text-on-surface-variant font-bold">/ {totalTarget.toLocaleString()} T</span>
           </div>
           <div className="mt-4">
-            <ProgressBar value={(totalOutput / totalTarget) * 100} height="h-2" />
+            <ProgressBar value={(totalOutput / (totalTarget || 1)) * 100} height="h-2" />
           </div>
         </div>
 
@@ -184,7 +207,7 @@ export default function HieuSuatCaTruc() {
             </thead>
             <tbody className="divide-y divide-outline-variant/30 text-sm sm:text-base">
               {data.map((d) => (
-                <tr key={d.worker} className="hover:bg-surface-container/60 transition-colors group">
+                <tr key={d.worker} className="hover:bg-surface-container/60 transition-colors group cursor-pointer">
                   <td className="px-5 py-4 font-bold text-on-surface flex items-center gap-3.5">
                     <div className="w-9 h-9 rounded-xl bg-primary/10 text-primary font-mono text-sm font-extrabold flex items-center justify-center border border-primary/20">
                       {d.worker.split(' ').pop()?.[0]}
@@ -222,6 +245,10 @@ export default function HieuSuatCaTruc() {
           </table>
         </div>
       </div>
+
+      {/* Print Modal */}
+      <PrintModal isOpen={printOpen} onClose={() => setPrintOpen(false)} data={printData} />
     </div>
   )
 }
+

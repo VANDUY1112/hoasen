@@ -62,7 +62,7 @@ export default function ThoiGianDungMay() {
                 key={tab.id}
                 onClick={() => setActiveFilter(tab.id)}
                 className={`
-                  px-3.5 py-2 rounded-lg text-xs sm:text-sm font-bold transition-all duration-150
+                  cursor-pointer px-3.5 py-2 rounded-lg text-xs sm:text-sm font-bold transition-all duration-150
                   ${activeFilter === tab.id
                     ? 'bg-surface-container-lowest text-primary shadow-xs'
                     : 'text-on-surface-variant hover:text-on-surface'

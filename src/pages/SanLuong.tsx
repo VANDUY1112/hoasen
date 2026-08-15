@@ -77,7 +77,7 @@ export default function SanLuong() {
         <button
           onClick={handleExportExcel}
           disabled={exporting}
-          className="px-5 py-2.5 bg-emerald-700 hover:bg-emerald-800 text-white font-mono text-xs sm:text-sm uppercase tracking-wider rounded-xl shadow-md hover:shadow-emerald-700/20 transition-all w-fit flex items-center gap-2 font-extrabold"
+          className="cursor-pointer px-5 py-2.5 bg-emerald-700 hover:bg-emerald-800 text-white font-mono text-xs sm:text-sm uppercase tracking-wider rounded-xl shadow-md hover:shadow-emerald-700/20 transition-all w-fit flex items-center gap-2 font-extrabold"
         >
           <FileSpreadsheet size={18} className={exporting ? 'animate-spin' : ''} />
           {exporting ? 'Đang tạo Excel...' : 'Xuất Báo Cáo Excel'}
@@ -150,7 +150,7 @@ export default function SanLuong() {
                   key={tab.id}
                   onClick={() => setActiveFilter(tab.id)}
                   className={`
-                    px-3.5 py-2 rounded-lg text-xs sm:text-sm font-bold transition-all duration-150
+                    cursor-pointer px-3.5 py-2 rounded-lg text-xs sm:text-sm font-bold transition-all duration-150
                     ${activeFilter === tab.id
                       ? 'bg-surface-container-lowest text-primary shadow-xs'
                       : 'text-on-surface-variant hover:text-on-surface'

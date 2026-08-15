@@ -211,7 +211,7 @@ export default function CaiDat() {
           <button
             type="submit"
             className={`
-              px-8 py-3 font-semibold rounded-xl transition-all duration-200 flex items-center gap-2 text-sm shadow-md
+              cursor-pointer px-8 py-3 font-semibold rounded-xl transition-all duration-200 flex items-center gap-2 text-sm shadow-md
               ${saved
                 ? 'bg-emerald-600 text-on-primary shadow-emerald-600/20'
                 : 'bg-primary text-on-primary hover:bg-on-primary-fixed-variant shadow-primary/20 hover:scale-[1.01] active:scale-[0.99]'

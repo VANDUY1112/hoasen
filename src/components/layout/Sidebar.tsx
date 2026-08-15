@@ -116,7 +116,7 @@ export default function Sidebar({ isOpen, onClose, currentView, onNavigate }: Si
               key={item.path}
               onClick={() => handleNav(item.path)}
               className={`
-                group w-full flex items-center justify-between px-3.5 py-3 rounded-xl transition-all duration-200 text-left text-sm sm:text-base font-semibold
+                cursor-pointer group w-full flex items-center justify-between px-3.5 py-3 rounded-xl transition-all duration-200 text-left text-sm sm:text-base font-semibold
                 ${isActive
                   ? 'bg-primary-container text-on-primary-container font-bold shadow-md shadow-primary/10'
                   : 'text-on-surface-variant hover:bg-surface-container hover:text-on-surface'
@@ -166,7 +166,7 @@ export default function Sidebar({ isOpen, onClose, currentView, onNavigate }: Si
           <button
             onClick={() => handleNav('cai-dat')}
             className={`
-              group w-full flex items-center gap-3.5 px-3.5 py-3 rounded-xl transition-all duration-200 text-left text-sm sm:text-base font-semibold
+              cursor-pointer group w-full flex items-center gap-3.5 px-3.5 py-3 rounded-xl transition-all duration-200 text-left text-sm sm:text-base font-semibold
               ${currentView === 'cai-dat'
                 ? 'bg-primary-container text-on-primary-container font-bold shadow-md shadow-primary/10'
                 : 'text-on-surface-variant hover:bg-surface-container hover:text-on-surface'

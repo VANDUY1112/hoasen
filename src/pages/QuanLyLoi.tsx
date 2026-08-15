@@ -69,7 +69,7 @@ export default function QuanLyLoi() {
         <button
           onClick={handleSimulateScan}
           disabled={scanning}
-          className="bg-primary text-on-primary px-5 py-2.5 rounded-xl font-bold shadow-md shadow-primary/20 hover:bg-on-primary-fixed-variant transition-all flex items-center gap-2 text-xs sm:text-sm uppercase tracking-wider font-mono w-fit"
+          className="cursor-pointer bg-primary text-on-primary px-5 py-2.5 rounded-xl font-bold shadow-md shadow-primary/20 hover:bg-on-primary-fixed-variant transition-all flex items-center gap-2 text-xs sm:text-sm uppercase tracking-wider font-mono w-fit"
         >
           <Upload size={18} className={scanning ? 'animate-spin' : ''} />
           {scanning ? 'Đang quét ảnh...' : 'Quét ảnh AI'}

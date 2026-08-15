@@ -37,16 +37,16 @@ export default function QuanLyDinhMuc() {
           </p>
         </div>
 
-        <div className="flex gap-3">
+        <div className="flex gap-3 flex-wrap">
           <button
             onClick={handleExport}
-            className="flex items-center gap-2 px-5 py-2.5 bg-surface-container-highest text-on-surface font-bold rounded-xl hover:bg-surface-container-high transition-all text-xs sm:text-sm uppercase font-mono tracking-wider border border-outline-variant/40"
+            className="cursor-pointer flex items-center gap-2 px-5 py-2.5 bg-surface-container-highest text-on-surface font-bold rounded-xl hover:bg-surface-container-high transition-all text-xs sm:text-sm uppercase font-mono tracking-wider border border-outline-variant/40"
           >
             <Download size={18} /> Xuất báo cáo
           </button>
           <button
             onClick={() => navigate('/thiet-lap-muc-tieu-ca-truc')}
-            className="flex items-center gap-2 px-5 py-2.5 bg-primary text-on-primary font-extrabold rounded-xl shadow-md shadow-primary/20 hover:bg-on-primary-fixed-variant transition-all text-xs sm:text-sm uppercase font-mono tracking-wider"
+            className="cursor-pointer flex items-center gap-2 px-5 py-2.5 bg-primary text-on-primary font-extrabold rounded-xl shadow-md shadow-primary/20 hover:bg-on-primary-fixed-variant transition-all text-xs sm:text-sm uppercase font-mono tracking-wider"
           >
             <FileEdit size={18} /> Cập nhật Định mức
           </button>

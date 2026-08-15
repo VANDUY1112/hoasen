@@ -1,7 +1,8 @@
 import { useState } from 'react'
-import { HashRouter, Routes, Route, Navigate } from 'react-router-dom'
+import { HashRouter, Routes, Route, Navigate, useLocation } from 'react-router-dom'
 import { ToastProvider } from './components/ui/Toast'
 import { LiveSimulationProvider } from './context/LiveSimulationContext'
+import { DataProvider } from './context/DataContext'
 import Sidebar from './components/layout/Sidebar'
 import Header from './components/layout/Header'
 import TongQuan from './pages/TongQuan'
@@ -32,59 +33,70 @@ const viewTitles: Record<string, string> = {
   'cai-dat': 'System Configuration Settings',
 }
 
-export default function App() {
+function AppContent() {
   const [sidebarOpen, setSidebarOpen] = useState(false)
-  const [currentView, setCurrentView] = useState('tong-quan')
+  const location = useLocation()
+  const currentView = location.pathname.replace(/^\//, '') || 'tong-quan'
 
+  return (
+    <div className="min-h-screen bg-surface">
+      {/* Mobile Backdrop */}
+      {sidebarOpen && (
+        <div
+          className="fixed inset-0 bg-black/50 z-40 lg:hidden backdrop-blur-sm transition-opacity duration-300"
+          onClick={() => setSidebarOpen(false)}
+        />
+      )}
+
+      {/* Sidebar */}
+      <Sidebar
+        isOpen={sidebarOpen}
+        onClose={() => setSidebarOpen(false)}
+        currentView={currentView}
+        onNavigate={() => setSidebarOpen(false)}
+      />
+
+      {/* Main Content */}
+      <div className="pl-0 lg:pl-72 transition-all duration-300">
+        <Header
+          subtitle={viewTitles[currentView] || 'Operational Monitoring System'}
+          onMenuClick={() => setSidebarOpen(true)}
+        />
+
+        <main className="relative pt-16 bg-surface min-h-screen overflow-hidden">
+          <Routes>
+            <Route path="/" element={<Navigate to="/tong-quan" replace />} />
+            <Route path="/tong-quan" element={<TongQuan />} />
+            <Route path="/san-luong" element={<SanLuong />} />
+            <Route path="/quan-ly-loi" element={<QuanLyLoi />} />
+            <Route path="/thoi-gian-dung-may" element={<ThoiGianDungMay />} />
+            <Route path="/quan-ly-dinh-muc" element={<QuanLyDinhMuc />} />
+            <Route path="/du-bao-bao-tri" element={<DuBaoBaoTri />} />
+            <Route path="/hieu-suat-ca-truc" element={<HieuSuatCaTruc />} />
+            <Route path="/quan-ly-ton-kho" element={<QuanLyTonKho />} />
+            <Route path="/nhap-kho-thanh-pham" element={<NhapKhoThanhPham />} />
+            <Route path="/thiet-lap-muc-tieu-ca-truc" element={<ThietLapMucTieuCaTruc />} />
+            <Route path="/lap-phieu-sua-chua" element={<LapPhieuSuaChua />} />
+            <Route path="/cai-dat" element={<CaiDat />} />
+          </Routes>
+        </main>
+      </div>
+    </div>
+  )
+}
+
+export default function App() {
   return (
     <HashRouter>
       <ToastProvider>
         <LiveSimulationProvider>
-          <div className="min-h-screen bg-surface">
-            {/* Mobile Backdrop */}
-            {sidebarOpen && (
-              <div
-                className="fixed inset-0 bg-black/50 z-40 lg:hidden backdrop-blur-sm transition-opacity duration-300"
-                onClick={() => setSidebarOpen(false)}
-              />
-            )}
-
-            {/* Sidebar */}
-            <Sidebar
-              isOpen={sidebarOpen}
-              onClose={() => setSidebarOpen(false)}
-              currentView={currentView}
-              onNavigate={setCurrentView}
-            />
-
-            {/* Main Content */}
-            <div className="pl-0 lg:pl-72 transition-all duration-300">
-              <Header
-                subtitle={viewTitles[currentView] || 'Operational Monitoring System'}
-                onMenuClick={() => setSidebarOpen(true)}
-              />
-
-              <main className="relative pt-16 bg-surface min-h-screen overflow-hidden">
-                <Routes>
-                  <Route path="/" element={<Navigate to="/tong-quan" replace />} />
-                  <Route path="/tong-quan" element={<TongQuan />} />
-                  <Route path="/san-luong" element={<SanLuong />} />
-                  <Route path="/quan-ly-loi" element={<QuanLyLoi />} />
-                  <Route path="/thoi-gian-dung-may" element={<ThoiGianDungMay />} />
-                  <Route path="/quan-ly-dinh-muc" element={<QuanLyDinhMuc />} />
-                  <Route path="/du-bao-bao-tri" element={<DuBaoBaoTri />} />
-                  <Route path="/hieu-suat-ca-truc" element={<HieuSuatCaTruc />} />
-                  <Route path="/quan-ly-ton-kho" element={<QuanLyTonKho />} />
-                  <Route path="/nhap-kho-thanh-pham" element={<NhapKhoThanhPham />} />
-                  <Route path="/thiet-lap-muc-tieu-ca-truc" element={<ThietLapMucTieuCaTruc />} />
-                  <Route path="/lap-phieu-sua-chua" element={<LapPhieuSuaChua />} />
-                  <Route path="/cai-dat" element={<CaiDat />} />
-                </Routes>
-              </main>
-            </div>
-          </div>
+          <DataProvider>
+            <AppContent />
+          </DataProvider>
         </LiveSimulationProvider>
       </ToastProvider>
     </HashRouter>
   )
 }
+
+

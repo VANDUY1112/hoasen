@@ -118,7 +118,7 @@ export default function TongQuan() {
                 key={t.id}
                 onClick={() => setActiveTimeRange(t.id)}
                 className={`
-                  px-3.5 py-2 rounded-lg text-xs sm:text-sm font-bold transition-all duration-150
+                  cursor-pointer px-3.5 py-2 rounded-lg text-xs sm:text-sm font-bold transition-all duration-150
                   ${activeTimeRange === t.id
                     ? 'bg-surface-container-lowest text-primary shadow-xs'
                     : 'text-on-surface-variant hover:text-on-surface'
@@ -133,7 +133,7 @@ export default function TongQuan() {
           <button
             onClick={handleRunAiDiagnosis}
             disabled={isDiagnosing}
-            className="bg-primary/10 text-primary hover:bg-primary/20 border border-primary/20 px-4 py-2.5 font-mono text-xs sm:text-sm uppercase tracking-wider flex items-center gap-2 font-bold rounded-xl transition-all shadow-xs"
+            className="cursor-pointer bg-primary/10 text-primary hover:bg-primary/20 border border-primary/20 px-4 py-2.5 font-mono text-xs sm:text-sm uppercase tracking-wider flex items-center gap-2 font-bold rounded-xl transition-all shadow-xs"
           >
             <Sparkles size={16} className={isDiagnosing ? 'animate-spin' : ''} />
             {isDiagnosing ? 'Đang chẩn đoán...' : 'Chẩn đoán AI'}
@@ -142,7 +142,7 @@ export default function TongQuan() {
           <button
             onClick={handleExportProductionExcel}
             disabled={exporting}
-            className="bg-surface-container-lowest text-on-surface border border-outline-variant/50 px-4 py-2.5 font-mono text-xs sm:text-sm uppercase tracking-wider flex items-center gap-2 font-bold rounded-xl hover:bg-surface-container transition-colors shadow-xs"
+            className="cursor-pointer bg-surface-container-lowest text-on-surface border border-outline-variant/50 px-4 py-2.5 font-mono text-xs sm:text-sm uppercase tracking-wider flex items-center gap-2 font-bold rounded-xl hover:bg-surface-container transition-colors shadow-xs"
           >
             <FileSpreadsheet size={16} className="text-emerald-600" /> Xuất Excel
           </button>
@@ -150,7 +150,7 @@ export default function TongQuan() {
           <button
             onClick={handleExportExcelSummary}
             disabled={exporting}
-            className="bg-primary text-on-primary px-5 py-2.5 font-mono text-xs sm:text-sm uppercase tracking-wider flex items-center gap-2 font-extrabold rounded-xl hover:bg-on-primary-fixed-variant transition-all shadow-md shadow-primary/20"
+            className="cursor-pointer bg-primary text-on-primary px-5 py-2.5 font-mono text-xs sm:text-sm uppercase tracking-wider flex items-center gap-2 font-extrabold rounded-xl hover:bg-on-primary-fixed-variant transition-all shadow-md shadow-primary/20"
           >
             <Download size={16} /> Báo cáo Giám Đốc
           </button>
@@ -166,7 +166,8 @@ export default function TongQuan() {
           subtitle="Tấn thành phẩm / 24h"
           trend={12.5}
           trendLabel="so với hôm qua"
-          icon={<Layers size={48} />}
+          icon={<Layers size={26} className="stroke-[2.2]" />}
+          accentColor="primary"
         />
         <KpiCard
           title="Số lỗi phát hiện"
@@ -175,14 +176,15 @@ export default function TongQuan() {
           trend={-2.4}
           trendLabel="mục tiêu giảm lỗi"
           accentColor="error"
-          icon={<AlertTriangle size={48} />}
+          icon={<AlertTriangle size={26} className="stroke-[2.2]" />}
         />
         <KpiCard
           title="Dừng máy (Downtime)"
           value={42}
           subtitle="Phút vận hành gián đoạn"
           resolved={true}
-          icon={<TimerOff size={48} />}
+          accentColor="success"
+          icon={<TimerOff size={26} className="stroke-[2.2]" />}
         />
       </section>
 

@@ -305,3 +305,7 @@ export async function exportExecutiveSummary() {
   const buffer = await workbook.xlsx.writeBuffer()
   saveAs(new Blob([buffer]), `HoaSen_BaoCao_GiamDoc_${Date.now()}.xlsx`)
 }
+
+// Alias for command palette & quick actions
+export const exportComprehensiveReport = exportExecutiveSummary
+

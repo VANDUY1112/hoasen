@@ -64,7 +64,7 @@ export default function CustomSelect({
         type="button"
         onClick={() => setIsOpen(!isOpen)}
         className={`
-          w-full flex items-center justify-between gap-3 px-4 py-3 rounded-xl
+          cursor-pointer w-full flex items-center justify-between gap-3 px-4 py-3 rounded-xl
           bg-surface-container-lowest border transition-all duration-200 text-left text-sm sm:text-base
           ${isOpen
             ? 'border-primary ring-2 ring-primary/15 shadow-md shadow-primary/5 bg-surface-container-lowest'
@@ -108,7 +108,7 @@ export default function CustomSelect({
                     setIsOpen(false)
                   }}
                   className={`
-                    w-full flex items-center justify-between px-4 py-3 text-left text-sm sm:text-base transition-all duration-150 mx-1 rounded-xl
+                    cursor-pointer w-full flex items-center justify-between px-4 py-3 text-left text-sm sm:text-base transition-all duration-150 mx-1 rounded-xl
                     ${isSelected
                       ? 'bg-primary-container text-on-primary-container font-bold shadow-xs'
                       : 'text-on-surface hover:bg-surface-container hover:text-primary'

@@ -1,11 +1,12 @@
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { Plus, Warehouse, AlertTriangle, CheckCircle2, Package, ArrowUpRight, FileSpreadsheet } from 'lucide-react'
+import { Plus, Warehouse, AlertTriangle, Package, FileSpreadsheet, Printer, Trash2 } from 'lucide-react'
 import SearchInput from '../components/ui/SearchInput'
 import Badge from '../components/ui/Badge'
 import { useToast } from '../components/ui/Toast'
 import { exportInventoryReport } from '../services/excelExport'
-import { inventoryItems } from '../data/mockData'
+import { useDataContext } from '../context/DataContext'
+import PrintModal, { PrintDocumentData } from '../components/ui/PrintModal'
 
 const categoryTabs = [
   { id: 'all', label: 'Tất cả' },
@@ -18,8 +19,13 @@ export default function QuanLyTonKho() {
   const [searchTerm, setSearchTerm] = useState('')
   const [activeCategory, setActiveCategory] = useState('all')
   const navigate = useNavigate()
+  const { inventory, deleteInventoryItem } = useDataContext()
+  const { addToast } = useToast()
+  const [exporting, setExporting] = useState(false)
+  const [printData, setPrintData] = useState<PrintDocumentData | null>(null)
+  const [printOpen, setPrintOpen] = useState(false)
 
-  const filtered = inventoryItems.filter((item) => {
+  const filtered = inventory.filter((item) => {
     const matchesSearch =
       item.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
       item.code.toLowerCase().includes(searchTerm.toLowerCase()) ||
@@ -28,30 +34,48 @@ export default function QuanLyTonKho() {
     return matchesSearch && matchesCategory
   })
 
-  const totalItems = inventoryItems.length
-  const lowStock = inventoryItems.filter((i) => i.status === 'low').length
-  const criticalStock = inventoryItems.filter((i) => i.status === 'critical').length
-  const { addToast } = useToast()
-  const [exporting, setExporting] = useState(false)
+  const totalItems = inventory.length
+  const lowStock = inventory.filter((i) => i.status === 'low').length
+  const criticalStock = inventory.filter((i) => i.status === 'critical').length
 
   const handleExportExcel = async () => {
     try {
       setExporting(true)
-      addToast({
-        type: 'info',
-        title: 'Đang tạo bảng kiểm kê tồn kho Excel...',
-        message: 'Tổng hợp số liệu từ các phân xưởng và kho thành phẩm...',
-      })
+      addToast('info', 'Đang tạo bảng kiểm kê tồn kho Excel...', 'Tổng hợp số liệu từ các phân xưởng và kho thành phẩm...')
       await exportInventoryReport(filtered)
-      addToast({
-        type: 'success',
-        title: 'Xuất Excel Thành Công!',
-        message: 'Tệp báo cáo tồn kho vật tư đã sẵn sàng.',
-      })
+      addToast('success', 'Xuất Excel Thành Công!', 'Tệp báo cáo tồn kho vật tư đã sẵn sàng.')
     } catch {
-      addToast({ type: 'error', title: 'Lỗi xuất file', message: 'Không thể tạo file Excel.' })
+      addToast('error', 'Lỗi xuất file', 'Không thể tạo file Excel.')
     } finally {
       setExporting(false)
+    }
+  }
+
+  const handlePrintItem = (item: typeof inventory[0]) => {
+    setPrintData({
+      type: 'nhap-kho',
+      title: 'PHIẾU KIỂM KÊ VẬT TƯ / THÀNH PHẨM',
+      code: `KK-${item.code}`,
+      date: new Date().toLocaleDateString('vi-VN'),
+      author: 'Nguyễn Văn An (Quản lý Kho)',
+      details: [
+        { label: 'Mã Vật tư / Cuộn', value: item.code, highlight: true },
+        { label: 'Tên Hàng hóa / Quy cách', value: item.name },
+        { label: 'Phân loại', value: item.type },
+        { label: 'Số lượng tồn thực tế', value: `${item.quantity.toLocaleString()} ${item.unit}`, highlight: true },
+        { label: 'Vị trí kho lưu trữ', value: item.location },
+        { label: 'Trạng thái định mức', value: item.status === 'critical' ? 'DƯỚI MỨC AN TOÀN' : item.status === 'low' ? 'SẮP HẾT' : 'ĐẦY ĐỦ' },
+      ],
+      notes: `Vật tư lưu trữ tại ${item.location}. Kiểm kê định kỳ theo quy trình quản lý ERP Hoa Sen Group.`,
+    })
+    setPrintOpen(true)
+  }
+
+  const handleDelete = (code: string, e: React.MouseEvent) => {
+    e.stopPropagation()
+    if (window.confirm(`Bạn có chắc chắn muốn xóa vật tư ${code} khỏi hệ thống?`)) {
+      deleteInventoryItem(code)
+      addToast('success', 'Đã xóa vật tư', `Mã ${code} đã được xóa thành công.`)
     }
   }
 
@@ -73,18 +97,18 @@ export default function QuanLyTonKho() {
           </p>
         </div>
 
-        <div className="flex gap-3">
+        <div className="flex gap-3 flex-wrap">
           <button
             onClick={handleExportExcel}
             disabled={exporting}
-            className="px-5 py-2.5 rounded-xl font-bold bg-emerald-700 hover:bg-emerald-800 text-white transition-all shadow-md flex items-center gap-2 text-xs sm:text-sm uppercase font-mono tracking-wider"
+            className="cursor-pointer px-5 py-2.5 rounded-xl font-bold bg-emerald-700 hover:bg-emerald-800 text-white transition-all shadow-md flex items-center gap-2 text-xs sm:text-sm uppercase font-mono tracking-wider"
           >
             <FileSpreadsheet size={18} className={exporting ? 'animate-spin' : ''} />
             {exporting ? 'Đang tạo...' : 'Xuất Excel'}
           </button>
           <button
             onClick={() => navigate('/nhap-kho-thanh-pham')}
-            className="bg-primary text-on-primary px-6 py-2.5 rounded-xl font-extrabold hover:bg-on-primary-fixed-variant transition-all shadow-md shadow-primary/20 hover:scale-[1.01] active:scale-[0.99] flex items-center gap-2 text-xs sm:text-sm w-fit font-mono uppercase tracking-wider"
+            className="cursor-pointer bg-primary text-on-primary px-6 py-2.5 rounded-xl font-extrabold hover:bg-on-primary-fixed-variant transition-all shadow-md shadow-primary/20 hover:scale-[1.01] active:scale-[0.99] flex items-center gap-2 text-xs sm:text-sm w-fit font-mono uppercase tracking-wider"
           >
             <Plus size={18} /> Nhập kho mới
           </button>
@@ -132,13 +156,13 @@ export default function QuanLyTonKho() {
         {/* Controls */}
         <div className="p-4 sm:p-5 border-b border-outline-variant/40 flex flex-col sm:flex-row sm:items-center justify-between gap-4 bg-surface-container-low/60">
           {/* Category Tabs */}
-          <div className="flex bg-surface-container p-1 rounded-xl gap-1">
+          <div className="flex bg-surface-container p-1 rounded-xl gap-1 overflow-x-auto">
             {categoryTabs.map((tab) => (
               <button
                 key={tab.id}
                 onClick={() => setActiveCategory(tab.id)}
                 className={`
-                  px-4 py-2 rounded-lg text-xs sm:text-sm font-bold transition-all duration-150
+                  cursor-pointer px-4 py-2 rounded-lg text-xs sm:text-sm font-bold transition-all duration-150 shrink-0
                   ${activeCategory === tab.id
                     ? 'bg-surface-container-lowest text-primary shadow-xs'
                     : 'text-on-surface-variant hover:text-on-surface'
@@ -182,18 +206,25 @@ export default function QuanLyTonKho() {
                 <th className="px-5 py-4 font-mono text-xs sm:text-sm text-on-surface-variant uppercase tracking-wider font-bold text-center">
                   Trạng thái
                 </th>
+                <th className="px-5 py-4 font-mono text-xs sm:text-sm text-on-surface-variant uppercase tracking-wider font-bold text-center">
+                  Thao tác
+                </th>
               </tr>
             </thead>
             <tbody className="divide-y divide-outline-variant/30 text-sm sm:text-base">
               {filtered.length === 0 ? (
                 <tr>
-                  <td colSpan={6} className="px-5 py-12 text-center text-on-surface-variant font-medium text-base">
+                  <td colSpan={7} className="px-5 py-12 text-center text-on-surface-variant font-medium text-base">
                     Không tìm thấy hàng tồn kho phù hợp
                   </td>
                 </tr>
               ) : (
                 filtered.map((item) => (
-                  <tr key={item.code} className="hover:bg-surface-container/60 transition-colors group">
+                  <tr
+                    key={item.code}
+                    onClick={() => handlePrintItem(item)}
+                    className="cursor-pointer hover:bg-surface-container/60 transition-colors group"
+                  >
                     <td className="px-5 py-4 font-mono text-sm font-extrabold text-primary">
                       {item.code}
                     </td>
@@ -226,6 +257,24 @@ export default function QuanLyTonKho() {
                         </Badge>
                       )}
                     </td>
+                    <td className="px-5 py-4 text-center">
+                      <div className="flex items-center justify-center gap-1.5" onClick={(e) => e.stopPropagation()}>
+                        <button
+                          onClick={() => handlePrintItem(item)}
+                          className="cursor-pointer p-2 hover:bg-surface-container-high rounded-lg text-on-surface-variant hover:text-primary transition-colors"
+                          title="In phiếu kiểm kê"
+                        >
+                          <Printer size={16} />
+                        </button>
+                        <button
+                          onClick={(e) => handleDelete(item.code, e)}
+                          className="cursor-pointer p-2 hover:bg-rose-500/10 rounded-lg text-on-surface-variant hover:text-rose-600 transition-colors"
+                          title="Xóa vật tư"
+                        >
+                          <Trash2 size={16} />
+                        </button>
+                      </div>
+                    </td>
                   </tr>
                 ))
               )}
@@ -233,6 +282,10 @@ export default function QuanLyTonKho() {
           </table>
         </div>
       </div>
+
+      {/* Print Modal */}
+      <PrintModal isOpen={printOpen} onClose={() => setPrintOpen(false)} data={printData} />
     </div>
   )
 }
+

@@ -31,6 +31,13 @@ export default function KpiCard({
     default: 'border-primary',
   }
 
+  const iconStyles = {
+    primary: 'bg-primary/10 text-primary border border-primary/20',
+    error: 'bg-rose-500/10 text-rose-600 border border-rose-500/20',
+    success: 'bg-emerald-500/10 text-emerald-600 border border-emerald-500/20',
+    default: 'bg-surface-container text-on-surface-variant border border-outline-variant/40',
+  }
+
   return (
     <div
       className={`
@@ -52,7 +59,12 @@ export default function KpiCard({
           )}
         </div>
         {icon && (
-          <div className="text-primary/15 group-hover:text-primary/25 group-hover:scale-110 transition-all duration-300">
+          <div
+            className={`
+              p-3 rounded-2xl ${iconStyles[accentColor]} shrink-0
+              shadow-sm group-hover:scale-110 transition-all duration-300
+            `}
+          >
             {icon}
           </div>
         )}
@@ -76,3 +88,5 @@ export default function KpiCard({
     </div>
   )
 }
+
+
