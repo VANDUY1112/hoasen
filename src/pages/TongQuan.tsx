@@ -1,11 +1,13 @@
 import { useState } from 'react'
-import { Layers, AlertTriangle, TimerOff, Share2, Download, Brain, Sparkles, TrendingUp, ArrowUpRight, Zap, RefreshCw } from 'lucide-react'
+import { Layers, AlertTriangle, TimerOff, Share2, Download, Brain, Sparkles, TrendingUp, ArrowUpRight, Zap, RefreshCw, FileSpreadsheet } from 'lucide-react'
 import { BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer, CartesianGrid } from 'recharts'
 import KpiCard from '../components/ui/KpiCard'
 import GaugeChart from '../components/ui/GaugeChart'
 import Badge from '../components/ui/Badge'
 import { useToast } from '../components/ui/Toast'
-import { kpiData, weeklyProduction, defectRecords, decorativeImages } from '../data/mockData'
+import { useLiveSimulation } from '../context/LiveSimulationContext'
+import { exportExecutiveSummary, exportProductionReport } from '../services/excelExport'
+import { weeklyProduction, defectRecords, decorativeImages } from '../data/mockData'
 
 const timeRanges = [
   { id: 'today', label: 'Hôm nay' },
@@ -16,22 +18,63 @@ const timeRanges = [
 export default function TongQuan() {
   const [activeTimeRange, setActiveTimeRange] = useState('7days')
   const [isDiagnosing, setIsDiagnosing] = useState(false)
+  const [exporting, setExporting] = useState(false)
+
+  const { dailyOutput, liveOee, liveLogs } = useLiveSimulation()
   const { addToast } = useToast()
 
-  const handleExportData = () => {
-    addToast({
-      type: 'info',
-      title: 'Đang kết xuất dữ liệu CSV...',
-      message: 'Tệp telemetry_export_2026.csv đã được tạo thành công!',
-    })
+  const handleExportExcelSummary = async () => {
+    try {
+      setExporting(true)
+      addToast({
+        type: 'info',
+        title: 'Đang tạo Báo cáo Tổng hợp Ban Giám Đốc...',
+        message: 'Áp dụng format tiêu chuẩn Hoa Sen Group...',
+      })
+
+      await exportExecutiveSummary()
+
+      addToast({
+        type: 'success',
+        title: 'Xuất Báo Cáo Thành Công!',
+        message: 'Tệp Excel báo cáo KPI Giám đốc đã được tải về máy.',
+      })
+    } catch (e) {
+      addToast({
+        type: 'error',
+        title: 'Lỗi xuất file',
+        message: 'Vui lòng kiểm tra lại quyền lưu file trên trình duyệt.',
+      })
+    } finally {
+      setExporting(false)
+    }
   }
 
-  const handleExportReport = () => {
-    addToast({
-      type: 'success',
-      title: 'Báo cáo Giám Đốc đã sẵn sàng!',
-      message: 'Báo cáo PDF tổng hợp sản lượng và OEE tháng 8 đã được tải xuống.',
-    })
+  const handleExportProductionExcel = async () => {
+    try {
+      setExporting(true)
+      addToast({
+        type: 'info',
+        title: 'Đang kết xuất dữ liệu sản lượng...',
+        message: 'Tập hợp tất cả cuộn tôn từ ca sáng đến nay...',
+      })
+
+      await exportProductionReport(liveLogs)
+
+      addToast({
+        type: 'success',
+        title: 'Đã xuất tệp Excel Sản lượng!',
+        message: 'Tệp chứa đầy đủ định dạng màu và công thức tính tổng.',
+      })
+    } catch (e) {
+      addToast({
+        type: 'error',
+        title: 'Lỗi xuất file',
+        message: 'Có lỗi xảy ra khi tạo tệp Excel.',
+      })
+    } finally {
+      setExporting(false)
+    }
   }
 
   const handleRunAiDiagnosis = () => {
@@ -97,46 +140,48 @@ export default function TongQuan() {
           </button>
 
           <button
-            onClick={handleExportData}
+            onClick={handleExportProductionExcel}
+            disabled={exporting}
             className="bg-surface-container-lowest text-on-surface border border-outline-variant/50 px-3.5 py-2 font-mono text-xs uppercase tracking-wider flex items-center gap-1.5 font-semibold rounded-xl hover:bg-surface-container transition-colors shadow-xs"
           >
-            <Share2 size={15} /> Xuất CSV
+            <FileSpreadsheet size={15} className="text-emerald-600" /> Xuất Excel
           </button>
 
           <button
-            onClick={handleExportReport}
+            onClick={handleExportExcelSummary}
+            disabled={exporting}
             className="bg-primary text-on-primary px-4 py-2 font-mono text-xs uppercase tracking-wider flex items-center gap-1.5 font-bold rounded-xl hover:bg-on-primary-fixed-variant transition-all shadow-md shadow-primary/20"
           >
-            <Download size={15} /> Báo cáo PDF
+            <Download size={15} /> Báo cáo Giám Đốc
           </button>
         </div>
         <div className="absolute -top-24 -left-24 w-96 h-96 bg-primary/5 rounded-full blur-[100px] pointer-events-none" />
       </section>
 
-      {/* KPI Cards */}
+      {/* KPI Cards with Live SCADA Data */}
       <section className="grid grid-cols-1 md:grid-cols-3 gap-4 sm:gap-5 stagger">
         <KpiCard
-          title="Sản lượng trong ngày"
-          value={kpiData.dailyOutput.value.toLocaleString()}
-          subtitle={kpiData.dailyOutput.unit}
-          trend={kpiData.dailyOutput.trend}
+          title="Sản lượng trong ngày (Live)"
+          value={dailyOutput.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
+          subtitle="Tấn thành phẩm / 24h"
+          trend={12.5}
           trendLabel="so với hôm qua"
           icon={<Layers size={48} />}
         />
         <KpiCard
           title="Số lỗi phát hiện"
-          value={kpiData.defectCount.value}
-          subtitle={kpiData.defectCount.unit}
-          trend={kpiData.defectCount.trend}
+          value={14}
+          subtitle="Trường hợp kiểm định"
+          trend={-2.4}
           trendLabel="mục tiêu giảm lỗi"
           accentColor="error"
           icon={<AlertTriangle size={48} />}
         />
         <KpiCard
           title="Dừng máy (Downtime)"
-          value={kpiData.downtime.value}
-          subtitle={kpiData.downtime.unit}
-          resolved={kpiData.downtime.resolved}
+          value={42}
+          subtitle="Phút vận hành gián đoạn"
+          resolved={true}
           icon={<TimerOff size={48} />}
         />
       </section>
@@ -149,21 +194,21 @@ export default function TongQuan() {
             <span className="font-mono text-xs text-on-surface-variant uppercase tracking-[0.15em] font-semibold">
               Hiệu suất tổng thể OEE
             </span>
-            <Badge variant="primary" size="sm">ISO Benchmark</Badge>
+            <Badge variant="primary" pulse size="sm">SCADA Stream</Badge>
           </div>
 
           <div className="mt-8">
-            <GaugeChart value={kpiData.oee.value} />
+            <GaugeChart value={Math.round(liveOee)} />
           </div>
 
           <div className="mt-6 grid grid-cols-2 gap-4 w-full pt-4 border-t border-outline-variant/30">
             <div className="text-center border-r border-outline-variant/40">
               <p className="text-[11px] font-mono text-on-surface-variant uppercase font-semibold">Khả dụng (A)</p>
-              <p className="text-2xl font-extrabold text-on-surface font-mono">{kpiData.oee.availability}%</p>
+              <p className="text-2xl font-extrabold text-on-surface font-mono">94.2%</p>
             </div>
             <div className="text-center">
               <p className="text-[11px] font-mono text-on-surface-variant uppercase font-semibold">Chất lượng (Q)</p>
-              <p className="text-2xl font-extrabold text-primary font-mono">{kpiData.oee.quality}%</p>
+              <p className="text-2xl font-extrabold text-primary font-mono">98.1%</p>
             </div>
           </div>
         </div>

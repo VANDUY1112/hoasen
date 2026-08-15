@@ -1,5 +1,6 @@
 import { useState, useRef, useEffect } from 'react'
-import { Menu, Bell, Factory, Check, Clock, ChevronDown, User, Shield, LogOut, CheckCircle2, AlertTriangle, Info, Sparkles } from 'lucide-react'
+import { Menu, Bell, Factory, Check, Clock, ChevronDown, User, Shield, LogOut, AlertTriangle, Info, Sparkles, Activity, Play, Pause, Zap } from 'lucide-react'
+import { useLiveSimulation } from '../../context/LiveSimulationContext'
 import { decorativeImages } from '../../data/mockData'
 
 interface HeaderProps {
@@ -47,11 +48,24 @@ export default function Header({ subtitle, onMenuClick }: HeaderProps) {
   const [notifOpen, setNotifOpen] = useState(false)
   const [profileOpen, setProfileOpen] = useState(false)
   const [notifications, setNotifications] = useState(initialNotifications)
+  const [currentTime, setCurrentTime] = useState('')
+
+  const { isSimulating, toggleSimulation, speedMpm } = useLiveSimulation()
 
   const notifRef = useRef<HTMLDivElement>(null)
   const profileRef = useRef<HTMLDivElement>(null)
 
   const unreadCount = notifications.filter((n) => !n.read).length
+
+  useEffect(() => {
+    const updateTime = () => {
+      const now = new Date()
+      setCurrentTime(now.toLocaleTimeString('vi-VN', { hour12: false }))
+    }
+    updateTime()
+    const timer = setInterval(updateTime, 1000)
+    return () => clearInterval(timer)
+  }, [])
 
   useEffect(() => {
     const handleClickOutside = (e: MouseEvent) => {
@@ -72,7 +86,7 @@ export default function Header({ subtitle, onMenuClick }: HeaderProps) {
 
   return (
     <header className="fixed top-0 left-0 lg:left-72 right-0 h-16 glass z-30 flex items-center justify-between px-4 lg:px-6 transition-all duration-300 border-b border-outline-variant/50">
-      {/* Left: Brand / View Title */}
+      {/* Left: View Title & Live Telemetry Controls */}
       <div className="flex items-center gap-2 lg:gap-3.5">
         <button
           onClick={onMenuClick}
@@ -90,18 +104,45 @@ export default function Header({ subtitle, onMenuClick }: HeaderProps) {
           </span>
         </div>
 
-        {/* Live Badge */}
-        <div className="hidden md:flex items-center gap-2 px-2.5 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/20 text-emerald-700">
+        {/* Live SCADA Simulation Toggle */}
+        <button
+          onClick={toggleSimulation}
+          className={`
+            hidden md:flex items-center gap-2 px-3 py-1 rounded-full border text-xs font-mono font-bold transition-all duration-200 shadow-xs
+            ${isSimulating
+              ? 'bg-emerald-500/10 border-emerald-500/30 text-emerald-700 hover:bg-emerald-500/20'
+              : 'bg-surface-container border-outline-variant/50 text-on-surface-variant hover:bg-surface-container-high'
+            }
+          `}
+          title="Bật/Tắt mô phỏng dữ liệu SCADA thời gian thực"
+        >
           <span className="relative flex h-2 w-2">
-            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-500 opacity-75" />
-            <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500" />
+            {isSimulating && (
+              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-500 opacity-75" />
+            )}
+            <span className={`relative inline-flex rounded-full h-2 w-2 ${isSimulating ? 'bg-emerald-500' : 'bg-on-surface-variant/50'}`} />
           </span>
-          <span className="font-mono text-[11px] font-bold uppercase tracking-wider">Trực tuyến 30s</span>
-        </div>
+          <span>{isSimulating ? 'SCADA LIVE' : 'TẠM DỪNG'}</span>
+          {isSimulating ? <Pause size={12} className="opacity-70" /> : <Play size={12} className="opacity-70" />}
+        </button>
+
+        {/* Realtime Speed Pill */}
+        {isSimulating && (
+          <div className="hidden xl:flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-primary/10 text-primary font-mono text-xs font-bold border border-primary/20 animate-fade-in">
+            <Zap size={13} />
+            <span>{speedMpm} m/phút</span>
+          </div>
+        )}
       </div>
 
-      {/* Right: Notifications & Profile */}
+      {/* Right: Clock + Notifications + Profile */}
       <div className="flex items-center gap-3 sm:gap-4">
+        {/* Real-time Clock */}
+        <div className="hidden sm:flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-surface-container-lowest/80 border border-outline-variant/40 font-mono text-xs font-bold text-on-surface">
+          <Clock size={14} className="text-primary" />
+          <span>{currentTime}</span>
+        </div>
+
         {/* Notifications Popover */}
         <div className="relative" ref={notifRef}>
           <button

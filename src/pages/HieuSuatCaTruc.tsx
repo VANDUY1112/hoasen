@@ -1,8 +1,10 @@
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { Settings, Users, Award, TrendingUp, CheckCircle2, AlertCircle, Clock } from 'lucide-react'
+import { Settings, Users, Award, TrendingUp, CheckCircle2, AlertCircle, Clock, FileSpreadsheet } from 'lucide-react'
 import Badge from '../components/ui/Badge'
 import ProgressBar from '../components/ui/ProgressBar'
+import { useToast } from '../components/ui/Toast'
+import { exportShiftReport } from '../services/excelExport'
 import { shiftPerformanceData } from '../data/mockData'
 
 const shifts = [
@@ -13,12 +15,37 @@ const shifts = [
 
 export default function HieuSuatCaTruc() {
   const [activeShift, setActiveShift] = useState('ca-1')
+  const [exporting, setExporting] = useState(false)
   const navigate = useNavigate()
+  const { addToast } = useToast()
   const data = shiftPerformanceData[activeShift] || []
 
   const totalOutput = data.reduce((sum, d) => sum + d.output, 0)
   const totalTarget = data.reduce((sum, d) => sum + d.target, 0)
   const avgQuality = data.length ? (data.reduce((sum, d) => sum + d.quality, 0) / data.length).toFixed(1) : '0'
+
+  const activeShiftObj = shifts.find((s) => s.id === activeShift)
+
+  const handleExportShiftExcel = async () => {
+    try {
+      setExporting(true)
+      addToast({
+        type: 'info',
+        title: `Đang tạo Báo cáo Hiệu suất ${activeShiftObj?.label}...`,
+        message: 'Định dạng bảng đánh giá công nhân và chỉ tiêu...',
+      })
+      await exportShiftReport(activeShiftObj?.label || 'Ca 1', data)
+      addToast({
+        type: 'success',
+        title: 'Xuất Báo Cáo Ca Thành Công!',
+        message: 'Tệp Excel đã sẵn sàng.',
+      })
+    } catch {
+      addToast({ type: 'error', title: 'Lỗi xuất file', message: 'Không thể tạo file Excel.' })
+    } finally {
+      setExporting(false)
+    }
+  }
 
   return (
     <div className="flex flex-col w-full p-4 sm:p-6 gap-6 sm:gap-8 animate-fade-in max-w-7xl mx-auto">
@@ -38,12 +65,22 @@ export default function HieuSuatCaTruc() {
           </p>
         </div>
 
-        <button
-          onClick={() => navigate('/thiet-lap-muc-tieu-ca-truc')}
-          className="bg-surface-container-highest text-on-surface hover:bg-surface-container-high px-5 py-2.5 rounded-xl font-semibold transition-all flex items-center gap-2 w-fit border border-outline-variant/40 shadow-xs text-sm"
-        >
-          <Settings size={16} /> Thiết Lập Mục Tiêu Ca
-        </button>
+        <div className="flex gap-3">
+          <button
+            onClick={handleExportShiftExcel}
+            disabled={exporting}
+            className="px-5 py-2.5 rounded-xl font-bold bg-emerald-700 hover:bg-emerald-800 text-white transition-all shadow-md flex items-center gap-2 text-xs uppercase font-mono tracking-wider"
+          >
+            <FileSpreadsheet size={16} className={exporting ? 'animate-spin' : ''} />
+            {exporting ? 'Đang tạo...' : 'Xuất Excel'}
+          </button>
+          <button
+            onClick={() => navigate('/thiet-lap-muc-tieu-ca-truc')}
+            className="bg-surface-container-highest text-on-surface hover:bg-surface-container-high px-5 py-2.5 rounded-xl font-semibold transition-all flex items-center gap-2 w-fit border border-outline-variant/40 shadow-xs text-xs uppercase font-mono tracking-wider"
+          >
+            <Settings size={16} /> Thiết Lập Ca
+          </button>
+        </div>
       </div>
 
       {/* Shift Switcher Cards */}

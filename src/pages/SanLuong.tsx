@@ -1,8 +1,10 @@
 import { useState } from 'react'
-import { Download, Layers, ShieldCheck, TrendingUp, Filter, Sparkles } from 'lucide-react'
+import { Download, Layers, ShieldCheck, TrendingUp, Filter, Sparkles, FileSpreadsheet } from 'lucide-react'
 import SearchInput from '../components/ui/SearchInput'
 import Badge from '../components/ui/Badge'
-import { productionLogs } from '../data/mockData'
+import { useToast } from '../components/ui/Toast'
+import { useLiveSimulation } from '../context/LiveSimulationContext'
+import { exportProductionReport } from '../services/excelExport'
 
 const filterTabs = [
   { id: 'all', label: 'Tất cả' },
@@ -14,14 +16,45 @@ const filterTabs = [
 export default function SanLuong() {
   const [searchTerm, setSearchTerm] = useState('')
   const [activeFilter, setActiveFilter] = useState('all')
+  const [exporting, setExporting] = useState(false)
 
-  const filteredLogs = productionLogs.filter((log) => {
+  const { liveLogs, dailyOutput } = useLiveSimulation()
+  const { addToast } = useToast()
+
+  const filteredLogs = liveLogs.filter((log) => {
     const matchesSearch =
       log.coilId.toLowerCase().includes(searchTerm.toLowerCase()) ||
       log.steelType.toLowerCase().includes(searchTerm.toLowerCase())
     const matchesStatus = activeFilter === 'all' || log.status === activeFilter
     return matchesSearch && matchesStatus
   })
+
+  const handleExportExcel = async () => {
+    try {
+      setExporting(true)
+      addToast({
+        type: 'info',
+        title: 'Đang tạo tệp Excel chuyên nghiệp...',
+        message: 'Áp dụng template màu chuẩn Hoa Sen Group và định dạng dữ liệu...',
+      })
+
+      await exportProductionReport(filteredLogs)
+
+      addToast({
+        type: 'success',
+        title: 'Xuất Excel thành công!',
+        message: 'Tệp báo cáo sản lượng đã được lưu vào máy tính của bạn.',
+      })
+    } catch (error) {
+      addToast({
+        type: 'error',
+        title: 'Lỗi xuất file',
+        message: 'Không thể tạo tệp Excel. Vui lòng thử lại.',
+      })
+    } finally {
+      setExporting(false)
+    }
+  }
 
   return (
     <div className="flex flex-col w-full p-4 sm:p-6 gap-6 sm:gap-8 animate-fade-in max-w-7xl mx-auto">
@@ -41,8 +74,13 @@ export default function SanLuong() {
           </p>
         </div>
 
-        <button className="px-5 py-2.5 bg-primary text-on-primary font-mono text-xs uppercase tracking-wider rounded-xl shadow-md hover:bg-on-primary-fixed-variant transition-all w-fit flex items-center gap-2 font-semibold">
-          <Download size={16} /> Xuất báo cáo Excel
+        <button
+          onClick={handleExportExcel}
+          disabled={exporting}
+          className="px-5 py-2.5 bg-emerald-700 hover:bg-emerald-800 text-white font-mono text-xs uppercase tracking-wider rounded-xl shadow-md hover:shadow-emerald-700/20 transition-all w-fit flex items-center gap-2 font-bold"
+        >
+          <FileSpreadsheet size={16} className={exporting ? 'animate-spin' : ''} />
+          {exporting ? 'Đang tạo Excel...' : 'Xuất Báo Cáo Excel'}
         </button>
       </section>
 
@@ -59,7 +97,9 @@ export default function SanLuong() {
                 </span>
               </div>
               <div className="flex items-baseline gap-3">
-                <h2 className="text-4xl md:text-5xl font-extrabold text-on-surface tracking-tight">1,240.5</h2>
+                <h2 className="text-4xl md:text-5xl font-extrabold text-on-surface tracking-tight font-mono">
+                  {dailyOutput.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
+                </h2>
                 <span className="text-xl font-bold text-on-surface-variant font-mono">Tấn</span>
               </div>
             </div>
@@ -97,8 +137,8 @@ export default function SanLuong() {
               <Sparkles size={18} />
             </div>
             <div>
-              <h3 className="text-base font-bold text-on-surface">Nhật ký Sản xuất Chi tiết</h3>
-              <p className="text-xs text-on-surface-variant">Danh sách cuộn tôn vừa hoàn thành qua dây chuyền</p>
+              <h3 className="text-base font-bold text-on-surface">Nhật ký Sản xuất Chi tiết (Live Telemetry)</h3>
+              <p className="text-xs text-on-surface-variant">Tự động đẩy cuộn tôn vừa hoàn thành qua dây chuyền</p>
             </div>
           </div>
 
@@ -163,8 +203,8 @@ export default function SanLuong() {
                   </td>
                 </tr>
               ) : (
-                filteredLogs.map((log) => (
-                  <tr key={log.coilId} className="hover:bg-surface-container/60 transition-colors group">
+                filteredLogs.map((log, idx) => (
+                  <tr key={log.coilId} className={`hover:bg-surface-container/60 transition-colors group ${idx === 0 ? 'bg-primary/5' : ''}`}>
                     <td className="px-5 py-4 font-mono text-xs text-on-surface-variant font-medium">
                       {log.time}
                     </td>
@@ -175,7 +215,7 @@ export default function SanLuong() {
                       {log.steelType}
                     </td>
                     <td className="px-5 py-4 text-right font-mono font-bold text-on-surface">
-                      {log.weight.toFixed(1)} <span className="font-normal text-xs text-on-surface-variant">T</span>
+                      {log.weight.toFixed(2)} <span className="font-normal text-xs text-on-surface-variant">T</span>
                     </td>
                     <td className="px-5 py-4 text-center">
                       {log.status === 'passed' ? (

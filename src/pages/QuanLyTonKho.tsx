@@ -1,8 +1,10 @@
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { Plus, Warehouse, AlertTriangle, CheckCircle2, Package, ArrowUpRight } from 'lucide-react'
+import { Plus, Warehouse, AlertTriangle, CheckCircle2, Package, ArrowUpRight, FileSpreadsheet } from 'lucide-react'
 import SearchInput from '../components/ui/SearchInput'
 import Badge from '../components/ui/Badge'
+import { useToast } from '../components/ui/Toast'
+import { exportInventoryReport } from '../services/excelExport'
 import { inventoryItems } from '../data/mockData'
 
 const categoryTabs = [
@@ -29,6 +31,29 @@ export default function QuanLyTonKho() {
   const totalItems = inventoryItems.length
   const lowStock = inventoryItems.filter((i) => i.status === 'low').length
   const criticalStock = inventoryItems.filter((i) => i.status === 'critical').length
+  const { addToast } = useToast()
+  const [exporting, setExporting] = useState(false)
+
+  const handleExportExcel = async () => {
+    try {
+      setExporting(true)
+      addToast({
+        type: 'info',
+        title: 'Đang tạo bảng kiểm kê tồn kho Excel...',
+        message: 'Tổng hợp số liệu từ các phân xưởng và kho thành phẩm...',
+      })
+      await exportInventoryReport(filtered)
+      addToast({
+        type: 'success',
+        title: 'Xuất Excel Thành Công!',
+        message: 'Tệp báo cáo tồn kho vật tư đã sẵn sàng.',
+      })
+    } catch {
+      addToast({ type: 'error', title: 'Lỗi xuất file', message: 'Không thể tạo file Excel.' })
+    } finally {
+      setExporting(false)
+    }
+  }
 
   return (
     <div className="flex flex-col w-full p-4 sm:p-6 gap-6 sm:gap-8 animate-fade-in max-w-7xl mx-auto">
@@ -48,12 +73,22 @@ export default function QuanLyTonKho() {
           </p>
         </div>
 
-        <button
-          onClick={() => navigate('/nhap-kho-thanh-pham')}
-          className="bg-primary text-on-primary px-6 py-3 rounded-xl font-semibold hover:bg-on-primary-fixed-variant transition-all shadow-md shadow-primary/20 hover:scale-[1.01] active:scale-[0.99] flex items-center gap-2 text-sm w-fit font-mono uppercase tracking-wider"
-        >
-          <Plus size={18} /> Nhập kho mới
-        </button>
+        <div className="flex gap-3">
+          <button
+            onClick={handleExportExcel}
+            disabled={exporting}
+            className="px-5 py-3 rounded-xl font-bold bg-emerald-700 hover:bg-emerald-800 text-white transition-all shadow-md flex items-center gap-2 text-xs uppercase font-mono tracking-wider"
+          >
+            <FileSpreadsheet size={16} className={exporting ? 'animate-spin' : ''} />
+            {exporting ? 'Đang tạo...' : 'Xuất Excel'}
+          </button>
+          <button
+            onClick={() => navigate('/nhap-kho-thanh-pham')}
+            className="bg-primary text-on-primary px-6 py-3 rounded-xl font-semibold hover:bg-on-primary-fixed-variant transition-all shadow-md shadow-primary/20 hover:scale-[1.01] active:scale-[0.99] flex items-center gap-2 text-sm w-fit font-mono uppercase tracking-wider"
+          >
+            <Plus size={18} /> Nhập kho mới
+          </button>
+        </div>
       </div>
 
       {/* KPI Summary Cards */}
