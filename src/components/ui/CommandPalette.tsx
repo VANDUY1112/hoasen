@@ -224,31 +224,31 @@ export default function CommandPalette({ isOpen, onClose, onOpenPrintModal }: Co
 
   return (
     <div
-      className="fixed inset-0 z-50 flex items-start justify-center pt-20 sm:pt-28 p-4 bg-black/60 backdrop-blur-sm animate-fade-in"
+      className="fixed inset-0 z-50 flex items-start justify-center pt-12 sm:pt-24 p-2.5 sm:p-4 bg-black/60 backdrop-blur-xs animate-fade-in"
       onClick={onClose}
     >
       <div
-        className="bg-surface-container-lowest w-full max-w-2xl rounded-2xl shadow-2xl border border-outline-variant/60 overflow-hidden flex flex-col max-h-[75vh] animate-scale-in"
+        className="bg-surface-container-lowest w-full max-w-2xl rounded-2xl shadow-2xl border border-outline-variant/50 overflow-hidden flex flex-col max-h-[82vh] animate-scale-in"
         onClick={(e) => e.stopPropagation()}
         onKeyDown={handleKeyDown}
       >
         {/* Search Input Bar */}
-        <div className="p-4 border-b border-outline-variant/40 flex items-center gap-3 bg-surface-container-low/40">
-          <Search size={22} className="text-primary shrink-0 ml-1" />
+        <div className="p-3 sm:p-4 border-b border-outline-variant/30 flex items-center gap-2.5 bg-surface-container-low/40">
+          <Search size={18} className="text-primary shrink-0 ml-0.5" />
           <input
             ref={inputRef}
             type="text"
-            placeholder="Tìm trang, cuộn tôn, máy móc, xuất excel, in phiếu... (Gõ để tìm)"
+            placeholder="Tìm trang, cuộn tôn, bảo trì, excel... (Gõ để tìm)"
             value={query}
             onChange={(e) => setQuery(e.target.value)}
-            className="w-full bg-transparent text-on-surface font-sans text-base font-semibold placeholder:text-on-surface-variant/60 outline-none"
+            className="w-full bg-transparent text-on-surface font-sans text-sm sm:text-base font-semibold placeholder:text-on-surface-variant/60 outline-none"
           />
           {query && (
             <button
               onClick={() => setQuery('')}
               className="cursor-pointer text-on-surface-variant hover:text-on-surface p-1 rounded-lg hover:bg-surface-container"
             >
-              <X size={18} />
+              <X size={16} />
             </button>
           )}
           <span className="hidden sm:inline-block px-2 py-0.5 rounded bg-surface-container-highest border border-outline-variant/40 text-[11px] font-mono font-bold text-on-surface-variant">

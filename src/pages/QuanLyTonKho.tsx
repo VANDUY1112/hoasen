@@ -1,8 +1,9 @@
-import { useState } from 'react'
+import { useState, useMemo } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { Plus, Warehouse, AlertTriangle, Package, FileSpreadsheet, Printer, Trash2, CheckCircle2 } from 'lucide-react'
 import SearchInput from '../components/ui/SearchInput'
 import Badge from '../components/ui/Badge'
+import Pagination from '../components/ui/Pagination'
 import { useToast } from '../components/ui/Toast'
 import { exportInventoryReport } from '../services/excelExport'
 import { useDataContext } from '../context/DataContext'
@@ -18,6 +19,8 @@ const categoryTabs = [
 export default function QuanLyTonKho() {
   const [searchTerm, setSearchTerm] = useState('')
   const [activeCategory, setActiveCategory] = useState('all')
+  const [currentPage, setCurrentPage] = useState(1)
+  const [pageSize, setPageSize] = useState(10)
   const navigate = useNavigate()
   const { inventory, deleteInventoryItem } = useDataContext()
   const { addToast } = useToast()
@@ -25,14 +28,31 @@ export default function QuanLyTonKho() {
   const [printData, setPrintData] = useState<PrintDocumentData | null>(null)
   const [printOpen, setPrintOpen] = useState(false)
 
-  const filtered = inventory.filter((item) => {
-    const matchesSearch =
-      item.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      item.code.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      item.location.toLowerCase().includes(searchTerm.toLowerCase())
-    const matchesCategory = activeCategory === 'all' || item.type === activeCategory
-    return matchesSearch && matchesCategory
-  })
+  const filtered = useMemo(() => {
+    return inventory.filter((item) => {
+      const matchesSearch =
+        item.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        item.code.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        item.location.toLowerCase().includes(searchTerm.toLowerCase())
+      const matchesCategory = activeCategory === 'all' || item.type === activeCategory
+      return matchesSearch && matchesCategory
+    })
+  }, [inventory, searchTerm, activeCategory])
+
+  const paginatedItems = useMemo(() => {
+    const start = (currentPage - 1) * pageSize
+    return filtered.slice(start, start + pageSize)
+  }, [filtered, currentPage, pageSize])
+
+  const handleSearch = (term: string) => {
+    setSearchTerm(term)
+    setCurrentPage(1)
+  }
+
+  const handleCategoryChange = (cat: string) => {
+    setActiveCategory(cat)
+    setCurrentPage(1)
+  }
 
   const totalItems = inventory.length
   const lowStock = inventory.filter((i) => i.status === 'low').length
@@ -163,20 +183,20 @@ export default function QuanLyTonKho() {
       </div>
 
       {/* Inventory Table Container */}
-      <div className="bg-surface-container-lowest shadow-sm border border-outline-variant/50 rounded-2xl overflow-hidden animate-slide-up">
+      <div className="bg-surface-container-lowest shadow-xs border border-outline-variant/35 rounded-2xl overflow-hidden animate-slide-up">
         {/* Controls */}
-        <div className="p-4 sm:p-5 border-b border-outline-variant/40 flex flex-col sm:flex-row sm:items-center justify-between gap-4 bg-surface-container-low/60">
+        <div className="p-3 sm:p-4 border-b border-outline-variant/30 flex flex-col sm:flex-row sm:items-center justify-between gap-3 bg-surface-container-low/50">
           {/* Category Tabs */}
-          <div className="flex bg-surface-container p-1 rounded-xl gap-1 overflow-x-auto">
+          <div className="flex bg-surface-container p-0.5 rounded-xl gap-0.5 overflow-x-auto no-scrollbar">
             {categoryTabs.map((tab) => (
               <button
                 key={tab.id}
-                onClick={() => setActiveCategory(tab.id)}
+                onClick={() => handleCategoryChange(tab.id)}
                 className={`
-                  cursor-pointer px-4 py-2 rounded-lg text-xs sm:text-sm font-bold transition-all duration-150 shrink-0
+                  cursor-pointer px-3 py-1.5 rounded-lg text-xs font-bold transition-all duration-150 shrink-0
                   ${activeCategory === tab.id
                     ? 'bg-surface-container-lowest text-primary shadow-xs'
-                    : 'text-on-surface-variant hover:text-on-surface'
+                    : 'text-on-surface-variant/80 hover:text-on-surface'
                   }
                 `}
               >
@@ -187,73 +207,73 @@ export default function QuanLyTonKho() {
 
           <SearchInput
             value={searchTerm}
-            onChange={setSearchTerm}
+            onChange={handleSearch}
             placeholder="Tìm theo tên vật tư, mã, vị trí..."
             shortcut="/"
-            className="w-full sm:w-80"
+            className="w-full sm:w-72"
           />
         </div>
 
         {/* Table */}
         <div className="overflow-x-auto">
-          <table className="w-full text-left min-w-[750px]">
+          <table className="w-full text-left min-w-[700px]">
             <thead>
-              <tr className="bg-surface-container-low/40 border-b border-outline-variant/30">
-                <th className="px-5 py-4 font-mono text-xs sm:text-sm text-on-surface-variant uppercase tracking-wider font-bold">
+              <tr className="bg-surface-container-low/30 border-b border-outline-variant/20">
+                <th className="px-4 py-3 font-mono text-xs text-on-surface-variant uppercase tracking-wider font-bold">
                   Mã VT
                 </th>
-                <th className="px-5 py-4 font-mono text-xs sm:text-sm text-on-surface-variant uppercase tracking-wider font-bold">
+                <th className="px-4 py-3 font-mono text-xs text-on-surface-variant uppercase tracking-wider font-bold">
                   Tên Vật tư / Hàng hóa
                 </th>
-                <th className="px-5 py-4 font-mono text-xs sm:text-sm text-on-surface-variant uppercase tracking-wider font-bold">
+                <th className="px-4 py-3 font-mono text-xs text-on-surface-variant uppercase tracking-wider font-bold">
                   Phân loại
                 </th>
-                <th className="px-5 py-4 font-mono text-xs sm:text-sm text-on-surface-variant uppercase tracking-wider font-bold text-right">
+                <th className="px-4 py-3 font-mono text-xs text-on-surface-variant uppercase tracking-wider font-bold text-right">
                   Số lượng tồn
                 </th>
-                <th className="px-5 py-4 font-mono text-xs sm:text-sm text-on-surface-variant uppercase tracking-wider font-bold">
+                <th className="px-4 py-3 font-mono text-xs text-on-surface-variant uppercase tracking-wider font-bold">
                   Vị trí kho
                 </th>
-                <th className="px-5 py-4 font-mono text-xs sm:text-sm text-on-surface-variant uppercase tracking-wider font-bold text-center">
+                <th className="px-4 py-3 font-mono text-xs text-on-surface-variant uppercase tracking-wider font-bold text-center">
                   Trạng thái
                 </th>
-                <th className="px-5 py-4 font-mono text-xs sm:text-sm text-on-surface-variant uppercase tracking-wider font-bold text-center">
+                <th className="px-4 py-3 font-mono text-xs text-on-surface-variant uppercase tracking-wider font-bold text-center">
                   Thao tác
                 </th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-outline-variant/30 text-sm sm:text-base">
-              {filtered.length === 0 ? (
+            <tbody className="divide-y divide-outline-variant/20 text-xs sm:text-sm">
+              {paginatedItems.length === 0 ? (
                 <tr>
-                  <td colSpan={7} className="px-5 py-12 text-center text-on-surface-variant font-medium text-base">
+                  <td colSpan={7} className="px-4 py-10 text-center text-on-surface-variant font-medium">
                     Không tìm thấy hàng tồn kho phù hợp
                   </td>
                 </tr>
               ) : (
-                filtered.map((item) => (
+                paginatedItems.map((item) => (
                   <tr
                     key={item.code}
                     onClick={() => handlePrintItem(item)}
-                    className="cursor-pointer hover:bg-surface-container/60 transition-colors group"
+                    className="cursor-pointer hover:bg-surface-container/50 transition-colors group"
                   >
-                    <td className="px-5 py-4 font-mono text-sm font-extrabold text-primary">
+                    <td className="px-4 py-3 font-mono font-extrabold text-primary">
                       {item.code}
                     </td>
-                    <td className="px-5 py-4 font-bold text-on-surface text-base">
+                    <td className="px-4 py-3 font-bold text-on-surface">
                       {item.name}
                     </td>
-                    <td className="px-5 py-4 text-sm font-mono text-on-surface-variant font-semibold">
+                    <td className="px-4 py-3 font-mono text-on-surface-variant/80 font-semibold">
                       {item.type}
                     </td>
-                    <td className="px-5 py-4 text-right font-mono font-extrabold text-on-surface text-base">
-                      {item.quantity.toLocaleString()} <span className="font-normal text-xs sm:text-sm text-on-surface-variant">{item.unit}</span>
+                    <td className="px-4 py-3 text-right font-mono font-extrabold text-on-surface">
+                      {item.quantity.toLocaleString()} <span className="font-normal text-xs text-on-surface-variant/70">{item.unit}</span>
                     </td>
-                    <td className="px-5 py-4 text-sm font-mono font-bold text-on-surface-variant">
-                      <span className="px-3 py-1 rounded-lg bg-surface-container border border-outline-variant/30">
+                    <td className="px-4 py-3 font-mono font-bold text-on-surface-variant">
+                      <span className="px-2.5 py-0.5 rounded bg-surface-container border border-outline-variant/30 text-xs">
                         {item.location}
                       </span>
                     </td>
-                    <td className="px-5 py-4 text-center">
+                    <td className="px-4 py-3 text-center">
                       {item.status === 'sufficient' ? (
                         <Badge variant="success" size="sm">
                           Đủ tồn kho
@@ -268,21 +288,21 @@ export default function QuanLyTonKho() {
                         </Badge>
                       )}
                     </td>
-                    <td className="px-5 py-4 text-center">
-                      <div className="flex items-center justify-center gap-1.5" onClick={(e) => e.stopPropagation()}>
+                    <td className="px-4 py-3 text-center">
+                      <div className="flex items-center justify-center gap-1" onClick={(e) => e.stopPropagation()}>
                         <button
                           onClick={() => handlePrintItem(item)}
-                          className="cursor-pointer p-2 hover:bg-surface-container-high rounded-lg text-on-surface-variant hover:text-primary transition-colors"
+                          className="cursor-pointer p-1.5 hover:bg-surface-container-high rounded-lg text-on-surface-variant hover:text-primary transition-colors"
                           title="In phiếu kiểm kê"
                         >
-                          <Printer size={16} />
+                          <Printer size={15} />
                         </button>
                         <button
                           onClick={(e) => handleDelete(item.code, e)}
-                          className="cursor-pointer p-2 hover:bg-rose-500/10 rounded-lg text-on-surface-variant hover:text-rose-600 transition-colors"
+                          className="cursor-pointer p-1.5 hover:bg-rose-500/10 rounded-lg text-on-surface-variant hover:text-rose-600 transition-colors"
                           title="Xóa vật tư"
                         >
-                          <Trash2 size={16} />
+                          <Trash2 size={15} />
                         </button>
                       </div>
                     </td>
@@ -292,6 +312,21 @@ export default function QuanLyTonKho() {
             </tbody>
           </table>
         </div>
+
+        {/* Pagination Footer */}
+        {filtered.length > 0 && (
+          <Pagination
+            currentPage={currentPage}
+            totalItems={filtered.length}
+            pageSize={pageSize}
+            onPageChange={setCurrentPage}
+            onPageSizeChange={(size) => {
+              setPageSize(size)
+              setCurrentPage(1)
+            }}
+            pageSizeOptions={[5, 10, 20, 50]}
+          />
+        )}
       </div>
 
       {/* Print Modal */}

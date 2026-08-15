@@ -83,27 +83,27 @@ export function ToastProvider({ children }: { children: ReactNode }) {
     <ToastContext.Provider value={{ addToast, removeToast }}>
       {children}
       {/* Toast Container */}
-      <div className="fixed bottom-6 right-6 z-50 flex flex-col gap-3 max-w-md w-full pointer-events-none">
+      <div className="fixed top-16 sm:top-auto sm:bottom-6 left-3 right-3 sm:left-auto sm:right-6 z-50 flex flex-col gap-2.5 sm:max-w-md w-auto pointer-events-none">
         {toasts.map((t) => (
           <div
             key={t.id}
             className={`
-              pointer-events-auto p-4 sm:p-5 rounded-2xl border backdrop-blur-2xl shadow-2xl flex items-start gap-3.5
+              pointer-events-auto p-3.5 sm:p-4 rounded-2xl border backdrop-blur-2xl shadow-xl flex items-start gap-3
               animate-slide-up transition-all duration-200 ${borderStyles[t.type]}
             `}
           >
             <div className="mt-0.5">{icons[t.type]}</div>
             <div className="flex-1 min-w-0">
-              <p className="text-sm sm:text-base font-extrabold text-on-surface leading-tight">{t.title}</p>
+              <p className="text-xs sm:text-sm font-extrabold text-on-surface leading-tight">{t.title}</p>
               {t.message && (
-                <p className="text-xs sm:text-sm text-on-surface-variant mt-1 leading-snug font-medium">{t.message}</p>
+                <p className="text-[11px] sm:text-xs text-on-surface-variant/90 mt-0.5 leading-snug font-medium">{t.message}</p>
               )}
             </div>
             <button
               onClick={() => removeToast(t.id)}
-              className="p-1.5 rounded-xl text-on-surface-variant hover:text-on-surface hover:bg-surface-container transition-colors shrink-0"
+              className="cursor-pointer p-1 rounded-lg text-on-surface-variant hover:text-on-surface hover:bg-surface-container transition-colors shrink-0"
             >
-              <X size={16} />
+              <X size={15} />
             </button>
           </div>
         ))}

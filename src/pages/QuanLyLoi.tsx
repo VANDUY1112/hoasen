@@ -1,6 +1,7 @@
-import { useState } from 'react'
+import { useState, useMemo } from 'react'
 import { AlertTriangle, Upload, Eye, Sparkles, CheckCircle2, RefreshCw, Layers, ShieldAlert, Zap } from 'lucide-react'
 import Badge from '../components/ui/Badge'
+import Pagination from '../components/ui/Pagination'
 import { useToast } from '../components/ui/Toast'
 import { defectRecords, defectImages } from '../data/mockData'
 
@@ -28,7 +29,14 @@ const defectLibrary = [
 export default function QuanLyLoi() {
   const [selectedDefect, setSelectedDefect] = useState<typeof defectLibrary[0] | null>(null)
   const [scanning, setScanning] = useState(false)
+  const [currentPage, setCurrentPage] = useState(1)
+  const [pageSize, setPageSize] = useState(5)
   const { addToast } = useToast()
+
+  const paginatedDefects = useMemo(() => {
+    const start = (currentPage - 1) * pageSize
+    return defectRecords.slice(start, start + pageSize)
+  }, [currentPage, pageSize])
 
   const handleSimulateScan = () => {
     setScanning(true)
@@ -127,20 +135,20 @@ export default function QuanLyLoi() {
                 <th className="px-5 py-4 font-mono text-xs sm:text-sm text-on-surface-variant uppercase font-bold text-right">Mức độ cảnh báo</th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-outline-variant/30 text-sm sm:text-base">
-              {defectRecords.map((d) => (
-                <tr key={d.code} className="hover:bg-surface-container/60 transition-colors">
-                  <td className="px-5 py-4 font-mono text-primary font-extrabold text-sm sm:text-base">{d.code}</td>
-                  <td className="px-5 py-4 font-bold text-on-surface text-base">{d.type}</td>
-                  <td className="px-5 py-4">
-                    <div className="flex items-center gap-3">
-                      <div className="w-28 h-2.5 bg-surface-container-high rounded-full overflow-hidden">
+            <tbody className="divide-y divide-outline-variant/20 text-xs sm:text-sm">
+              {paginatedDefects.map((d) => (
+                <tr key={d.code} className="hover:bg-surface-container/50 transition-colors">
+                  <td className="px-4 py-3 font-mono text-primary font-extrabold">{d.code}</td>
+                  <td className="px-4 py-3 font-semibold text-on-surface">{d.type}</td>
+                  <td className="px-4 py-3">
+                    <div className="flex items-center gap-2.5">
+                      <div className="w-24 h-2 bg-surface-container-high rounded-full overflow-hidden">
                         <div className="gradient-primary h-full rounded-full" style={{ width: `${(d.frequency / 50) * 100}%` }} />
                       </div>
-                      <span className="font-mono text-sm font-extrabold">{d.frequency} lần</span>
+                      <span className="font-mono text-xs font-bold">{d.frequency} lần</span>
                     </div>
                   </td>
-                  <td className="px-5 py-4 text-right">
+                  <td className="px-4 py-3 text-right">
                     <Badge variant={d.severity === 'high' ? 'error' : d.severity === 'medium' ? 'warning' : 'neutral'} size="sm">
                       {d.severity === 'high' ? 'Nghiêm trọng' : d.severity === 'medium' ? 'Trung bình' : 'Thấp'}
                     </Badge>
@@ -150,6 +158,19 @@ export default function QuanLyLoi() {
             </tbody>
           </table>
         </div>
+
+        {/* Pagination */}
+        <Pagination
+          currentPage={currentPage}
+          totalItems={defectRecords.length}
+          pageSize={pageSize}
+          onPageChange={setCurrentPage}
+          onPageSizeChange={(size) => {
+            setPageSize(size)
+            setCurrentPage(1)
+          }}
+          pageSizeOptions={[3, 5, 10]}
+        />
       </div>
 
       {/* AI Vision Defect Library */}

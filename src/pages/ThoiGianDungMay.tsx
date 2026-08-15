@@ -1,7 +1,8 @@
-import { useState } from 'react'
+import { useState, useMemo } from 'react'
 import { TimerOff, AlertOctagon, CheckCircle2, Clock, Filter, AlertTriangle } from 'lucide-react'
 import SearchInput from '../components/ui/SearchInput'
 import Badge from '../components/ui/Badge'
+import Pagination from '../components/ui/Pagination'
 import { downtimeRecords } from '../data/mockData'
 
 const filterTabs = [
@@ -14,12 +15,31 @@ const filterTabs = [
 export default function ThoiGianDungMay() {
   const [searchTerm, setSearchTerm] = useState('')
   const [activeFilter, setActiveFilter] = useState('all')
+  const [currentPage, setCurrentPage] = useState(1)
+  const [pageSize, setPageSize] = useState(10)
 
-  const filtered = downtimeRecords.filter((r) => {
-    const matchesSearch = r.equipment.toLowerCase().includes(searchTerm.toLowerCase())
-    const matchesStatus = activeFilter === 'all' || r.status === activeFilter
-    return matchesSearch && matchesStatus
-  })
+  const filtered = useMemo(() => {
+    return downtimeRecords.filter((r) => {
+      const matchesSearch = r.equipment.toLowerCase().includes(searchTerm.toLowerCase())
+      const matchesStatus = activeFilter === 'all' || r.status === activeFilter
+      return matchesSearch && matchesStatus
+    })
+  }, [searchTerm, activeFilter])
+
+  const paginatedItems = useMemo(() => {
+    const start = (currentPage - 1) * pageSize
+    return filtered.slice(start, start + pageSize)
+  }, [filtered, currentPage, pageSize])
+
+  const handleSearch = (term: string) => {
+    setSearchTerm(term)
+    setCurrentPage(1)
+  }
+
+  const handleFilterChange = (filter: string) => {
+    setActiveFilter(filter)
+    setCurrentPage(1)
+  }
 
   return (
     <div className="flex flex-col w-full p-3.5 sm:p-5 lg:p-6 gap-4 sm:gap-5 animate-fade-in max-w-7xl mx-auto">
@@ -60,7 +80,7 @@ export default function ThoiGianDungMay() {
             {filterTabs.map((tab) => (
               <button
                 key={tab.id}
-                onClick={() => setActiveFilter(tab.id)}
+                onClick={() => handleFilterChange(tab.id)}
                 className={`
                   cursor-pointer px-3 py-1.5 rounded-lg text-xs font-bold transition-all duration-150 whitespace-nowrap flex-1 sm:flex-none text-center
                   ${activeFilter === tab.id
@@ -76,7 +96,7 @@ export default function ThoiGianDungMay() {
 
           <SearchInput
             value={searchTerm}
-            onChange={setSearchTerm}
+            onChange={handleSearch}
             placeholder="Tìm theo thiết bị, dây chuyền..."
             shortcut="⌘K"
             className="w-full sm:w-72"
@@ -84,57 +104,80 @@ export default function ThoiGianDungMay() {
         </div>
 
         <div className="overflow-x-auto w-full">
-          <table className="w-full text-left min-w-[700px]">
+          <table className="w-full text-left min-w-[650px]">
             <thead>
-              <tr className="bg-surface-container-low/40 border-b border-outline-variant/30">
-                <th className="px-5 py-4 font-mono text-xs sm:text-sm text-on-surface-variant uppercase tracking-wider font-bold">
+              <tr className="bg-surface-container-low/30 border-b border-outline-variant/20">
+                <th className="px-4 py-3 font-mono text-xs text-on-surface-variant uppercase tracking-wider font-bold">
                   Thời điểm ghi nhận
                 </th>
-                <th className="px-5 py-4 font-mono text-xs sm:text-sm text-on-surface-variant uppercase tracking-wider font-bold">
+                <th className="px-4 py-3 font-mono text-xs text-on-surface-variant uppercase tracking-wider font-bold">
                   Thiết bị / Dây chuyền
                 </th>
-                <th className="px-5 py-4 font-mono text-xs sm:text-sm text-on-surface-variant uppercase tracking-wider font-bold text-right">
+                <th className="px-4 py-3 font-mono text-xs text-on-surface-variant uppercase tracking-wider font-bold text-right">
                   Thời lượng dừng
                 </th>
-                <th className="px-5 py-4 font-mono text-xs sm:text-sm text-on-surface-variant uppercase tracking-wider font-bold text-center">
+                <th className="px-4 py-3 font-mono text-xs text-on-surface-variant uppercase tracking-wider font-bold text-center">
                   Trạng thái xử lý
                 </th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-outline-variant/30 text-sm sm:text-base">
-              {filtered.map((r, i) => (
-                <tr key={i} className="hover:bg-surface-container/60 transition-colors group">
-                  <td className="px-5 py-4 font-mono text-sm font-semibold text-on-surface-variant">
-                    {r.time}
-                  </td>
-                  <td className="px-5 py-4 font-bold text-on-surface text-base">
-                    {r.equipment}
-                  </td>
-                  <td className="px-5 py-4 text-right font-mono font-extrabold text-base">
-                    <span className={r.status === 'repairing' ? 'text-rose-600 font-black' : 'text-on-surface'}>
-                      {r.duration}
-                    </span>
-                  </td>
-                  <td className="px-5 py-4 text-center">
-                    {r.status === 'repairing' ? (
-                      <Badge variant="error" pulse size="sm">
-                        Đang sửa chữa
-                      </Badge>
-                    ) : r.status === 'resolved' ? (
-                      <Badge variant="success" size="sm">
-                        Đã khắc phục
-                      </Badge>
-                    ) : (
-                      <Badge variant="warning" size="sm">
-                        Chờ kiểm tra
-                      </Badge>
-                    )}
+            <tbody className="divide-y divide-outline-variant/20 text-xs sm:text-sm">
+              {paginatedItems.length === 0 ? (
+                <tr>
+                  <td colSpan={4} className="px-4 py-10 text-center text-on-surface-variant font-medium">
+                    Không tìm thấy sự cố dừng máy phù hợp
                   </td>
                 </tr>
-              ))}
+              ) : (
+                paginatedItems.map((r, i) => (
+                  <tr key={i} className="hover:bg-surface-container/50 transition-colors group">
+                    <td className="px-4 py-3 font-mono font-semibold text-on-surface-variant/85">
+                      {r.time}
+                    </td>
+                    <td className="px-4 py-3 font-bold text-on-surface">
+                      {r.equipment}
+                    </td>
+                    <td className="px-4 py-3 text-right font-mono font-extrabold">
+                      <span className={r.status === 'repairing' ? 'text-rose-600 font-black' : 'text-on-surface'}>
+                        {r.duration}
+                      </span>
+                    </td>
+                    <td className="px-4 py-3 text-center">
+                      {r.status === 'repairing' ? (
+                        <Badge variant="error" pulse size="sm">
+                          Đang sửa chữa
+                        </Badge>
+                      ) : r.status === 'resolved' ? (
+                        <Badge variant="success" size="sm">
+                          Đã khắc phục
+                        </Badge>
+                      ) : (
+                        <Badge variant="warning" size="sm">
+                          Chờ kiểm tra
+                        </Badge>
+                      )}
+                    </td>
+                  </tr>
+                ))
+              )}
             </tbody>
           </table>
         </div>
+
+        {/* Pagination Footer */}
+        {filtered.length > 0 && (
+          <Pagination
+            currentPage={currentPage}
+            totalItems={filtered.length}
+            pageSize={pageSize}
+            onPageChange={setCurrentPage}
+            onPageSizeChange={(size) => {
+              setPageSize(size)
+              setCurrentPage(1)
+            }}
+            pageSizeOptions={[5, 10, 20]}
+          />
+        )}
       </section>
     </div>
   )

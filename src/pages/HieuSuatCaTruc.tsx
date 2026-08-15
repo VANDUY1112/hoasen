@@ -146,47 +146,47 @@ export default function HieuSuatCaTruc() {
       </div>
 
       {/* Shift KPI Summary */}
-      <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 sm:gap-5 stagger">
-        <div className="bg-surface-container-lowest p-6 rounded-2xl shadow-sm border border-outline-variant/40 border-l-4 border-l-primary card-hover">
-          <p className="font-mono text-xs sm:text-sm text-on-surface-variant uppercase font-bold">Tổng sản lượng ca</p>
-          <div className="flex items-baseline gap-2.5 mt-2">
-            <h2 className="text-4xl sm:text-5xl font-extrabold text-on-surface font-mono">{totalOutput.toLocaleString()}</h2>
-            <span className="text-base font-mono text-on-surface-variant font-bold">/ {totalTarget.toLocaleString()} T</span>
+      <div className="grid grid-cols-1 sm:grid-cols-3 gap-3.5 sm:gap-4 stagger">
+        <div className="bg-surface-container-lowest p-4 sm:p-5 rounded-2xl shadow-xs border border-outline-variant/35 border-l-4 border-l-primary card-hover">
+          <p className="font-mono text-[11px] sm:text-xs text-on-surface-variant uppercase font-bold">Tổng sản lượng ca</p>
+          <div className="flex items-baseline gap-2 mt-1.5">
+            <h2 className="text-2xl sm:text-3xl font-extrabold text-on-surface font-mono">{totalOutput.toLocaleString()}</h2>
+            <span className="text-xs sm:text-sm font-mono text-on-surface-variant/80 font-bold">/ {totalTarget.toLocaleString()} T</span>
           </div>
-          <div className="mt-4">
-            <ProgressBar value={(totalOutput / (totalTarget || 1)) * 100} height="h-2" />
+          <div className="mt-2.5">
+            <ProgressBar value={(totalOutput / (totalTarget || 1)) * 100} height="h-1.5" />
           </div>
         </div>
 
-        <div className="bg-surface-container-lowest p-6 rounded-2xl shadow-sm border border-outline-variant/40 border-l-4 border-l-emerald-500 card-hover">
-          <p className="font-mono text-xs sm:text-sm text-on-surface-variant uppercase font-bold">Chất lượng TB</p>
-          <h2 className="text-4xl sm:text-5xl font-extrabold text-emerald-600 mt-2 font-mono">{avgQuality}%</h2>
-          <p className="text-sm text-on-surface-variant mt-1.5 font-medium">Đạt yêu cầu tiêu chuẩn xuất khẩu ISO</p>
+        <div className="bg-surface-container-lowest p-4 sm:p-5 rounded-2xl shadow-xs border border-outline-variant/35 border-l-4 border-l-emerald-500 card-hover">
+          <p className="font-mono text-[11px] sm:text-xs text-on-surface-variant uppercase font-bold">Chất lượng TB</p>
+          <h2 className="text-2xl sm:text-3xl font-extrabold text-emerald-600 mt-1.5 font-mono">{avgQuality}%</h2>
+          <p className="text-xs text-on-surface-variant/80 mt-1 font-medium">Đạt yêu cầu tiêu chuẩn xuất khẩu ISO</p>
         </div>
 
-        <div className="bg-surface-container-lowest p-6 rounded-2xl shadow-sm border border-outline-variant/40 border-l-4 border-l-sky-500 card-hover">
-          <p className="font-mono text-xs sm:text-sm text-on-surface-variant uppercase font-bold">Quân số vận hành</p>
-          <h2 className="text-4xl sm:text-5xl font-extrabold text-sky-700 mt-2 font-mono">{data.length} <span className="text-lg font-semibold text-on-surface-variant">người</span></h2>
-          <p className="text-sm text-on-surface-variant mt-1.5 font-medium">100% có mặt đúng giờ đầy đủ</p>
+        <div className="bg-surface-container-lowest p-4 sm:p-5 rounded-2xl shadow-xs border border-outline-variant/35 border-l-4 border-l-sky-500 card-hover">
+          <p className="font-mono text-[11px] sm:text-xs text-on-surface-variant uppercase font-bold">Quân số vận hành</p>
+          <h2 className="text-2xl sm:text-3xl font-extrabold text-sky-700 mt-1.5 font-mono">{data.length} <span className="text-xs sm:text-sm font-semibold text-on-surface-variant/80">người</span></h2>
+          <p className="text-xs text-on-surface-variant/80 mt-1 font-medium">100% có mặt đúng giờ đầy đủ</p>
         </div>
       </div>
 
       {/* Worker Performance Table */}
-      <div className="bg-surface-container-lowest shadow-sm border border-outline-variant/50 rounded-2xl overflow-hidden animate-slide-up">
-        <div className="p-4 sm:p-5 border-b border-outline-variant/40 flex justify-between items-center bg-surface-container-low/60">
-          <div className="flex items-center gap-3">
+      <div className="bg-surface-container-lowest shadow-xs border border-outline-variant/35 rounded-2xl overflow-hidden animate-slide-up">
+        <div className="p-3.5 sm:p-4 border-b border-outline-variant/30 flex justify-between items-center bg-surface-container-low/50">
+          <div className="flex items-center gap-2.5">
             <div className="p-2 rounded-xl bg-primary/10 text-primary">
-              <Award size={20} />
+              <Award size={18} />
             </div>
             <div>
-              <h3 className="text-base sm:text-lg font-extrabold text-on-surface">Bảng Đánh giá Năng lực Công nhân</h3>
-              <p className="text-xs sm:text-sm text-on-surface-variant">Thống kê sản lượng và tỷ lệ kiểm định theo từng vị trí</p>
+              <h3 className="text-sm sm:text-base font-extrabold text-on-surface">Bảng Đánh giá Năng lực Công nhân</h3>
+              <p className="text-xs text-on-surface-variant/80 font-medium">Thống kê sản lượng và tỷ lệ kiểm định theo từng vị trí</p>
             </div>
           </div>
         </div>
 
         <div className="overflow-x-auto">
-          <table className="w-full text-left min-w-[700px]">
+          <table className="w-full text-left min-w-[650px]">
             <thead>
               <tr className="bg-surface-container-low/40 border-b border-outline-variant/30">
                 <th className="px-5 py-4 font-mono text-xs sm:text-sm text-on-surface-variant uppercase tracking-wider font-bold">

@@ -181,26 +181,26 @@ export default function DuBaoBaoTri() {
       </section>
 
       {/* Equipment Health Cards & Active Tickets */}
-      <section className="px-4 sm:px-6">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-5 sm:gap-6">
+      <section className="w-full">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-4 sm:gap-5">
           {/* Equipment Health Cards */}
           <div className="lg:col-span-7">
-            <div className="flex items-center justify-between mb-4">
+            <div className="flex items-center justify-between mb-3.5">
               <div className="flex items-center gap-2">
-                <Activity size={20} className="text-primary" />
-                <h3 className="text-lg sm:text-xl font-extrabold text-on-surface">Chỉ số Sức khỏe Thiết bị</h3>
+                <Activity size={18} className="text-primary" />
+                <h3 className="text-base sm:text-lg font-extrabold text-on-surface">Chỉ số Sức khỏe Thiết bị</h3>
               </div>
-              <span className="text-xs sm:text-sm text-on-surface-variant font-mono font-semibold">SCADA Realtime Stream</span>
+              <span className="text-[11px] sm:text-xs text-on-surface-variant/80 font-mono font-semibold">SCADA Realtime Stream</span>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 stagger">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3.5 stagger">
               {maintenanceList.map((item) => (
                 <div
                   key={item.equipment}
-                  className="bg-surface-container-lowest p-6 rounded-2xl shadow-sm card-hover border border-outline-variant/40"
+                  className="bg-surface-container-lowest p-4 sm:p-5 rounded-2xl shadow-xs card-hover border border-outline-variant/35"
                 >
-                  <div className="flex justify-between items-start mb-3">
-                    <h4 className="font-extrabold text-on-surface text-base">{item.equipment}</h4>
+                  <div className="flex justify-between items-start mb-2.5">
+                    <h4 className="font-extrabold text-on-surface text-sm sm:text-base">{item.equipment}</h4>
                     <Badge variant={item.status === 'critical' ? 'error' : item.status === 'warning' ? 'warning' : 'success'} size="sm">
                       {item.status === 'critical' ? 'Nguy cấp' : item.status === 'warning' ? 'Cảnh báo' : 'Tốt'}
                     </Badge>
@@ -210,18 +210,18 @@ export default function DuBaoBaoTri() {
                     value={item.health}
                     color={item.status === 'critical' ? 'error' : item.status === 'warning' ? 'tertiary' : 'success'}
                     showPercent
-                    height="h-2.5"
+                    height="h-2"
                   />
 
-                  <p className="text-sm text-on-surface-variant mt-3.5 leading-relaxed line-clamp-2 font-medium">
+                  <p className="text-xs sm:text-sm text-on-surface-variant/80 mt-3 leading-relaxed line-clamp-2 font-medium">
                     {item.description}
                   </p>
 
-                  <div className="mt-4 pt-3 border-t border-outline-variant/30 flex items-center justify-between">
-                    <span className="font-mono text-xs sm:text-sm text-on-surface-variant font-bold">Lịch bảo trì: {item.nextMaintenance}</span>
+                  <div className="mt-3.5 pt-2.5 border-t border-outline-variant/25 flex items-center justify-between">
+                    <span className="font-mono text-xs text-on-surface-variant font-bold">Bảo trì: {item.nextMaintenance}</span>
                     <button
                       onClick={() => handleSensorDetails(item.equipment)}
-                      className="cursor-pointer text-xs sm:text-sm text-primary font-bold hover:underline"
+                      className="cursor-pointer text-xs text-primary font-bold hover:underline"
                     >
                       Chi tiết &rarr;
                     </button>
@@ -232,11 +232,11 @@ export default function DuBaoBaoTri() {
           </div>
 
           {/* Active Maintenance Tickets */}
-          <div className="lg:col-span-5 bg-surface-container-lowest rounded-2xl shadow-sm border border-outline-variant/40 p-6">
-            <div className="flex items-center justify-between mb-5 pb-3 border-b border-outline-variant/40">
+          <div className="lg:col-span-5 bg-surface-container-lowest rounded-2xl shadow-xs border border-outline-variant/35 p-4 sm:p-5">
+            <div className="flex items-center justify-between mb-4 pb-2.5 border-b border-outline-variant/30">
               <div className="flex items-center gap-2">
-                <Calendar size={20} className="text-primary" />
-                <h3 className="text-base sm:text-lg font-extrabold text-on-surface">Phiếu Sửa Chữa Đang Xử Lý</h3>
+                <Calendar size={18} className="text-primary" />
+                <h3 className="text-sm sm:text-base font-extrabold text-on-surface">Phiếu Sửa Chữa Đang Xử Lý</h3>
               </div>
               <button
                 onClick={() => navigate('/lap-phieu-sua-chua')}
