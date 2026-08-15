@@ -71,7 +71,7 @@ export default function Sidebar({ isOpen, onClose, currentView, onNavigate }: Si
       <div className="absolute top-0 left-0 w-full h-1 gradient-primary" />
 
       {/* Logo Section */}
-      <div className="p-3.5 sm:p-4 flex items-center justify-between">
+      <div className="p-3.5 sm:p-4 flex items-center">
         <div className="flex items-center gap-3 py-0.5">
           <div className="relative">
             <img
@@ -89,36 +89,10 @@ export default function Sidebar({ isOpen, onClose, currentView, onNavigate }: Si
             </span>
           </div>
         </div>
-
-        <button
-          onClick={onClose}
-          className="lg:hidden text-on-surface-variant hover:text-primary p-1.5 rounded-lg hover:bg-surface-container-high transition-colors"
-        >
-          <X size={18} />
-        </button>
-      </div>
-
-      {/* Plant Location Selector Card */}
-      <div className="px-3.5 mb-2">
-        <div className="p-2.5 rounded-xl bg-surface-container-low/70 border border-outline-variant/40 flex items-center justify-between">
-          <div className="flex items-center gap-2">
-            <div className="w-2 h-2 rounded-full bg-primary" />
-            <div>
-              <p className="text-[10px] font-mono text-on-surface-variant uppercase font-bold">Khu phức hợp</p>
-              <p className="text-xs font-extrabold text-on-surface">Nhà máy Tôn Phú Mỹ</p>
-            </div>
-          </div>
-          <span className="text-[10px] font-mono px-2 py-0.5 rounded bg-surface-container-highest text-on-surface-variant font-bold">
-            KCN PM1
-          </span>
-        </div>
       </div>
 
       {/* Navigation Links */}
-      <nav className="flex-1 px-2.5 mt-1 space-y-0.5 overflow-y-auto">
-        <p className="px-3 pt-1 pb-1.5 text-[10px] font-mono uppercase tracking-wider text-on-surface-variant/70 font-bold">
-          Giám sát &amp; Phân tích
-        </p>
+      <nav className="flex-1 px-2.5 space-y-0.5 overflow-y-auto pb-4">
         {navItems.map((item) => {
           const isActive = currentView === item.path
           const Icon = item.icon
@@ -174,9 +148,6 @@ export default function Sidebar({ isOpen, onClose, currentView, onNavigate }: Si
 
         {/* Operational Console Section */}
         <div className="pt-2 mt-2 border-t border-outline-variant/30">
-          <p className="px-3 pb-1.5 text-[10px] font-mono uppercase tracking-wider text-on-surface-variant/70 font-bold">
-            Nghiệp vụ trực tiếp
-          </p>
           <div className="space-y-0.5">
             {operationalItems.map((item) => {
               const isActive = currentView === item.path
@@ -240,23 +211,6 @@ export default function Sidebar({ isOpen, onClose, currentView, onNavigate }: Si
           </button>
         </div>
       </nav>
-
-      {/* AI Assistant Banner */}
-      <div className="p-3.5 m-3 rounded-2xl gradient-primary text-on-primary shadow-lg shadow-primary/15 relative overflow-hidden shrink-0">
-        <div className="relative z-10">
-          <div className="flex items-center gap-1.5 text-xs font-bold uppercase tracking-wider mb-1 opacity-90 font-mono">
-            <Sparkles size={15} /> AI Copilot Sản xuất
-          </div>
-          <p className="text-xs opacity-90 leading-snug">Tối ưu hóa lịch bảo trì và tiêu hao năng lượng tự động.</p>
-        </div>
-      </div>
-
-      {/* Footer */}
-      <div className="p-3 border-t border-outline-variant/40 text-center shrink-0">
-        <p className="text-xs font-mono text-on-surface-variant/80 uppercase tracking-widest font-bold">
-          HOA SEN ERP 2026
-        </p>
-      </div>
     </aside>
   )
 }
