@@ -46,8 +46,8 @@ export default function Badge({
 
   // Sized comfortably for UI tables & cards
   const sizeStyles = {
-    sm: 'text-[11px] sm:text-xs px-2.5 py-0.5 font-bold whitespace-nowrap',
-    md: 'text-xs sm:text-sm px-3 py-1 font-bold whitespace-nowrap',
+    sm: 'text-xs px-2.5 py-0.5 font-bold whitespace-nowrap',
+    md: 'text-xs sm:text-sm px-3.5 py-1 font-bold whitespace-nowrap',
   }
 
   const current = variantStyles[variant]
@@ -55,7 +55,7 @@ export default function Badge({
   return (
     <span
       className={`
-        inline-flex items-center justify-center rounded-full border font-mono uppercase transition-all duration-200 shadow-2xs whitespace-nowrap shrink-0
+        inline-flex items-center justify-center rounded-full border transition-all duration-200 shadow-2xs whitespace-nowrap shrink-0
         ${sizeStyles[size]} ${current.container} ${className}
       `}
     >

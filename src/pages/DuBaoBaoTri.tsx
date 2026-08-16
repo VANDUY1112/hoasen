@@ -52,20 +52,20 @@ export default function DuBaoBaoTri() {
   }
 
   return (
-    <div className="flex flex-col w-full p-3.5 sm:p-5 lg:p-6 gap-4 sm:gap-5 animate-fade-in max-w-7xl mx-auto pb-8">
+    <div className="flex flex-col w-full px-4 sm:px-6 lg:px-8 xl:px-10 py-5 sm:py-6 lg:py-8 gap-5 sm:gap-6 lg:gap-8 animate-fade-in pb-12">
       {/* Header */}
-      <section className="flex flex-col md:flex-row justify-between items-start md:items-end gap-3 sm:gap-4">
-        <div className="max-w-2xl space-y-1">
-          <h1 className="text-xl sm:text-2xl lg:text-3xl font-extrabold text-on-surface tracking-tight leading-none mb-1">
+      <section className="flex flex-col md:flex-row justify-between items-start md:items-end gap-4 sm:gap-5">
+        <div className="space-y-1.5">
+          <h1 className="text-2xl sm:text-3xl lg:text-4xl font-extrabold text-on-surface tracking-tight leading-none mb-1">
             Dự báo &amp; Kế hoạch Bảo trì
           </h1>
-          <p className="text-xs sm:text-sm text-on-surface-variant/80 max-w-xl leading-relaxed">
+          <p className="text-xs sm:text-sm lg:text-base text-on-surface-variant/80 max-w-3xl leading-relaxed font-medium">
             Hệ thống cảm biến IoT thu thập rung chấn thời gian thực kết hợp thuật toán AI dự báo hao mòn vòng bi và động cơ.
           </p>
         </div>
 
-        <div className="flex gap-3.5 items-center bg-surface-container-lowest p-3 sm:p-3.5 rounded-2xl shadow-xs border border-outline-variant/35 w-full sm:w-auto">
-          <div className="relative w-11 h-11 sm:w-12 sm:h-12 flex items-center justify-center shrink-0">
+        <div className="flex gap-4 items-center bg-surface-container-lowest p-4 sm:p-5 rounded-2xl shadow-xs border border-outline-variant/35 w-full sm:w-auto">
+          <div className="relative w-12 h-12 sm:w-14 sm:h-14 flex items-center justify-center shrink-0">
             <svg className="absolute inset-0 w-full h-full -rotate-90" viewBox="0 0 36 36">
               <circle className="stroke-surface-container-highest" cx="18" cy="18" fill="none" strokeWidth="3.5" />
               <circle
@@ -79,18 +79,18 @@ export default function DuBaoBaoTri() {
                 strokeWidth="3.5"
               />
             </svg>
-            <span className="font-mono text-xs text-primary font-extrabold">85%</span>
+            <span className="font-mono text-sm sm:text-base text-primary font-extrabold">85%</span>
           </div>
           <div>
-            <p className="font-mono text-[11px] uppercase text-on-surface-variant font-bold">Chỉ số Sức khỏe TB</p>
-            <p className="text-sm sm:text-base font-extrabold text-on-surface">Vận hành Ổn định</p>
+            <p className="font-mono text-xs sm:text-sm uppercase text-on-surface-variant font-bold">Chỉ số Sức khỏe TB</p>
+            <p className="text-base sm:text-lg font-extrabold text-on-surface">Vận hành Ổn định</p>
           </div>
         </div>
       </section>
 
       {/* Urgent Alert & Spare Parts Row */}
       <section className="w-full">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-3.5 sm:gap-4">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-4 sm:gap-5 lg:gap-6">
           {/* Critical Alert Card */}
           <div className="lg:col-span-8 bg-rose-500/5 rounded-2xl p-4 sm:p-5 flex flex-col md:flex-row gap-4 items-center border border-rose-500/25 relative overflow-hidden group shadow-xs">
             <div className="absolute top-0 right-0 p-4 opacity-5 group-hover:opacity-10 transition-opacity">

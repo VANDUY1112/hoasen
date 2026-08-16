@@ -42,28 +42,28 @@ export default function KpiCard({
   return (
     <div
       className={`
-        group relative bg-surface-container-lowest p-3.5 sm:p-5 flex flex-col justify-between
+        group relative bg-surface-container-lowest p-4 sm:p-5 lg:p-6 flex flex-col justify-between
         overflow-hidden shadow-xs hover:shadow-md card-hover border border-outline-variant/35 rounded-2xl transition-all
         ${borderColors[accentColor]} ${className}
       `}
     >
-      <div className="flex justify-between items-start gap-2 sm:gap-3 mb-2 sm:mb-3">
+      <div className="flex justify-between items-start gap-3 sm:gap-4 mb-3 sm:mb-4">
         <div className="min-w-0 flex-1">
-          <p className="text-[10px] sm:text-xs font-bold text-on-surface-variant/80 uppercase tracking-wider leading-snug">
+          <p className="text-sm sm:text-base font-bold text-on-surface-variant leading-snug">
             {title}
           </p>
-          <h2 className="text-xl sm:text-3xl font-mono font-extrabold text-on-surface tracking-tight mt-0.5 sm:mt-1 group-hover:text-primary transition-colors animate-counter">
+          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-mono font-black text-on-surface tracking-tight mt-1.5 sm:mt-2 group-hover:text-primary transition-colors animate-counter">
             {value}
           </h2>
           {subtitle && (
-            <p className="text-[11px] sm:text-xs font-medium text-on-surface-variant/85 mt-0.5 leading-snug">{subtitle}</p>
+            <p className="text-xs sm:text-sm lg:text-base font-medium text-on-surface-variant/85 mt-1.5 leading-snug">{subtitle}</p>
           )}
         </div>
         {icon && (
           <div
             className={`
-              p-2 sm:p-2.5 rounded-xl ${iconStyles[accentColor]} shrink-0
-              shadow-xs group-hover:scale-105 transition-all duration-300
+              p-2.5 sm:p-3 lg:p-3.5 rounded-xl lg:rounded-2xl ${iconStyles[accentColor]} shrink-0
+              shadow-xs group-hover:scale-110 transition-all duration-300
             `}
           >
             {icon}
@@ -72,26 +72,26 @@ export default function KpiCard({
       </div>
 
       {trend !== undefined && (
-        <div className="flex items-center flex-wrap gap-1.5 pt-2 border-t border-outline-variant/20 text-xs font-bold font-mono text-on-surface">
+        <div className="flex items-center flex-wrap gap-2 pt-2.5 sm:pt-3 border-t border-outline-variant/20 text-xs sm:text-sm font-bold font-mono text-on-surface">
           {trend >= 0 ? (
             <span className="flex items-center text-primary font-bold">
-              <TrendingUp size={14} className="mr-1" /> +{trend}%
+              <TrendingUp size={16} className="mr-1" /> +{trend}%
             </span>
           ) : (
             <span className="flex items-center text-rose-600 font-bold">
-              <TrendingDown size={14} className="mr-1" /> {trend}%
+              <TrendingDown size={16} className="mr-1" /> {trend}%
             </span>
           )}
-          {trendLabel && <span className="font-sans font-medium text-[11px] text-on-surface-variant/70 italic">{trendLabel}</span>}
+          {trendLabel && <span className="font-sans font-medium text-xs sm:text-sm text-on-surface-variant/70 italic">{trendLabel}</span>}
         </div>
       )}
 
       {resolved && (
-        <div className="flex items-center gap-1.5 pt-2 border-t border-outline-variant/20 text-xs font-bold font-mono text-on-surface-variant">
-          <div className="w-4 h-4 rounded-full bg-primary/10 text-primary flex items-center justify-center">
-            <Check size={11} className="stroke-[3]" />
+        <div className="flex items-center gap-2 pt-2.5 sm:pt-3 border-t border-outline-variant/20 text-xs sm:text-sm font-bold font-mono text-on-surface-variant">
+          <div className="w-5 h-5 rounded-full bg-primary/10 text-primary flex items-center justify-center">
+            <Check size={13} className="stroke-[3]" />
           </div>
-          <span className="font-sans text-[11px] font-semibold text-on-surface-variant">Đã khắc phục 100%</span>
+          <span className="font-sans text-xs sm:text-sm font-semibold text-on-surface-variant">Đã khắc phục 100%</span>
         </div>
       )}
     </div>

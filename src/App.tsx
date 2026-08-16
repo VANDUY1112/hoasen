@@ -84,7 +84,7 @@ function AppContent() {
       />
 
       {/* Main Content */}
-      <div className="pl-0 lg:pl-72 transition-all duration-300">
+      <div className="pl-0 lg:pl-80 transition-all duration-300">
         <Header
           subtitle={viewTitles[currentView] || 'Operational Monitoring System'}
           onMenuClick={() => setSidebarOpen(true)}

@@ -20,36 +20,36 @@ export default function QuanLyDinhMuc() {
   }
 
   return (
-    <div className="flex flex-col w-full p-3.5 sm:p-5 lg:p-6 gap-4 sm:gap-5 animate-fade-in max-w-7xl mx-auto">
+    <div className="flex flex-col w-full px-4 sm:px-6 lg:px-8 xl:px-10 py-5 sm:py-6 lg:py-8 gap-5 sm:gap-6 lg:gap-8 animate-fade-in">
       {/* Header */}
-      <div className="flex flex-col md:flex-row md:items-end justify-between gap-3 sm:gap-4">
-        <div className="space-y-1">
-          <h1 className="text-xl sm:text-2xl lg:text-3xl font-extrabold text-on-surface tracking-tight">
+      <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 sm:gap-5">
+        <div className="space-y-1.5">
+          <h1 className="text-2xl sm:text-3xl lg:text-4xl font-extrabold text-on-surface tracking-tight">
             Quản lý Định mức &amp; KPIs
           </h1>
-          <p className="text-xs sm:text-sm text-on-surface-variant/80 max-w-2xl leading-relaxed font-medium">
+          <p className="text-xs sm:text-sm lg:text-base text-on-surface-variant/80 max-w-3xl leading-relaxed font-medium">
             Thiết lập và theo dõi mục tiêu sản xuất thực tế so với kế hoạch. Hệ thống tự động phân tích độ lệch chuẩn và cảnh báo hiệu suất.
           </p>
         </div>
 
-        <div className="grid grid-cols-2 sm:flex gap-2 w-full sm:w-auto">
+        <div className="grid grid-cols-2 sm:flex gap-3 w-full sm:w-auto">
           <button
             onClick={handleExport}
-            className="cursor-pointer flex items-center justify-center gap-1.5 px-3.5 sm:px-4 py-2 bg-surface-container-lowest text-on-surface font-bold rounded-xl hover:bg-surface-container transition-all text-xs uppercase font-mono tracking-wider border border-outline-variant/40 shadow-2xs"
+            className="cursor-pointer flex items-center justify-center gap-2 px-5 py-3 bg-surface-container-lowest text-on-surface font-bold rounded-xl hover:bg-surface-container transition-all text-xs sm:text-sm lg:text-base uppercase font-mono tracking-wider border border-outline-variant/40 shadow-2xs"
           >
-            <Download size={15} className="text-primary shrink-0" /> <span className="truncate">Xuất báo cáo</span>
+            <Download size={17} className="text-primary shrink-0" /> <span className="truncate">Xuất báo cáo</span>
           </button>
           <button
             onClick={() => navigate('/thiet-lap-muc-tieu-ca-truc')}
-            className="cursor-pointer flex items-center justify-center gap-1.5 px-3.5 sm:px-4 py-2 bg-primary text-on-primary font-extrabold rounded-xl shadow-xs shadow-primary/20 hover:bg-on-primary-fixed-variant transition-all text-xs uppercase font-mono tracking-wider"
+            className="cursor-pointer flex items-center justify-center gap-2 px-5 py-3 bg-primary text-on-primary font-extrabold rounded-xl shadow-xs shadow-primary/20 hover:bg-on-primary-fixed-variant transition-all text-xs sm:text-sm lg:text-base uppercase font-mono tracking-wider"
           >
-            <FileEdit size={15} /> <span className="truncate">Cập nhật Định mức</span>
+            <FileEdit size={17} /> <span className="truncate">Cập nhật Định mức</span>
           </button>
         </div>
       </div>
 
       {/* Top Stats - Minimalist & Unified Brand Design */}
-      <div className="grid grid-cols-2 lg:grid-cols-4 gap-2.5 sm:gap-4 stagger">
+      <div className="grid grid-cols-2 lg:grid-cols-4 gap-3.5 sm:gap-5 lg:gap-6 stagger">
         {[
           { label: 'Target Yield', value: '42,500', unit: 'Tấn/tháng', trend: '+4.2%', icon: Factory },
           { label: 'Quality Standard', value: '99.8', unit: '%', progress: 99.8, icon: ShieldCheck },
@@ -58,34 +58,34 @@ export default function QuanLyDinhMuc() {
         ].map((item) => (
           <div
             key={item.label}
-            className="group p-3.5 sm:p-4 bg-surface-container-lowest rounded-2xl shadow-xs hover:shadow-md transition-all card-hover border border-outline-variant/30 hover:border-primary/40"
+            className="group p-5 sm:p-6 lg:p-7 bg-surface-container-lowest rounded-2xl shadow-xs hover:shadow-md transition-all card-hover border border-outline-variant/30 hover:border-primary/40 flex flex-col justify-between"
           >
-            <div className="flex justify-between items-start mb-2">
-              <span className="font-mono text-[11px] sm:text-xs text-on-surface-variant uppercase font-bold">{item.label}</span>
-              <div className="p-1.5 sm:p-2 rounded-xl shrink-0 transition-transform group-hover:scale-110 bg-primary/10 text-primary border border-primary/20">
-                <item.icon size={17} />
+            <div className="flex justify-between items-start mb-3">
+              <span className="font-mono text-xs sm:text-sm text-on-surface-variant uppercase font-bold">{item.label}</span>
+              <div className="p-2.5 sm:p-3 rounded-2xl shrink-0 transition-transform group-hover:scale-110 bg-primary/10 text-primary border border-primary/20">
+                <item.icon size={20} />
               </div>
             </div>
-            <div className="flex items-baseline gap-1.5 sm:gap-2">
-              <span className="text-xl sm:text-2xl lg:text-3xl font-extrabold text-on-surface font-mono group-hover:text-primary transition-colors">{item.value}</span>
-              <span className="font-mono text-[11px] sm:text-xs text-on-surface-variant font-bold">{item.unit}</span>
+            <div className="flex items-baseline gap-2">
+              <span className="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-on-surface font-mono group-hover:text-primary transition-colors">{item.value}</span>
+              <span className="font-mono text-xs sm:text-sm text-on-surface-variant font-bold">{item.unit}</span>
             </div>
             {item.trend && (
-              <div className="mt-2 flex items-center gap-1.5">
-                <span className="flex items-center text-xs font-bold text-primary bg-primary/10 px-2 py-0.5 rounded font-mono">
-                  <TrendingUp size={13} className="mr-1" /> {item.trend}
+              <div className="mt-3 flex items-center gap-2">
+                <span className="flex items-center text-xs sm:text-sm font-bold text-primary bg-primary/10 px-2.5 py-1 rounded font-mono">
+                  <TrendingUp size={15} className="mr-1" /> {item.trend}
                 </span>
-                <span className="text-[10px] sm:text-[11px] text-on-surface-variant/70 italic font-medium">vs tháng trước</span>
+                <span className="text-xs sm:text-sm text-on-surface-variant/70 italic font-medium">vs tháng trước</span>
               </div>
             )}
             {item.progress !== undefined && (
-              <div className="mt-2.5">
-                <ProgressBar value={item.progress} height="h-1.5" />
+              <div className="mt-3">
+                <ProgressBar value={item.progress} height="h-2" />
               </div>
             )}
             {item.badge && (
-              <div className="mt-2">
-                <Badge variant="neutral" size="sm">{item.badge}</Badge>
+              <div className="mt-3">
+                <Badge variant="neutral" size="md">{item.badge}</Badge>
               </div>
             )}
           </div>

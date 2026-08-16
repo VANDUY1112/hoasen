@@ -95,19 +95,19 @@ export default function ThietLapMucTieuCaTruc() {
   }
 
   return (
-    <div className="flex flex-col w-full p-3.5 sm:p-5 lg:p-6 gap-4 sm:gap-5 animate-fade-in max-w-5xl mx-auto">
+    <div className="flex flex-col w-full px-4 sm:px-6 lg:px-8 xl:px-10 py-5 sm:py-6 lg:py-8 gap-5 sm:gap-6 lg:gap-8 animate-fade-in">
       {/* Title */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
-        <div className="flex items-center gap-2.5">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+        <div className="flex items-center gap-3">
           <button
             onClick={() => navigate('/hieu-suat-ca-truc')}
-            className="cursor-pointer p-2 hover:bg-surface-container-high rounded-xl transition-colors text-on-surface-variant hover:text-primary border border-outline-variant/40 shadow-2xs shrink-0"
+            className="cursor-pointer p-2.5 hover:bg-surface-container-high rounded-xl transition-colors text-on-surface-variant hover:text-primary border border-outline-variant/40 shadow-2xs shrink-0"
             title="Quay lại Hiệu suất ca"
           >
-            <ArrowLeft size={16} />
+            <ArrowLeft size={18} />
           </button>
           <div>
-            <h1 className="text-xl sm:text-2xl lg:text-3xl font-extrabold text-on-surface tracking-tight">
+            <h1 className="text-2xl sm:text-3xl lg:text-4xl font-extrabold text-on-surface tracking-tight">
               Thiết lập Mục tiêu Ca trực
             </h1>
           </div>
@@ -116,140 +116,168 @@ export default function ThietLapMucTieuCaTruc() {
         <button
           type="button"
           onClick={handleOpenPrint}
-          className="cursor-pointer bg-surface-container-lowest border border-outline-variant/40 text-on-surface px-3.5 py-2 rounded-xl font-mono text-xs font-bold uppercase tracking-wider flex items-center justify-center gap-1.5 hover:bg-surface-container transition-colors shadow-2xs w-full sm:w-auto"
+          className="cursor-pointer bg-surface-container-lowest border border-outline-variant/40 text-on-surface px-5 sm:px-6 py-3 rounded-xl font-mono text-xs sm:text-sm lg:text-base font-bold uppercase tracking-wider flex items-center justify-center gap-2 hover:bg-surface-container transition-colors shadow-2xs w-full sm:w-auto"
         >
-          <Printer size={15} className="text-primary" /> Xem lệnh giao ca A4
+          <Printer size={18} className="text-primary" /> Xem lệnh giao ca A4
         </button>
       </div>
 
-      <div className="bg-surface-container-lowest p-4 sm:p-6 rounded-2xl shadow-xs border border-outline-variant/35">
-        <form className="space-y-6" onSubmit={handleSubmit}>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
-            <CustomSelect
-              label="Ca trực áp dụng"
-              icon={<Clock size={16} />}
-              options={shiftOptions}
-              value={shift}
-              onChange={setShift}
-            />
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-5 sm:gap-6 lg:gap-8">
+        {/* Form Container (8 cols) */}
+        <div className="lg:col-span-8 bg-surface-container-lowest p-5 sm:p-6 lg:p-8 rounded-2xl shadow-sm border border-outline-variant/40">
+          <form className="space-y-6" onSubmit={handleSubmit}>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+              <CustomSelect
+                label="Ca trực áp dụng"
+                icon={<Clock size={16} />}
+                options={shiftOptions}
+                value={shift}
+                onChange={setShift}
+              />
 
-            <CustomSelect
-              label="Dây chuyền sản xuất"
-              icon={<Factory size={16} />}
-              options={lineOptions}
-              value={line}
-              onChange={setLine}
-            />
-          </div>
+              <CustomSelect
+                label="Dây chuyền sản xuất"
+                icon={<Factory size={16} />}
+                options={lineOptions}
+                value={line}
+                onChange={setLine}
+              />
+            </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
-            <div>
-              <label className="block text-xs font-semibold text-on-surface-variant uppercase tracking-wider mb-1.5">
-                Mục tiêu sản lượng (Tấn)
-              </label>
-              <input
-                type="number"
-                className="w-full bg-surface-container-lowest border border-outline-variant/60 rounded-xl px-4 py-2.5 text-sm font-mono focus:border-primary focus:ring-3 focus:ring-primary/15 outline-none transition-all duration-200 font-bold"
-                value={targetOutput}
-                onChange={(e) => setTargetOutput(e.target.value)}
-                required
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
+              <div>
+                <label className="block text-xs font-semibold text-on-surface-variant uppercase tracking-wider mb-1.5">
+                  Mục tiêu sản lượng (Tấn)
+                </label>
+                <input
+                  type="number"
+                  className="w-full bg-surface-container-lowest border border-outline-variant/60 rounded-xl px-4 py-2.5 text-sm font-mono focus:border-primary focus:ring-3 focus:ring-primary/15 outline-none transition-all duration-200 font-bold"
+                  value={targetOutput}
+                  onChange={(e) => setTargetOutput(e.target.value)}
+                  required
+                />
+              </div>
+
+              <div>
+                <label className="block text-xs font-semibold text-on-surface-variant uppercase tracking-wider mb-1.5">
+                  Mục tiêu chất lượng (%)
+                </label>
+                <input
+                  type="number"
+                  step="0.1"
+                  className="w-full bg-surface-container-lowest border border-outline-variant/60 rounded-xl px-4 py-2.5 text-sm font-mono focus:border-primary focus:ring-3 focus:ring-primary/15 outline-none transition-all duration-200 font-bold"
+                  value={targetQuality}
+                  onChange={(e) => setTargetQuality(e.target.value)}
+                  required
+                />
+              </div>
+
+              <div>
+                <label className="block text-xs font-semibold text-on-surface-variant uppercase tracking-wider mb-1.5">
+                  Downtime tối đa (Phút)
+                </label>
+                <input
+                  type="number"
+                  className="w-full bg-surface-container-lowest border border-outline-variant/60 rounded-xl px-4 py-2.5 text-sm font-mono focus:border-primary focus:ring-3 focus:ring-primary/15 outline-none transition-all duration-200 font-bold"
+                  value={maxDowntime}
+                  onChange={(e) => setMaxDowntime(e.target.value)}
+                  required
+                />
+              </div>
+            </div>
+
+            <div className="max-w-md">
+              <CustomDatePicker
+                label="Ngày áp dụng chỉ tiêu"
+                value={targetDate}
+                onChange={setTargetDate}
               />
             </div>
 
             <div>
               <label className="block text-xs font-semibold text-on-surface-variant uppercase tracking-wider mb-1.5">
-                Mục tiêu chất lượng (%)
+                Chỉ thị đặc biệt từ Ban Giám Đốc
               </label>
-              <input
-                type="number"
-                step="0.1"
-                className="w-full bg-surface-container-lowest border border-outline-variant/60 rounded-xl px-4 py-2.5 text-sm font-mono focus:border-primary focus:ring-3 focus:ring-primary/15 outline-none transition-all duration-200"
-                value={targetQuality}
-                onChange={(e) => setTargetQuality(e.target.value)}
-                required
+              <textarea
+                className="w-full bg-surface-container-lowest border border-outline-variant/60 rounded-xl px-4 py-2.5 text-sm focus:border-primary focus:ring-3 focus:ring-primary/15 outline-none transition-all duration-200 h-24 resize-none font-medium"
+                placeholder="Ví dụ: Ưu tiên đơn hàng tôn mạ Z275 xuất khẩu thị trường Mỹ..."
+                value={notes}
+                onChange={(e) => setNotes(e.target.value)}
               />
             </div>
 
-            <div>
-              <label className="block text-xs font-semibold text-on-surface-variant uppercase tracking-wider mb-1.5">
-                Downtime tối đa (Phút)
-              </label>
-              <input
-                type="number"
-                className="w-full bg-surface-container-lowest border border-outline-variant/60 rounded-xl px-4 py-2.5 text-sm font-mono focus:border-primary focus:ring-3 focus:ring-primary/15 outline-none transition-all duration-200"
-                value={maxDowntime}
-                onChange={(e) => setMaxDowntime(e.target.value)}
-                required
-              />
-            </div>
-          </div>
+            <div className="flex items-center gap-4 pt-4 border-t border-outline-variant/40 flex-wrap">
+              <button
+                type="submit"
+                disabled={submitting}
+                className={`
+                  cursor-pointer px-8 py-3.5 text-on-primary font-bold rounded-xl transition-all duration-200 flex items-center gap-2 text-sm sm:text-base shadow-md font-mono tracking-wider
+                  ${success
+                    ? 'bg-emerald-600 shadow-emerald-600/20'
+                    : 'bg-primary hover:bg-on-primary-fixed-variant shadow-primary/20 hover:scale-[1.01] active:scale-[0.99]'
+                  }
+                `}
+              >
+                {submitting ? (
+                  <>
+                    <RefreshCw size={18} className="animate-spin-slow" /> Đang ban hành...
+                  </>
+                ) : success ? (
+                  <>
+                    <CheckCircle2 size={18} /> Đã ban hành thành công
+                  </>
+                ) : (
+                  <>
+                    <Sliders size={18} /> Ban hành Chỉ tiêu Ca trực
+                  </>
+                )}
+              </button>
 
-          <div className="max-w-md">
-            <CustomDatePicker
-              label="Ngày áp dụng chỉ tiêu"
-              value={targetDate}
-              onChange={setTargetDate}
-            />
-          </div>
-
-          <div>
-            <label className="block text-xs font-semibold text-on-surface-variant uppercase tracking-wider mb-1.5">
-              Chỉ thị đặc biệt từ Ban Giám Đốc
-            </label>
-            <textarea
-              className="w-full bg-surface-container-lowest border border-outline-variant/60 rounded-xl px-4 py-2.5 text-sm focus:border-primary focus:ring-3 focus:ring-primary/15 outline-none transition-all duration-200 h-24 resize-none font-medium"
-              placeholder="Ví dụ: Ưu tiên đơn hàng tôn mạ Z275 xuất khẩu thị trường Mỹ..."
-              value={notes}
-              onChange={(e) => setNotes(e.target.value)}
-            />
-          </div>
-
-          <div className="flex items-center gap-4 pt-4 border-t border-outline-variant/40 flex-wrap">
-            <button
-              type="submit"
-              disabled={submitting}
-              className={`
-                cursor-pointer px-8 py-3 text-on-primary font-semibold rounded-xl transition-all duration-200 flex items-center gap-2 text-sm shadow-md
-                ${success
-                  ? 'bg-emerald-600 shadow-emerald-600/20'
-                  : 'bg-primary hover:bg-on-primary-fixed-variant shadow-primary/20 hover:scale-[1.01] active:scale-[0.99]'
-                }
-              `}
-            >
-              {submitting ? (
-                <>
-                  <RefreshCw size={16} className="animate-spin-slow" /> Đang ban hành...
-                </>
-              ) : success ? (
-                <>
-                  <CheckCircle2 size={16} /> Đã ban hành thành công
-                </>
-              ) : (
-                <>
-                  <Sliders size={16} /> Ban hành Chỉ tiêu Ca trực
-                </>
+              {success && (
+                <button
+                  type="button"
+                  onClick={handleOpenPrint}
+                  className="cursor-pointer px-6 py-3.5 bg-emerald-50 text-emerald-700 font-bold rounded-xl border border-emerald-300 hover:bg-emerald-100 transition-colors text-sm sm:text-base flex items-center gap-2 animate-scale-in font-mono"
+                >
+                  <Printer size={18} /> In lệnh giao ca A4
+                </button>
               )}
-            </button>
 
-            {success && (
               <button
                 type="button"
-                onClick={handleOpenPrint}
-                className="cursor-pointer px-5 py-3 bg-emerald-50 text-emerald-700 font-bold rounded-xl border border-emerald-300 hover:bg-emerald-100 transition-colors text-sm flex items-center gap-2 animate-scale-in"
+                onClick={() => navigate('/hieu-suat-ca-truc')}
+                className="cursor-pointer px-6 py-3.5 bg-surface-container text-on-surface-variant font-bold rounded-xl hover:bg-surface-container-high transition-colors text-sm sm:text-base font-mono"
               >
-                <Printer size={16} /> In lệnh giao ca A4
+                Quay lại
               </button>
-            )}
+            </div>
+          </form>
+        </div>
 
-            <button
-              type="button"
-              onClick={() => navigate('/hieu-suat-ca-truc')}
-              className="cursor-pointer px-5 py-3 bg-surface-container text-on-surface-variant font-semibold rounded-xl hover:bg-surface-container-high transition-colors text-sm"
-            >
-              Quay lại
-            </button>
+        {/* Target Summary Sidebar (4 cols) */}
+        <div className="lg:col-span-4 space-y-5 sm:space-y-6">
+          <div className="bg-surface-container-lowest p-5 sm:p-6 lg:p-7 rounded-2xl shadow-sm border border-outline-variant/40 space-y-4">
+            <h3 className="text-base sm:text-lg lg:text-xl font-extrabold text-on-surface">Tóm tắt Chỉ tiêu Giao ca</h3>
+            <div className="space-y-3 font-mono text-sm">
+              <div className="flex justify-between p-3 rounded-xl bg-surface-container-low border border-outline-variant/30">
+                <span className="text-on-surface-variant">Sản lượng mục tiêu:</span>
+                <span className="font-extrabold text-primary">{targetOutput} Tấn</span>
+              </div>
+              <div className="flex justify-between p-3 rounded-xl bg-surface-container-low border border-outline-variant/30">
+                <span className="text-on-surface-variant">Chất lượng tối thiểu:</span>
+                <span className="font-extrabold text-emerald-600">{targetQuality}%</span>
+              </div>
+              <div className="flex justify-between p-3 rounded-xl bg-surface-container-low border border-outline-variant/30">
+                <span className="text-on-surface-variant">Downtime trần:</span>
+                <span className="font-extrabold text-amber-600">{maxDowntime} Phút</span>
+              </div>
+              <div className="flex justify-between p-3 rounded-xl bg-surface-container-low border border-outline-variant/30">
+                <span className="text-on-surface-variant">OEE Ca ước tính:</span>
+                <span className="font-extrabold text-on-surface">88.5%</span>
+              </div>
+            </div>
           </div>
-        </form>
+        </div>
       </div>
 
       {/* Print Modal */}

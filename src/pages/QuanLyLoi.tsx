@@ -57,14 +57,14 @@ export default function QuanLyLoi() {
   }
 
   return (
-    <div className="flex flex-col w-full p-3.5 sm:p-5 lg:p-6 gap-4 sm:gap-5 animate-fade-in max-w-7xl mx-auto">
+    <div className="flex flex-col w-full px-4 sm:px-6 lg:px-8 xl:px-10 py-5 sm:py-6 lg:py-8 gap-5 sm:gap-6 lg:gap-8 animate-fade-in">
       {/* Title */}
-      <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-3 sm:gap-4">
-        <div className="space-y-1">
-          <h1 className="text-xl sm:text-2xl lg:text-3xl font-extrabold text-on-surface tracking-tight">
+      <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 sm:gap-5">
+        <div className="space-y-1.5">
+          <h1 className="text-2xl sm:text-3xl lg:text-4xl font-extrabold text-on-surface tracking-tight">
             Quản lý &amp; Nhận dạng Lỗi AI
           </h1>
-          <p className="text-xs sm:text-sm text-on-surface-variant/80 max-w-2xl leading-relaxed font-medium">
+          <p className="text-xs sm:text-sm lg:text-base text-on-surface-variant/80 max-w-3xl leading-relaxed font-medium">
             Hệ thống camera quang học quét bề mặt tôn tốc độ cao kết hợp mô hình AI phân loại khuyết tật tôn cuộn.
           </p>
         </div>
@@ -72,79 +72,86 @@ export default function QuanLyLoi() {
         <button
           onClick={handleSimulateScan}
           disabled={scanning}
-          className="cursor-pointer bg-primary text-on-primary px-4 py-2 rounded-xl font-bold shadow-xs hover:bg-on-primary-fixed-variant transition-all flex items-center justify-center gap-1.5 text-xs uppercase tracking-wider font-mono w-full sm:w-auto"
+          className="cursor-pointer bg-primary text-on-primary px-5 sm:px-6 py-3 rounded-xl font-extrabold shadow-xs hover:bg-on-primary-fixed-variant transition-all flex items-center justify-center gap-2 text-xs sm:text-sm lg:text-base uppercase tracking-wider font-mono w-full sm:w-auto"
         >
-          <Upload size={15} className={scanning ? 'animate-spin' : ''} />
+          <Upload size={18} className={scanning ? 'animate-spin' : ''} />
           {scanning ? 'Đang quét ảnh...' : 'Quét ảnh AI'}
         </button>
       </div>
 
       {/* KPI Row */}
-      <div className="grid grid-cols-2 md:grid-cols-3 gap-2.5 sm:gap-4 stagger">
-        <div className="col-span-2 md:col-span-1 bg-surface-container-lowest p-3.5 sm:p-5 shadow-xs border border-outline-variant/35 border-l-4 border-l-primary rounded-2xl card-hover">
-          <p className="font-mono text-[10px] sm:text-xs text-on-surface-variant uppercase font-bold">Tỷ lệ lỗi toàn diện (YTD)</p>
-          <span className="text-xl sm:text-3xl font-extrabold text-on-surface mt-0.5 sm:mt-1 block font-mono">1.42%</span>
-          <p className="text-[11px] sm:text-xs text-emerald-600 mt-0.5 sm:mt-1 font-bold">-0.3% so với mục tiêu quý</p>
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-4 sm:gap-5 lg:gap-6 stagger">
+        <div className="bg-surface-container-lowest p-5 sm:p-6 lg:p-7 shadow-xs border border-outline-variant/35 rounded-2xl card-hover flex flex-col justify-between">
+          <div>
+            <p className="text-sm sm:text-base font-bold text-on-surface-variant">Tỷ lệ lỗi toàn diện (YTD)</p>
+            <span className="text-3xl sm:text-4xl lg:text-5xl font-black text-on-surface mt-2 block font-mono">1.42%</span>
+          </div>
+          <p className="text-xs sm:text-sm text-emerald-600 mt-2 font-bold">-0.3% so với mục tiêu quý</p>
         </div>
 
-        <div className="col-span-1 gradient-primary p-3.5 sm:p-5 shadow-md rounded-2xl text-on-primary card-hover flex justify-between items-start">
+        <div className="bg-surface-container-lowest p-5 sm:p-6 lg:p-7 shadow-xs border border-outline-variant/35 rounded-2xl card-hover flex justify-between items-start">
           <div className="min-w-0">
-            <p className="font-mono text-[10px] sm:text-xs opacity-90 uppercase font-bold truncate">Lỗi nghiêm trọng</p>
-            <span className="text-xl sm:text-3xl font-extrabold mt-0.5 sm:mt-1 block font-mono">04 <span className="text-xs sm:text-base font-normal opacity-90">vụ</span></span>
-            <p className="text-[11px] sm:text-xs opacity-90 mt-0.5 sm:mt-1 font-medium truncate">Đã khoanh vùng</p>
+            <p className="text-sm sm:text-base font-bold text-on-surface-variant truncate">Lỗi nghiêm trọng</p>
+            <span className="text-3xl sm:text-4xl lg:text-5xl font-black text-primary mt-2 block font-mono">04 <span className="text-base font-normal text-on-surface-variant font-sans">vụ</span></span>
+            <p className="text-xs sm:text-sm text-on-surface-variant/80 mt-2 font-medium truncate">Đã khoanh vùng</p>
           </div>
-          <div className="p-2 rounded-xl bg-on-primary/15 shrink-0 ml-1">
-            <AlertTriangle size={18} />
+          <div className="p-3 sm:p-3.5 rounded-2xl bg-primary/10 text-primary border border-primary/20 shrink-0 ml-2">
+            <AlertTriangle size={26} />
           </div>
         </div>
 
-        <div className="col-span-1 bg-surface-container-lowest p-3.5 sm:p-5 shadow-xs border border-outline-variant/35 border-l-4 border-l-sky-500 rounded-2xl card-hover">
-          <p className="font-mono text-[10px] sm:text-xs text-on-surface-variant uppercase font-bold truncate">Phản hồi TB</p>
-          <span className="text-xl sm:text-3xl font-extrabold text-on-surface mt-0.5 sm:mt-1 block font-mono">18 <span className="text-xs sm:text-base font-normal text-on-surface-variant">phút</span></span>
-          <p className="text-[11px] sm:text-xs text-on-surface-variant/80 mt-0.5 sm:mt-1 font-medium truncate">Từ lúc phát hiện</p>
+        <div className="bg-surface-container-lowest p-5 sm:p-6 lg:p-7 shadow-xs border border-outline-variant/35 rounded-2xl card-hover flex justify-between items-start">
+          <div className="min-w-0">
+            <p className="text-sm sm:text-base font-bold text-on-surface-variant truncate">Phản hồi trung bình</p>
+            <span className="text-3xl sm:text-4xl lg:text-5xl font-black text-on-surface mt-2 block font-mono">18 <span className="text-base font-normal text-on-surface-variant font-sans">phút</span></span>
+            <p className="text-xs sm:text-sm text-on-surface-variant/80 mt-2 font-medium truncate">Từ lúc phát hiện</p>
+          </div>
+          <div className="p-3 sm:p-3.5 rounded-2xl bg-primary/10 text-primary border border-primary/20 shrink-0 ml-2">
+            <ShieldAlert size={26} />
+          </div>
         </div>
       </div>
 
       {/* Defect Log Table */}
-      <div className="bg-surface-container-lowest shadow-xs border border-outline-variant/35 rounded-2xl overflow-hidden animate-slide-up">
-        <div className="p-3 sm:p-4 border-b border-outline-variant/30 bg-surface-container-low/50 flex items-center justify-between">
-          <div className="flex items-center gap-2.5">
-            <div className="p-1.5 rounded-lg bg-primary/10 text-primary">
-              <ShieldAlert size={18} />
+      <div className="bg-surface-container-lowest shadow-sm border border-outline-variant/40 rounded-2xl overflow-hidden animate-slide-up">
+        <div className="p-5 sm:p-6 border-b border-outline-variant/30 bg-surface-container-low/60 flex items-center justify-between">
+          <div className="flex items-center gap-3">
+            <div className="p-2.5 rounded-xl bg-primary/10 text-primary border border-primary/20">
+              <ShieldAlert size={22} />
             </div>
             <div>
-              <h3 className="text-sm sm:text-base font-extrabold text-on-surface">Danh mục Khuyết tật Bề mặt &amp; Cơ tính</h3>
-              <p className="text-xs text-on-surface-variant/80 font-medium">Phân loại lỗi theo tiêu chuẩn JIS G3302</p>
+              <h3 className="text-lg sm:text-xl lg:text-2xl font-extrabold text-on-surface">Danh mục Khuyết tật Bề mặt &amp; Cơ tính</h3>
+              <p className="text-xs sm:text-sm text-on-surface-variant/80 font-medium mt-0.5">Phân loại lỗi theo tiêu chuẩn JIS G3302</p>
             </div>
           </div>
-          <Badge variant="primary" size="sm">AI Trained v4.2</Badge>
+          <Badge variant="primary" size="md">AI Trained v4.2</Badge>
         </div>
 
         <div className="overflow-x-auto">
           <table className="w-full text-left min-w-[600px]">
             <thead>
-              <tr className="bg-surface-container-low/30 border-b border-outline-variant/20">
-                <th className="px-3.5 py-2.5 font-mono text-xs text-on-surface-variant uppercase font-bold whitespace-nowrap">Mã lỗi</th>
-                <th className="px-3.5 py-2.5 font-mono text-xs text-on-surface-variant uppercase font-bold whitespace-nowrap">Loại lỗi</th>
-                <th className="px-3.5 py-2.5 font-mono text-xs text-on-surface-variant uppercase font-bold whitespace-nowrap">Tần suất xuất hiện</th>
-                <th className="px-3.5 py-2.5 font-mono text-xs text-on-surface-variant uppercase font-bold text-right whitespace-nowrap">Mức độ cảnh báo</th>
+              <tr className="bg-surface-container-low/40 border-b border-outline-variant/30">
+                <th className="px-5 py-4 font-mono text-xs sm:text-sm text-on-surface-variant uppercase font-bold whitespace-nowrap">Mã lỗi</th>
+                <th className="px-5 py-4 font-mono text-xs sm:text-sm text-on-surface-variant uppercase font-bold whitespace-nowrap">Loại lỗi</th>
+                <th className="px-5 py-4 font-mono text-xs sm:text-sm text-on-surface-variant uppercase font-bold whitespace-nowrap">Tần suất xuất hiện</th>
+                <th className="px-5 py-4 font-mono text-xs sm:text-sm text-on-surface-variant uppercase font-bold text-right whitespace-nowrap">Mức độ cảnh báo</th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-outline-variant/20 text-xs sm:text-[13px]">
+            <tbody className="divide-y divide-outline-variant/20 text-sm sm:text-base">
               {paginatedDefects.map((d) => (
                 <tr key={d.code} className="hover:bg-surface-container/50 transition-colors">
-                  <td className="px-3.5 py-2.5 font-mono text-primary font-bold whitespace-nowrap">{d.code}</td>
-                  <td className="px-3.5 py-2.5 font-semibold text-on-surface whitespace-nowrap">{d.type}</td>
-                  <td className="px-3.5 py-2.5 whitespace-nowrap">
-                    <div className="flex items-center gap-2">
-                      <div className="w-20 sm:w-28 h-1.5 bg-surface-container-high rounded-full overflow-hidden">
+                  <td className="px-5 py-4 font-mono text-primary font-bold whitespace-nowrap">{d.code}</td>
+                  <td className="px-5 py-4 font-bold text-on-surface whitespace-nowrap">{d.type}</td>
+                  <td className="px-5 py-4 whitespace-nowrap">
+                    <div className="flex items-center gap-3">
+                      <div className="w-24 sm:w-36 h-2 bg-surface-container-high rounded-full overflow-hidden">
                         <div className="gradient-primary h-full rounded-full" style={{ width: `${(d.frequency / 50) * 100}%` }} />
                       </div>
-                      <span className="font-mono text-xs font-bold text-on-surface">{d.frequency} lần</span>
+                      <span className="font-mono text-xs sm:text-sm font-bold text-on-surface">{d.frequency} lần</span>
                     </div>
                   </td>
-                  <td className="px-3.5 py-2.5 text-right whitespace-nowrap">
-                    <Badge variant={d.severity === 'high' ? 'error' : d.severity === 'medium' ? 'warning' : 'neutral'} size="sm">
+                  <td className="px-5 py-4 text-right whitespace-nowrap">
+                    <Badge variant={d.severity === 'high' ? 'error' : d.severity === 'medium' ? 'warning' : 'neutral'} size="md">
                       {d.severity === 'high' ? 'Nghiêm trọng' : d.severity === 'medium' ? 'Trung bình' : 'Thấp'}
                     </Badge>
                   </td>
@@ -170,12 +177,12 @@ export default function QuanLyLoi() {
 
       {/* AI Vision Defect Library */}
       <div>
-        <div className="flex items-center justify-between mb-3">
-          <div className="flex items-center gap-2">
-            <Sparkles size={18} className="text-primary" />
-            <h3 className="text-base sm:text-lg font-extrabold text-on-surface">Thư viện Nhận dạng Khuyết tật AI Vision</h3>
+        <div className="flex items-center justify-between mb-4">
+          <div className="flex items-center gap-2.5">
+            <Sparkles size={22} className="text-primary" />
+            <h3 className="text-lg sm:text-xl lg:text-2xl font-extrabold text-on-surface">Thư viện Nhận dạng Khuyết tật AI Vision</h3>
           </div>
-          <span className="text-[11px] sm:text-xs text-on-surface-variant/80 font-mono font-semibold">Dataset: 250k+ ảnh</span>
+          <span className="text-xs sm:text-sm text-on-surface-variant/80 font-mono font-semibold">Dataset: 250k+ ảnh</span>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-3.5 sm:gap-4">

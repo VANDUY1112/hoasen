@@ -119,7 +119,7 @@ export default function Header({ subtitle, onMenuClick }: HeaderProps) {
 
   return (
     <>
-      <header className="fixed top-0 left-0 lg:left-72 right-0 h-14 glass z-30 flex items-center justify-between px-3 sm:px-4 lg:px-5 transition-all duration-300 border-b border-outline-variant/40">
+      <header className="fixed top-0 left-0 lg:left-80 right-0 h-14 glass z-30 flex items-center justify-between px-3 sm:px-4 lg:px-5 transition-all duration-300 border-b border-outline-variant/40">
         {/* Left: Menu */}
         <div className="flex items-center gap-2 sm:gap-2.5 min-w-0">
           <button
@@ -253,8 +253,8 @@ export default function Header({ subtitle, onMenuClick }: HeaderProps) {
             >
               <div className="text-right hidden sm:block">
                 <p className="text-sm font-extrabold text-on-surface leading-tight">Admin User</p>
-                <p className="text-xs font-mono text-on-surface-variant uppercase tracking-wider font-semibold">
-                  Plant Manager
+                <p className="text-xs font-bold text-on-surface-variant/80 mt-0.5">
+                  Giám đốc Nhà máy
                 </p>
               </div>
               <img
@@ -282,11 +282,11 @@ export default function Header({ subtitle, onMenuClick }: HeaderProps) {
                     />
                     <div>
                       <p className="text-base font-extrabold text-on-surface">Võ Văn Duy</p>
-                      <p className="text-xs font-medium text-on-surface-variant">Giám đốc Nhà máy</p>
+                      <p className="text-xs font-bold text-on-surface-variant">Giám đốc Nhà máy</p>
                     </div>
                   </div>
-                  <div className="mt-3 flex items-center justify-between p-2.5 rounded-xl bg-surface-container text-xs font-mono">
-                    <span className="text-on-surface-variant font-medium">Khu vực:</span>
+                  <div className="mt-3 flex items-center justify-between p-2.5 rounded-xl bg-surface-container text-xs font-bold">
+                    <span className="text-on-surface-variant">Khu vực:</span>
                     <span className="font-extrabold text-primary">Nhà máy Phú Mỹ</span>
                   </div>
                 </div>
