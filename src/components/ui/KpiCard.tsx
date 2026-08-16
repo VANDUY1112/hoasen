@@ -24,25 +24,26 @@ export default function KpiCard({
   resolved,
   className = '',
 }: KpiCardProps) {
-  const borderColors = {
-    primary: 'border-primary',
-    error: 'border-on-surface-variant',
-    success: 'border-success',
-    default: 'border-primary',
-  }
-
+  // Cohesive brand styling - Red & Neutral instead of harsh green/yellow
   const iconStyles = {
     primary: 'bg-primary/10 text-primary border border-primary/20',
     error: 'bg-rose-500/10 text-rose-600 border border-rose-500/20',
-    success: 'bg-emerald-500/10 text-emerald-600 border border-emerald-500/20',
+    success: 'bg-primary/10 text-primary border border-primary/20',
     default: 'bg-surface-container text-on-surface-variant border border-outline-variant/40',
+  }
+
+  const borderColors = {
+    primary: 'border-l-4 border-l-primary',
+    error: 'border-l-4 border-l-primary',
+    success: 'border-l-4 border-l-primary',
+    default: 'border-l-4 border-l-primary',
   }
 
   return (
     <div
       className={`
         group relative bg-surface-container-lowest p-3.5 sm:p-5 flex flex-col justify-between
-        overflow-hidden shadow-xs hover:shadow-md card-hover border border-outline-variant/35 border-l-4 rounded-2xl
+        overflow-hidden shadow-xs hover:shadow-md card-hover border border-outline-variant/35 rounded-2xl transition-all
         ${borderColors[accentColor]} ${className}
       `}
     >
@@ -71,23 +72,28 @@ export default function KpiCard({
       </div>
 
       {trend !== undefined && (
-        <div className={`flex items-center flex-wrap gap-1.5 pt-2 border-t border-outline-variant/20 text-xs font-bold font-mono ${trend >= 0 ? 'text-emerald-600' : 'text-rose-600'}`}>
-          {trend >= 0 ? <TrendingUp size={14} className="shrink-0" /> : <TrendingDown size={14} className="shrink-0" />}
-          <span>
-            {trend >= 0 ? '+' : ''}{trend}%
-          </span>
+        <div className="flex items-center flex-wrap gap-1.5 pt-2 border-t border-outline-variant/20 text-xs font-bold font-mono text-on-surface">
+          {trend >= 0 ? (
+            <span className="flex items-center text-primary font-bold">
+              <TrendingUp size={14} className="mr-1" /> +{trend}%
+            </span>
+          ) : (
+            <span className="flex items-center text-rose-600 font-bold">
+              <TrendingDown size={14} className="mr-1" /> {trend}%
+            </span>
+          )}
           {trendLabel && <span className="font-sans font-medium text-[11px] text-on-surface-variant/70 italic">{trendLabel}</span>}
         </div>
       )}
 
       {resolved && (
-        <div className="flex items-center gap-1.5 pt-2 border-t border-outline-variant/20 text-emerald-600 text-xs font-bold font-mono">
-          <Check size={14} className="stroke-[2.5]" />
-          <span className="font-sans text-[11px] font-semibold text-emerald-700">Đã khắc phục 100%</span>
+        <div className="flex items-center gap-1.5 pt-2 border-t border-outline-variant/20 text-xs font-bold font-mono text-on-surface-variant">
+          <div className="w-4 h-4 rounded-full bg-primary/10 text-primary flex items-center justify-center">
+            <Check size={11} className="stroke-[3]" />
+          </div>
+          <span className="font-sans text-[11px] font-semibold text-on-surface-variant">Đã khắc phục 100%</span>
         </div>
       )}
     </div>
   )
 }
-
-

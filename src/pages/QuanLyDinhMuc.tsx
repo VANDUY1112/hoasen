@@ -96,8 +96,8 @@ export default function QuanLyDinhMuc() {
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-5 sm:gap-6">
         <div className="lg:col-span-8 space-y-5 sm:space-y-6">
           {/* Smooth Wave Area Chart */}
-          <div className="p-4 sm:p-6 bg-surface-container-lowest rounded-2xl shadow-sm border border-outline-variant/40">
-            <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-3 sm:gap-4 mb-5">
+          <div className="p-4 sm:p-6 bg-surface-container-lowest rounded-2xl shadow-sm border border-outline-variant/40 relative overflow-hidden flex flex-col justify-between">
+            <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-3 sm:gap-4 mb-4">
               <div>
                 <span className="font-mono text-xs sm:text-sm text-on-surface-variant uppercase tracking-wider font-bold">Theo dõi đa kỳ</span>
                 <h3 className="text-base sm:text-xl font-extrabold text-on-surface mt-0.5">Thực tế vs Định mức (6 Tháng qua)</h3>
@@ -114,12 +114,12 @@ export default function QuanLyDinhMuc() {
               </div>
             </div>
 
-            <div className="h-[280px] sm:h-[320px] w-full">
+            <div className="h-60 sm:h-72 w-[calc(100%+2rem)] sm:w-[calc(100%+3rem)] -mx-4 sm:-mx-6 -mb-4 sm:-mb-6">
               <ResponsiveContainer width="100%" height="100%">
-                <AreaChart data={monthlyComparison} margin={{ top: 10, right: 10, left: -20, bottom: 0 }}>
+                <AreaChart data={monthlyComparison} margin={{ top: 10, right: 0, left: 0, bottom: 8 }}>
                   <defs>
                     <linearGradient id="dinhMucActualGrad" x1="0" y1="0" x2="0" y2="1">
-                      <stop offset="5%" stopColor="#b5000b" stopOpacity={0.35} />
+                      <stop offset="5%" stopColor="#b5000b" stopOpacity={0.4} />
                       <stop offset="95%" stopColor="#b5000b" stopOpacity={0.0} />
                     </linearGradient>
                     <linearGradient id="dinhMucTargetGrad" x1="0" y1="0" x2="0" y2="1">
@@ -131,30 +131,37 @@ export default function QuanLyDinhMuc() {
                   <XAxis
                     dataKey="month"
                     interval={0}
-                    padding={{ left: 10, right: 10 }}
+                    padding={{ left: 24, right: 24 }}
                     tick={{ fontSize: 13, fontWeight: 700, fill: 'var(--color-on-surface-variant)' }}
                     tickMargin={8}
                     axisLine={false}
                     tickLine={false}
                   />
-                  <YAxis
-                    tick={{ fontSize: 12, fontWeight: 600, fill: 'var(--color-on-surface-variant)' }}
-                    axisLine={false}
-                    tickLine={false}
-                  />
+                  <YAxis domain={[65, 100]} hide />
                   <Tooltip
-                    contentStyle={{
-                      background: 'var(--color-surface-container-lowest)',
-                      border: '1px solid var(--color-outline-variant)',
-                      borderRadius: '12px',
-                      fontSize: '13px',
-                      boxShadow: '0 10px 25px rgba(0,0,0,0.1)',
-                      fontWeight: 600,
+                    content={({ active, payload }) => {
+                      if (active && payload && payload.length) {
+                        const item = payload[0]?.payload
+                        const actualVal = payload.find((p) => p.dataKey === 'actual')?.value
+                        const targetVal = payload.find((p) => p.dataKey === 'target')?.value
+                        return (
+                          <div className="bg-surface-container-lowest p-3 rounded-xl border border-outline-variant/40 shadow-lg text-xs">
+                            <p className="font-mono font-bold text-on-surface uppercase mb-1.5">{item?.fullMonth || item?.month}</p>
+                            <div className="space-y-1 font-mono">
+                              <div className="flex items-center justify-between gap-3 text-primary font-bold">
+                                <span>Sản lượng Thực tế:</span>
+                                <span>{actualVal}%</span>
+                              </div>
+                              <div className="flex items-center justify-between gap-3 text-on-surface-variant font-medium">
+                                <span>Mục tiêu Định mức:</span>
+                                <span>{targetVal}%</span>
+                              </div>
+                            </div>
+                          </div>
+                        )
+                      }
+                      return null
                     }}
-                    formatter={(val: any, name: any) => [
-                      `${Number(val ?? 0).toLocaleString()} Tấn`,
-                      name === 'actual' ? 'Thực tế' : name === 'target' ? 'Định mức' : name,
-                    ]}
                   />
                   <Area
                     type="monotone"

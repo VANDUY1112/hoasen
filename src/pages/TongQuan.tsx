@@ -15,14 +15,126 @@ const timeRanges = [
   { id: '30days', label: 'Tháng này' },
 ]
 
+// Mock Data for the 3 Time Filter Options
+const timeFilterData = {
+  today: {
+    kpiOutput: {
+      title: 'Sản lượng trong ngày (Live)',
+      subtitle: 'Tấn thành phẩm / 24h',
+      trend: 12.5,
+      trendLabel: 'so với hôm qua',
+    },
+    kpiDefects: {
+      title: 'Số lỗi phát hiện',
+      value: 14,
+      subtitle: 'Trường hợp kiểm định trong ca',
+      trend: -2.4,
+      trendLabel: 'mục tiêu giảm lỗi',
+    },
+    kpiDowntime: {
+      title: 'Dừng máy (Downtime)',
+      value: 42,
+      subtitle: 'Phút gián đoạn trong ca',
+      resolvedText: 'Đã khắc phục 100%',
+    },
+    oee: {
+      overall: 83,
+      availability: 94.2,
+      performance: 88.5,
+      quality: 98.1,
+    },
+    chartTitle: 'Sản lượng theo khung giờ hôm nay (Tấn)',
+    chartData: [
+      { day: '06:00', fullDay: '06:00 - Đầu ca 1', planned: 160, actual: 155 },
+      { day: '09:00', fullDay: '09:00 - Giữa ca 1', planned: 200, actual: 215 },
+      { day: '12:00', fullDay: '12:00 - Cuối ca 1', planned: 200, actual: 195 },
+      { day: '15:00', fullDay: '15:00 - Đầu ca 2', planned: 200, actual: 220 },
+      { day: '18:00', fullDay: '18:00 - Giữa ca 2', planned: 220, actual: 235 },
+      { day: '21:00', fullDay: '21:00 - Hiện tại', planned: 220, actual: 248 },
+    ],
+  },
+  '7days': {
+    kpiOutput: {
+      title: 'Sản lượng 7 ngày qua',
+      subtitle: 'Tấn thành phẩm / 7 ngày',
+      trend: 8.6,
+      trendLabel: 'so với tuần trước',
+    },
+    kpiDefects: {
+      title: 'Số lỗi 7 ngày qua',
+      value: 86,
+      subtitle: 'Trường hợp kiểm định tuần',
+      trend: -4.8,
+      trendLabel: 'giảm 4.8% tuần qua',
+    },
+    kpiDowntime: {
+      title: 'Tổng dừng máy tuần',
+      value: 185,
+      subtitle: 'Phút tích lũy 7 ngày qua',
+      resolvedText: 'Kiểm soát tốt',
+    },
+    oee: {
+      overall: 85,
+      availability: 95.5,
+      performance: 90.2,
+      quality: 98.4,
+    },
+    chartTitle: 'Sản lượng tuần hiện tại (Tấn)',
+    chartData: [
+      { day: 'Thứ 2', fullDay: 'Thứ Hai', planned: 1500, actual: 1420 },
+      { day: 'Thứ 3', fullDay: 'Thứ Ba', planned: 1550, actual: 1590 },
+      { day: 'Thứ 4', fullDay: 'Thứ Tư', planned: 1600, actual: 1640 },
+      { day: 'Thứ 5', fullDay: 'Thứ Năm', planned: 1500, actual: 1580 },
+      { day: 'Thứ 6', fullDay: 'Thứ Sáu (Hôm nay)', planned: 1650, actual: 1720 },
+      { day: 'Thứ 7', fullDay: 'Thứ Bảy', planned: 1600, actual: 1500 },
+    ],
+  },
+  '30days': {
+    kpiOutput: {
+      title: 'Sản lượng tháng này',
+      subtitle: 'Tấn thành phẩm / Tháng 08',
+      trend: 14.2,
+      trendLabel: 'so với tháng trước',
+    },
+    kpiDefects: {
+      title: 'Số lỗi tháng này',
+      value: 312,
+      subtitle: 'Trường hợp kiểm định tháng',
+      trend: -8.5,
+      trendLabel: 'chất lượng cải thiện',
+    },
+    kpiDowntime: {
+      title: 'Tổng dừng máy tháng',
+      value: 640,
+      subtitle: 'Phút tích lũy tháng này',
+      resolvedText: 'Đạt chuẩn ISO',
+    },
+    oee: {
+      overall: 87,
+      availability: 96.2,
+      performance: 92.0,
+      quality: 98.8,
+    },
+    chartTitle: 'Sản lượng theo tuần trong tháng (Tấn)',
+    chartData: [
+      { day: 'Tuần 1', fullDay: 'Tuần 01 (01/08 - 07/08)', planned: 9500, actual: 9850 },
+      { day: 'Tuần 2', fullDay: 'Tuần 02 (08/08 - 14/08)', planned: 10000, actual: 10420 },
+      { day: 'Tuần 3', fullDay: 'Tuần 03 (15/08 - 21/08)', planned: 10500, actual: 10810 },
+      { day: 'Tuần 4', fullDay: 'Tuần 04 (22/08 - 31/08)', planned: 10000, actual: 10200 },
+    ],
+  },
+}
+
 export default function TongQuan() {
-  const [activeTimeRange, setActiveTimeRange] = useState('7days')
+  const [activeTimeRange, setActiveTimeRange] = useState<'today' | '7days' | '30days'>('7days')
   const [isDiagnosing, setIsDiagnosing] = useState(false)
   const [reportModalOpen, setReportModalOpen] = useState(false)
   const [reportType, setReportType] = useState<ReportType>('executive')
 
   const { dailyOutput, liveOee, liveLogs } = useLiveSimulation()
   const { addToast } = useToast()
+
+  const currentData = timeFilterData[activeTimeRange]
 
   const handleRunAiDiagnosis = () => {
     setIsDiagnosing(true)
@@ -89,7 +201,7 @@ export default function TongQuan() {
               }}
               className="cursor-pointer bg-surface-container-lowest text-on-surface border border-outline-variant/40 px-3.5 py-2.5 font-mono text-xs sm:text-[13px] uppercase tracking-wider flex items-center justify-center gap-1.5 font-bold rounded-xl hover:bg-surface-container transition-colors shadow-2xs"
             >
-              <Eye size={15} className="text-emerald-600 shrink-0" />
+              <Eye size={15} className="text-primary shrink-0" />
               <span className="truncate">Xem Báo Cáo</span>
             </button>
 
@@ -110,31 +222,37 @@ export default function TongQuan() {
       {/* KPI Cards with Live SCADA Data */}
       <section className="grid grid-cols-2 md:grid-cols-3 gap-2.5 sm:gap-4 stagger">
         <KpiCard
-          title="Sản lượng trong ngày (Live)"
-          value={dailyOutput.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
-          subtitle="Tấn thành phẩm / 24h"
-          trend={12.5}
-          trendLabel="so với hôm qua"
+          title={currentData.kpiOutput.title}
+          value={
+            activeTimeRange === 'today'
+              ? dailyOutput.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })
+              : activeTimeRange === '7days'
+              ? '9,450.00'
+              : '41,280.00'
+          }
+          subtitle={currentData.kpiOutput.subtitle}
+          trend={currentData.kpiOutput.trend}
+          trendLabel={currentData.kpiOutput.trendLabel}
           icon={<Layers size={20} className="stroke-[2.2]" />}
           accentColor="primary"
           className="col-span-2 md:col-span-1"
         />
         <KpiCard
-          title="Số lỗi phát hiện"
-          value={14}
-          subtitle="Trường hợp kiểm định"
-          trend={-2.4}
-          trendLabel="mục tiêu giảm lỗi"
+          title={currentData.kpiDefects.title}
+          value={currentData.kpiDefects.value}
+          subtitle={currentData.kpiDefects.subtitle}
+          trend={currentData.kpiDefects.trend}
+          trendLabel={currentData.kpiDefects.trendLabel}
           accentColor="error"
           icon={<AlertTriangle size={20} className="stroke-[2.2]" />}
           className="col-span-1"
         />
         <KpiCard
-          title="Dừng máy (Downtime)"
-          value={42}
-          subtitle="Phút vận hành gián đoạn"
+          title={currentData.kpiDowntime.title}
+          value={currentData.kpiDowntime.value}
+          subtitle={currentData.kpiDowntime.subtitle}
           resolved={true}
-          accentColor="success"
+          accentColor="primary"
           icon={<TimerOff size={20} className="stroke-[2.2]" />}
           className="col-span-1"
         />
@@ -153,25 +271,31 @@ export default function TongQuan() {
 
           <div className="my-2">
             <GaugeChart
-              value={Math.round(liveOee)}
-              availability={liveOee > 80 ? 94.2 : 91.5}
-              performance={88.5}
-              quality={98.1}
+              value={activeTimeRange === 'today' ? Math.round(liveOee) : currentData.oee.overall}
+              availability={activeTimeRange === 'today' ? (liveOee > 80 ? 94.2 : 91.5) : currentData.oee.availability}
+              performance={currentData.oee.performance}
+              quality={currentData.oee.quality}
             />
           </div>
 
           <div className="grid grid-cols-3 gap-2 w-full pt-3 mt-1 border-t border-outline-variant/30">
             <div className="text-center border-r border-outline-variant/30">
               <p className="text-[10px] sm:text-[11px] font-mono text-sky-600 uppercase font-bold">Khả dụng (A)</p>
-              <p className="text-base sm:text-lg font-extrabold text-on-surface font-mono mt-0.5">{liveOee > 80 ? '94.2%' : '91.5%'}</p>
+              <p className="text-base sm:text-lg font-extrabold text-on-surface font-mono mt-0.5">
+                {activeTimeRange === 'today' ? (liveOee > 80 ? '94.2%' : '91.5%') : `${currentData.oee.availability}%`}
+              </p>
             </div>
             <div className="text-center border-r border-outline-variant/30">
               <p className="text-[10px] sm:text-[11px] font-mono text-amber-600 uppercase font-bold">Hiệu suất (P)</p>
-              <p className="text-base sm:text-lg font-extrabold text-on-surface font-mono mt-0.5">88.5%</p>
+              <p className="text-base sm:text-lg font-extrabold text-on-surface font-mono mt-0.5">
+                {currentData.oee.performance}%
+              </p>
             </div>
             <div className="text-center">
               <p className="text-[10px] sm:text-[11px] font-mono text-rose-600 uppercase font-bold">Chất lượng (Q)</p>
-              <p className="text-base sm:text-lg font-extrabold text-primary font-mono mt-0.5">98.1%</p>
+              <p className="text-base sm:text-lg font-extrabold text-primary font-mono mt-0.5">
+                {currentData.oee.quality}%
+              </p>
             </div>
           </div>
         </div>
@@ -183,7 +307,7 @@ export default function TongQuan() {
               <span className="font-mono text-xs text-on-surface-variant uppercase tracking-wider font-bold">
                 Sản lượng kế hoạch vs Thực tế
               </span>
-              <h3 className="text-base sm:text-lg font-extrabold text-on-surface mt-0.5">Sản lượng tuần hiện tại (Tấn)</h3>
+              <h3 className="text-base sm:text-lg font-extrabold text-on-surface mt-0.5">{currentData.chartTitle}</h3>
             </div>
             <div className="flex gap-4 items-center font-mono text-xs font-bold">
               <span className="flex items-center gap-1.5 text-on-surface">
@@ -197,7 +321,7 @@ export default function TongQuan() {
 
           <div className="h-56 sm:h-60 w-[calc(100%+2rem)] sm:w-[calc(100%+2.5rem)] -mx-4 sm:-mx-5 -mb-4 sm:-mb-5">
             <ResponsiveContainer width="100%" height="100%">
-              <AreaChart data={weeklyProduction} margin={{ top: 10, right: 0, left: 0, bottom: 8 }}>
+              <AreaChart data={currentData.chartData} margin={{ top: 10, right: 0, left: 0, bottom: 8 }}>
                 <defs>
                   <linearGradient id="gradientActual" x1="0" y1="0" x2="0" y2="1">
                     <stop offset="5%" stopColor="var(--color-primary, #b5000b)" stopOpacity={0.4} />
@@ -231,11 +355,11 @@ export default function TongQuan() {
                           <div className="space-y-1 font-mono">
                             <div className="flex items-center justify-between gap-3 text-primary font-bold">
                               <span>Sản lượng Thực tế:</span>
-                              <span>{actualVal} Tấn</span>
+                              <span>{Number(actualVal).toLocaleString()} Tấn</span>
                             </div>
                             <div className="flex items-center justify-between gap-3 text-on-surface-variant font-medium">
                               <span>Mục tiêu Kế hoạch:</span>
-                              <span>{plannedVal} Tấn</span>
+                              <span>{Number(plannedVal).toLocaleString()} Tấn</span>
                             </div>
                           </div>
                         </div>

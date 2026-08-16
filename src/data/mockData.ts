@@ -113,12 +113,12 @@ export const productionLines: ProductionLine[] = [
 
 // ===== MONTHLY COMPARISON (6 months) =====
 export const monthlyComparison = [
-  { month: 'Tháng 1', target: 80, actual: 75 },
-  { month: 'Tháng 2', target: 80, actual: 82 },
-  { month: 'Tháng 3', target: 85, actual: 88 },
-  { month: 'Tháng 4', target: 90, actual: 84 },
-  { month: 'Tháng 5', target: 90, actual: 92 },
-  { month: 'Tháng 6', target: 95, actual: 94 },
+  { month: 'T1', fullMonth: 'Tháng 1', target: 80, actual: 75 },
+  { month: 'T2', fullMonth: 'Tháng 2', target: 80, actual: 82 },
+  { month: 'T3', fullMonth: 'Tháng 3', target: 85, actual: 88 },
+  { month: 'T4', fullMonth: 'Tháng 4', target: 90, actual: 84 },
+  { month: 'T5', fullMonth: 'Tháng 5', target: 90, actual: 92 },
+  { month: 'T6', fullMonth: 'Tháng 6', target: 95, actual: 94 },
 ]
 
 // ===== MAINTENANCE ITEMS =====

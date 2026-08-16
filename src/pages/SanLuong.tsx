@@ -64,7 +64,7 @@ export default function SanLuong() {
 
         <button
           onClick={() => setReportModalOpen(true)}
-          className="cursor-pointer px-4 sm:px-5 py-2.5 sm:py-2.5 bg-emerald-700 hover:bg-emerald-800 text-white font-mono text-xs sm:text-[13px] uppercase tracking-wider rounded-xl shadow-xs hover:shadow-emerald-700/20 transition-all w-full sm:w-auto flex items-center justify-center gap-2 font-extrabold"
+          className="cursor-pointer px-4 sm:px-5 py-2.5 sm:py-2.5 bg-primary hover:bg-on-primary-fixed-variant text-on-primary font-mono text-xs sm:text-[13px] uppercase tracking-wider rounded-xl shadow-xs shadow-primary/20 transition-all w-full sm:w-auto flex items-center justify-center gap-2 font-extrabold"
         >
           <Eye size={16} />
           <span>Xem & Xuất Báo Cáo</span>
@@ -73,41 +73,41 @@ export default function SanLuong() {
 
       {/* KPI Cards */}
       <section className="grid grid-cols-2 lg:grid-cols-4 gap-2.5 sm:gap-4 stagger">
-        <div className="col-span-2 bg-surface-container-lowest p-4 sm:p-5 shadow-xs border border-outline-variant/35 rounded-2xl card-hover relative overflow-hidden">
+        <div className="col-span-2 bg-surface-container-lowest p-4 sm:p-5 shadow-xs border border-outline-variant/30 hover:border-primary/40 rounded-2xl card-hover relative overflow-hidden transition-all">
           <div className="flex justify-between items-start">
             <div>
               <div className="flex items-center gap-2 mb-1.5">
                 <span className="font-mono text-xs text-on-surface-variant uppercase font-bold">Sản lượng trong ngày (Live)</span>
                 <span className="relative flex h-2 w-2">
-                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-500 opacity-75" />
-                  <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500" />
+                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary opacity-75" />
+                  <span className="relative inline-flex rounded-full h-2 w-2 bg-primary" />
                 </span>
               </div>
               <div className="flex items-baseline gap-2">
-                <h2 className="text-2xl sm:text-3xl lg:text-4xl font-extrabold text-on-surface tracking-tight font-mono">
+                <h2 className="text-2xl sm:text-3xl lg:text-4xl font-extrabold text-on-surface tracking-tight font-mono group-hover:text-primary transition-colors">
                   {dailyOutput.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
                 </h2>
                 <span className="text-sm sm:text-base font-bold text-on-surface-variant font-mono">Tấn</span>
               </div>
             </div>
-            <div className="p-2.5 rounded-xl bg-primary/10 text-primary">
+            <div className="p-2.5 rounded-xl bg-primary/10 text-primary border border-primary/20">
               <Layers size={22} />
             </div>
           </div>
-          <div className="mt-3 flex items-center gap-1.5 text-xs font-bold text-emerald-600 font-mono">
+          <div className="mt-3 flex items-center gap-1.5 text-xs font-bold text-primary font-mono">
             <TrendingUp size={15} /> +12.5% so với cùng kỳ hôm qua
           </div>
         </div>
 
-        <div className="bg-surface-container-lowest p-4 sm:p-5 shadow-xs border-t-4 border-primary border border-outline-variant/35 rounded-2xl card-hover">
+        <div className="bg-surface-container-lowest p-4 sm:p-5 shadow-xs border border-outline-variant/30 hover:border-primary/40 rounded-2xl card-hover transition-all">
           <p className="font-mono text-xs text-on-surface-variant uppercase font-bold mb-1.5">Tổng tuần (W42)</p>
           <h2 className="text-2xl sm:text-3xl font-extrabold text-on-surface font-mono">8,642</h2>
           <p className="text-xs text-on-surface-variant/80 mt-1 font-medium">Cuộn thép thành phẩm</p>
         </div>
 
-        <div className="bg-surface-container-lowest p-4 sm:p-5 shadow-xs border-t-4 border-emerald-500 border border-outline-variant/35 rounded-2xl card-hover">
+        <div className="bg-surface-container-lowest p-4 sm:p-5 shadow-xs border border-outline-variant/30 hover:border-primary/40 rounded-2xl card-hover transition-all">
           <p className="font-mono text-xs text-on-surface-variant uppercase font-bold mb-1.5">Đạt kế hoạch</p>
-          <h2 className="text-2xl sm:text-3xl font-extrabold text-emerald-600 font-mono">98.4%</h2>
+          <h2 className="text-2xl sm:text-3xl font-extrabold text-primary font-mono">98.4%</h2>
           <p className="text-xs text-on-surface-variant/80 mt-1 font-medium">Mục tiêu: 95.0%</p>
         </div>
       </section>
