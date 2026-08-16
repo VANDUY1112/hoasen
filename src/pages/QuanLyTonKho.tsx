@@ -103,9 +103,9 @@ export default function QuanLyTonKho() {
         <div className="grid grid-cols-2 sm:flex gap-2 sm:gap-2.5 w-full sm:w-auto">
           <button
             onClick={() => setReportModalOpen(true)}
-            className="cursor-pointer px-4 sm:px-5 py-2.5 sm:py-2.5 rounded-xl font-bold bg-emerald-700 hover:bg-emerald-800 text-white transition-all shadow-xs flex items-center justify-center gap-2 text-xs sm:text-[13px] uppercase font-mono tracking-wider"
+            className="cursor-pointer px-4 sm:px-5 py-2.5 sm:py-2.5 rounded-xl font-bold bg-surface-container-lowest text-on-surface border border-outline-variant/40 hover:bg-surface-container transition-all shadow-2xs flex items-center justify-center gap-2 text-xs sm:text-[13px] uppercase font-mono tracking-wider"
           >
-            <Eye size={16} />
+            <Eye size={16} className="text-primary shrink-0" />
             <span className="truncate">Xem Báo Cáo</span>
           </button>
           <button
@@ -117,49 +117,49 @@ export default function QuanLyTonKho() {
         </div>
       </div>
 
-      {/* KPI Summary Cards */}
+      {/* KPI Summary Cards - Unified Brand Aesthetic */}
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-2.5 sm:gap-4 stagger">
-        <div className="bg-surface-container-lowest p-4 sm:p-5 rounded-2xl shadow-xs border border-outline-variant/35 border-l-4 border-l-primary card-hover flex justify-between items-start">
+        <div className="group bg-surface-container-lowest p-4 sm:p-5 rounded-2xl shadow-xs border border-outline-variant/30 hover:border-primary/40 card-hover flex justify-between items-start transition-all">
           <div>
             <p className="font-mono text-xs text-on-surface-variant uppercase font-bold">Tổng mặt hàng</p>
-            <h2 className="text-2xl sm:text-3xl font-extrabold text-on-surface mt-1 font-mono">{totalItems}</h2>
+            <h2 className="text-2xl sm:text-3xl font-extrabold text-on-surface mt-1 font-mono group-hover:text-primary transition-colors">{totalItems}</h2>
             <p className="text-xs text-on-surface-variant/80 mt-1 font-medium">Đang quản lý trên ERP</p>
           </div>
-          <div className="p-2.5 rounded-xl bg-primary/10 text-primary">
-            <Warehouse size={22} />
+          <div className="p-2.5 rounded-xl bg-primary/10 text-primary border border-primary/20 transition-transform group-hover:scale-110">
+            <Warehouse size={20} />
           </div>
         </div>
 
-        <div className="bg-surface-container-lowest p-4 sm:p-5 rounded-2xl shadow-xs border border-outline-variant/35 border-l-4 border-l-amber-500 card-hover flex justify-between items-start">
+        <div className="group bg-surface-container-lowest p-4 sm:p-5 rounded-2xl shadow-xs border border-outline-variant/30 hover:border-primary/40 card-hover flex justify-between items-start transition-all">
           <div>
             <p className="font-mono text-xs text-on-surface-variant uppercase font-bold">Sắp hết hàng (Low Stock)</p>
-            <h2 className="text-2xl sm:text-3xl font-extrabold text-amber-600 mt-1 font-mono">{lowStock}</h2>
+            <h2 className="text-2xl sm:text-3xl font-extrabold text-on-surface mt-1 font-mono group-hover:text-primary transition-colors">{lowStock}</h2>
             <p className="text-xs text-on-surface-variant/80 mt-1 font-medium">Cần lập đề xuất mua sắm</p>
           </div>
-          <div className="p-2.5 rounded-xl bg-amber-500/10 text-amber-600">
-            <AlertTriangle size={22} />
+          <div className="p-2.5 rounded-xl bg-primary/10 text-primary border border-primary/20 transition-transform group-hover:scale-110">
+            <AlertTriangle size={20} />
           </div>
         </div>
 
-        <div className="bg-surface-container-lowest p-4 sm:p-5 rounded-2xl shadow-xs border border-outline-variant/35 border-l-4 border-l-emerald-500 card-hover flex justify-between items-start">
+        <div className="group bg-surface-container-lowest p-4 sm:p-5 rounded-2xl shadow-xs border border-outline-variant/30 hover:border-primary/40 card-hover flex justify-between items-start transition-all">
           <div>
             <p className="font-mono text-xs text-on-surface-variant uppercase font-bold">Tồn kho An toàn</p>
-            <h2 className="text-2xl sm:text-3xl font-extrabold text-emerald-600 mt-1 font-mono">{inventory.length - lowStock}</h2>
+            <h2 className="text-2xl sm:text-3xl font-extrabold text-on-surface mt-1 font-mono group-hover:text-primary transition-colors">{inventory.length - lowStock}</h2>
             <p className="text-xs text-on-surface-variant/80 mt-1 font-medium">Đạt định mức tối thiểu</p>
           </div>
-          <div className="p-2.5 rounded-xl bg-emerald-500/10 text-emerald-600">
-            <CheckCircle2 size={22} />
+          <div className="p-2.5 rounded-xl bg-primary/10 text-primary border border-primary/20 transition-transform group-hover:scale-110">
+            <CheckCircle2 size={20} />
           </div>
         </div>
 
-        <div className="bg-surface-container-lowest p-4 sm:p-5 rounded-2xl shadow-xs border border-outline-variant/35 border-l-4 border-l-rose-500 card-hover flex justify-between items-start">
+        <div className="group bg-surface-container-lowest p-4 sm:p-5 rounded-2xl shadow-xs border border-outline-variant/30 hover:border-primary/40 card-hover flex justify-between items-start transition-all">
           <div>
             <p className="font-mono text-xs text-on-surface-variant uppercase font-bold">Cần đặt gấp (Critical)</p>
-            <h2 className="text-2xl sm:text-3xl font-extrabold text-rose-600 mt-1 font-mono">{criticalStock}</h2>
+            <h2 className="text-2xl sm:text-3xl font-extrabold text-on-surface mt-1 font-mono group-hover:text-primary transition-colors">{criticalStock}</h2>
             <p className="text-xs text-on-surface-variant/80 mt-1 font-medium">Dưới mức an toàn</p>
           </div>
-          <div className="p-2.5 rounded-xl bg-rose-500/10 text-rose-600">
-            <Package size={22} />
+          <div className="p-2.5 rounded-xl bg-primary/10 text-primary border border-primary/20 transition-transform group-hover:scale-110">
+            <Package size={20} />
           </div>
         </div>
       </div>

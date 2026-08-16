@@ -81,9 +81,9 @@ export default function HieuSuatCaTruc() {
           <button
             onClick={handleExportShiftExcel}
             disabled={exporting}
-            className="cursor-pointer px-3 sm:px-3.5 py-2 rounded-xl font-bold bg-emerald-700 hover:bg-emerald-800 text-white transition-all shadow-xs flex items-center justify-center gap-1.5 text-xs uppercase font-mono tracking-wider"
+            className="cursor-pointer px-4 sm:px-5 py-2.5 sm:py-2.5 rounded-xl font-bold bg-surface-container-lowest text-on-surface border border-outline-variant/40 hover:bg-surface-container transition-all shadow-2xs flex items-center justify-center gap-2 text-xs sm:text-[13px] uppercase font-mono tracking-wider"
           >
-            <FileSpreadsheet size={15} className={exporting ? 'animate-spin' : ''} />
+            <FileSpreadsheet size={16} className={`text-primary shrink-0 ${exporting ? 'animate-spin' : ''}`} />
             <span className="truncate">{exporting ? 'Đang tạo...' : 'Xuất Excel'}</span>
           </button>
           <button
