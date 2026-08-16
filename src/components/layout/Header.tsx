@@ -13,12 +13,8 @@ import {
   AlertTriangle,
   Info,
   Sparkles,
-  Play,
-  Pause,
-  Zap,
   Search,
 } from 'lucide-react'
-import { useLiveSimulation } from '../../context/LiveSimulationContext'
 import { decorativeImages } from '../../data/mockData'
 import CommandPalette from '../ui/CommandPalette'
 import ProfileModal from '../ui/ProfileModal'
@@ -75,7 +71,6 @@ export default function Header({ subtitle, onMenuClick }: HeaderProps) {
   const [notifications, setNotifications] = useState(initialNotifications)
   const [currentTime, setCurrentTime] = useState('')
 
-  const { isSimulating, toggleSimulation, speedMpm } = useLiveSimulation()
   const { addToast } = useToast()
 
   const notifRef = useRef<HTMLDivElement>(null)
@@ -125,7 +120,7 @@ export default function Header({ subtitle, onMenuClick }: HeaderProps) {
   return (
     <>
       <header className="fixed top-0 left-0 lg:left-72 right-0 h-14 glass z-30 flex items-center justify-between px-3 sm:px-4 lg:px-5 transition-all duration-300 border-b border-outline-variant/40">
-        {/* Left: Menu & Live Telemetry Controls */}
+        {/* Left: Menu */}
         <div className="flex items-center gap-2 sm:gap-2.5 min-w-0">
           <button
             onClick={onMenuClick}
@@ -134,37 +129,6 @@ export default function Header({ subtitle, onMenuClick }: HeaderProps) {
           >
             <Menu size={20} />
           </button>
-
-          {/* Live SCADA Simulation Toggle - Compact */}
-          <button
-            onClick={toggleSimulation}
-            className={`
-              cursor-pointer flex items-center gap-1.5 px-2.5 py-1 rounded-full border text-xs font-mono font-bold transition-all duration-200 shadow-2xs shrink-0
-              ${isSimulating
-                ? 'bg-emerald-500/10 border-emerald-500/30 text-emerald-700 hover:bg-emerald-500/20'
-                : 'bg-surface-container border-outline-variant/40 text-on-surface-variant hover:bg-surface-container-high'
-              }
-            `}
-            title="Bật/Tắt mô phỏng dữ liệu SCADA thời gian thực"
-          >
-            <span className="relative flex h-2 w-2">
-              {isSimulating && (
-                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-500 opacity-75" />
-              )}
-              <span className={`relative inline-flex rounded-full h-2 w-2 ${isSimulating ? 'bg-emerald-500' : 'bg-on-surface-variant/50'}`} />
-            </span>
-            <span className="hidden xs:inline text-[11px]">{isSimulating ? 'SCADA LIVE' : 'TẠM DỪNG'}</span>
-            <span className="xs:hidden text-[11px]">{isSimulating ? 'LIVE' : 'DỪNG'}</span>
-            {isSimulating ? <Pause size={12} className="opacity-70 hidden sm:block" /> : <Play size={12} className="opacity-70 hidden sm:block" />}
-          </button>
-
-          {/* Realtime Speed Pill */}
-          {isSimulating && (
-            <div className="hidden xl:flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-primary/10 text-primary font-mono text-xs font-extrabold border border-primary/20 animate-fade-in">
-              <Zap size={13} />
-              <span>{speedMpm} m/phút</span>
-            </div>
-          )}
         </div>
 
         {/* Right: Search Spotlight + Clock + Notifications + Profile */}

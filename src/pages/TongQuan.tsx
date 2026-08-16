@@ -151,24 +151,33 @@ export default function TongQuan() {
             <Badge variant="primary" pulse size="sm">SCADA Stream</Badge>
           </div>
 
-          <div className="my-3">
-            <GaugeChart value={Math.round(liveOee)} />
+          <div className="my-2">
+            <GaugeChart
+              value={Math.round(liveOee)}
+              availability={liveOee > 80 ? 94.2 : 91.5}
+              performance={88.5}
+              quality={98.1}
+            />
           </div>
 
-          <div className="grid grid-cols-2 gap-3 w-full pt-3 border-t border-outline-variant/30">
+          <div className="grid grid-cols-3 gap-2 w-full pt-3 mt-1 border-t border-outline-variant/30">
             <div className="text-center border-r border-outline-variant/30">
-              <p className="text-[11px] font-mono text-on-surface-variant/80 uppercase font-bold">Khả dụng (Availability)</p>
-              <p className="text-xl sm:text-2xl font-extrabold text-on-surface font-mono">{liveOee > 80 ? '94.2%' : '91.5%'}</p>
+              <p className="text-[10px] sm:text-[11px] font-mono text-sky-600 uppercase font-bold">Khả dụng (A)</p>
+              <p className="text-base sm:text-lg font-extrabold text-on-surface font-mono mt-0.5">{liveOee > 80 ? '94.2%' : '91.5%'}</p>
+            </div>
+            <div className="text-center border-r border-outline-variant/30">
+              <p className="text-[10px] sm:text-[11px] font-mono text-amber-600 uppercase font-bold">Hiệu suất (P)</p>
+              <p className="text-base sm:text-lg font-extrabold text-on-surface font-mono mt-0.5">88.5%</p>
             </div>
             <div className="text-center">
-              <p className="text-[11px] font-mono text-on-surface-variant/80 uppercase font-bold">Chất lượng (Quality)</p>
-              <p className="text-xl sm:text-2xl font-extrabold text-primary font-mono">98.1%</p>
+              <p className="text-[10px] sm:text-[11px] font-mono text-rose-600 uppercase font-bold">Chất lượng (Q)</p>
+              <p className="text-base sm:text-lg font-extrabold text-primary font-mono mt-0.5">98.1%</p>
             </div>
           </div>
         </div>
 
         {/* Weekly Wave Area Chart */}
-        <div className="lg:col-span-8 bg-surface-container-lowest p-4 sm:p-5 shadow-xs border border-outline-variant/35 rounded-2xl animate-slide-up">
+        <div className="lg:col-span-8 bg-surface-container-lowest p-4 sm:p-5 shadow-xs border border-outline-variant/35 rounded-2xl animate-slide-up relative overflow-hidden flex flex-col justify-between">
           <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-2 mb-3">
             <div>
               <span className="font-mono text-xs text-on-surface-variant uppercase tracking-wider font-bold">
@@ -186,9 +195,9 @@ export default function TongQuan() {
             </div>
           </div>
 
-          <div className="h-56 sm:h-60 w-full">
+          <div className="h-56 sm:h-60 w-[calc(100%+2rem)] sm:w-[calc(100%+2.5rem)] -mx-4 sm:-mx-5 -mb-4 sm:-mb-5">
             <ResponsiveContainer width="100%" height="100%">
-              <AreaChart data={weeklyProduction} margin={{ top: 10, right: 10, left: 0, bottom: 0 }}>
+              <AreaChart data={weeklyProduction} margin={{ top: 10, right: 0, left: 0, bottom: 8 }}>
                 <defs>
                   <linearGradient id="gradientActual" x1="0" y1="0" x2="0" y2="1">
                     <stop offset="5%" stopColor="var(--color-primary, #b5000b)" stopOpacity={0.4} />
@@ -202,7 +211,10 @@ export default function TongQuan() {
                 <CartesianGrid strokeDasharray="3 3" stroke="var(--color-surface-container-high)" vertical={false} />
                 <XAxis
                   dataKey="day"
-                  tick={{ fontSize: 12, fontWeight: 700, fill: 'var(--color-on-surface-variant)' }}
+                  interval={0}
+                  padding={{ left: 24, right: 24 }}
+                  tick={{ fontSize: 13, fontWeight: 700, fill: 'var(--color-on-surface-variant)' }}
+                  tickMargin={10}
                   axisLine={false}
                   tickLine={false}
                 />

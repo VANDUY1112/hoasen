@@ -130,12 +130,15 @@ export default function QuanLyDinhMuc() {
                   <CartesianGrid strokeDasharray="3 3" stroke="var(--color-outline-variant)" strokeOpacity={0.3} vertical={false} />
                   <XAxis
                     dataKey="month"
-                    tick={{ fontSize: 12, fontWeight: 700, fill: 'var(--color-on-surface-variant)' }}
+                    interval={0}
+                    padding={{ left: 10, right: 10 }}
+                    tick={{ fontSize: 13, fontWeight: 700, fill: 'var(--color-on-surface-variant)' }}
+                    tickMargin={8}
                     axisLine={false}
                     tickLine={false}
                   />
                   <YAxis
-                    tick={{ fontSize: 11, fontWeight: 600, fill: 'var(--color-on-surface-variant)' }}
+                    tick={{ fontSize: 12, fontWeight: 600, fill: 'var(--color-on-surface-variant)' }}
                     axisLine={false}
                     tickLine={false}
                   />
