@@ -9,11 +9,13 @@ import { useToast } from '../components/ui/Toast'
 import { useLiveSimulation } from '../context/LiveSimulationContext'
 import { weeklyProduction, defectRecords, decorativeImages } from '../data/mockData'
 
-const timeRanges = [
+type TimeRangeType = 'today' | '7days' | '30days'
+
+const timeRanges: { id: TimeRangeType; label: string }[] = [
   { id: 'today', label: 'Hôm nay' },
   { id: '7days', label: '7 ngày qua' },
   { id: '30days', label: 'Tháng này' },
-] as const
+]
 
 // Mock Data for the 3 Time Filter Options
 const timeFilterData = {
