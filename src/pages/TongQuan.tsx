@@ -128,7 +128,7 @@ const timeFilterData = {
 }
 
 export default function TongQuan() {
-  const [activeTimeRange, setActiveTimeRange] = useState<'today' | '7days' | '30days'>('7days')
+  const [activeTimeRange, setActiveTimeRange] = useState<TimeRangeType>('7days')
   const [isDiagnosing, setIsDiagnosing] = useState(false)
   const [reportModalOpen, setReportModalOpen] = useState(false)
   const [reportType, setReportType] = useState<ReportType>('executive')
@@ -136,7 +136,7 @@ export default function TongQuan() {
   const { dailyOutput, liveOee, liveLogs } = useLiveSimulation()
   const { addToast } = useToast()
 
-  const currentData = timeFilterData[activeTimeRange]
+  const currentData = timeFilterData[activeTimeRange] || timeFilterData['7days']
 
   const handleRunAiDiagnosis = () => {
     setIsDiagnosing(true)
@@ -172,7 +172,7 @@ export default function TongQuan() {
             {timeRanges.map((t) => (
               <button
                 key={t.id}
-                onClick={() => setActiveTimeRange(t.id)}
+                onClick={() => setActiveTimeRange(t.id as TimeRangeType)}
                 className={`
                   cursor-pointer px-3.5 sm:px-4 py-2 sm:py-2.5 rounded-lg text-xs sm:text-[13px] font-bold transition-all duration-150 whitespace-nowrap flex-1 sm:flex-none text-center
                   ${activeTimeRange === t.id
