@@ -13,7 +13,7 @@ const timeRanges = [
   { id: 'today', label: 'Hôm nay' },
   { id: '7days', label: '7 ngày qua' },
   { id: '30days', label: 'Tháng này' },
-]
+] as const
 
 // Mock Data for the 3 Time Filter Options
 const timeFilterData = {

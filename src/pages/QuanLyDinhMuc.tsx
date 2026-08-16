@@ -35,9 +35,9 @@ export default function QuanLyDinhMuc() {
         <div className="grid grid-cols-2 sm:flex gap-2 w-full sm:w-auto">
           <button
             onClick={handleExport}
-            className="cursor-pointer flex items-center justify-center gap-1.5 px-3.5 sm:px-4 py-2 bg-surface-container-highest text-on-surface font-bold rounded-xl hover:bg-surface-container-high transition-all text-xs uppercase font-mono tracking-wider border border-outline-variant/40"
+            className="cursor-pointer flex items-center justify-center gap-1.5 px-3.5 sm:px-4 py-2 bg-surface-container-lowest text-on-surface font-bold rounded-xl hover:bg-surface-container transition-all text-xs uppercase font-mono tracking-wider border border-outline-variant/40 shadow-2xs"
           >
-            <Download size={15} /> <span className="truncate">Xuất báo cáo</span>
+            <Download size={15} className="text-primary shrink-0" /> <span className="truncate">Xuất báo cáo</span>
           </button>
           <button
             onClick={() => navigate('/thiet-lap-muc-tieu-ca-truc')}
@@ -48,44 +48,44 @@ export default function QuanLyDinhMuc() {
         </div>
       </div>
 
-      {/* Top Stats with Vibrant Icon Colors */}
+      {/* Top Stats - Minimalist & Unified Brand Design */}
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-2.5 sm:gap-4 stagger">
         {[
-          { label: 'Target Yield', value: '42,500', unit: 'Tấn/tháng', trend: '+4.2%', icon: Factory, border: 'border-l-4 border-l-primary', iconBg: 'bg-primary/10 text-primary' },
-          { label: 'Quality Standard', value: '99.8', unit: '%', progress: 99.8, icon: ShieldCheck, border: 'border-l-4 border-l-emerald-500', iconBg: 'bg-emerald-500/10 text-emerald-600' },
-          { label: 'Max Downtime', value: '120', unit: 'Phút/ca', badge: 'Critical Threshold', icon: TimerOff, border: 'border-l-4 border-l-amber-500', iconBg: 'bg-amber-500/10 text-amber-600' },
-          { label: 'OEE Benchmark', value: '85.0', unit: '%', progress: 82, icon: Gauge, border: 'border-l-4 border-l-sky-500', iconBg: 'bg-sky-500/10 text-sky-600' },
+          { label: 'Target Yield', value: '42,500', unit: 'Tấn/tháng', trend: '+4.2%', icon: Factory },
+          { label: 'Quality Standard', value: '99.8', unit: '%', progress: 99.8, icon: ShieldCheck },
+          { label: 'Max Downtime', value: '120', unit: 'Phút/ca', badge: 'Ngưỡng tối đa', icon: TimerOff },
+          { label: 'OEE Benchmark', value: '85.0', unit: '%', progress: 82, icon: Gauge },
         ].map((item) => (
           <div
             key={item.label}
-            className={`group p-3.5 sm:p-4 bg-surface-container-lowest rounded-2xl shadow-xs hover:shadow-md transition-shadow card-hover border border-outline-variant/35 ${item.border}`}
+            className="group p-3.5 sm:p-4 bg-surface-container-lowest rounded-2xl shadow-xs hover:shadow-md transition-all card-hover border border-outline-variant/30 hover:border-primary/40"
           >
             <div className="flex justify-between items-start mb-2">
               <span className="font-mono text-[11px] sm:text-xs text-on-surface-variant uppercase font-bold">{item.label}</span>
-              <div className={`p-1.5 sm:p-2 rounded-xl shrink-0 transition-transform group-hover:scale-110 ${item.iconBg}`}>
+              <div className="p-1.5 sm:p-2 rounded-xl shrink-0 transition-transform group-hover:scale-110 bg-primary/10 text-primary border border-primary/20">
                 <item.icon size={17} />
               </div>
             </div>
             <div className="flex items-baseline gap-1.5 sm:gap-2">
-              <span className="text-xl sm:text-2xl lg:text-3xl font-extrabold text-on-surface font-mono">{item.value}</span>
+              <span className="text-xl sm:text-2xl lg:text-3xl font-extrabold text-on-surface font-mono group-hover:text-primary transition-colors">{item.value}</span>
               <span className="font-mono text-[11px] sm:text-xs text-on-surface-variant font-bold">{item.unit}</span>
             </div>
             {item.trend && (
               <div className="mt-2 flex items-center gap-1.5">
-                <span className="flex items-center text-xs font-bold text-emerald-600 bg-emerald-500/10 px-2 py-0.5 rounded font-mono">
+                <span className="flex items-center text-xs font-bold text-primary bg-primary/10 px-2 py-0.5 rounded font-mono">
                   <TrendingUp size={13} className="mr-1" /> {item.trend}
                 </span>
                 <span className="text-[10px] sm:text-[11px] text-on-surface-variant/70 italic font-medium">vs tháng trước</span>
               </div>
             )}
             {item.progress !== undefined && (
-              <div className="mt-2">
+              <div className="mt-2.5">
                 <ProgressBar value={item.progress} height="h-1.5" />
               </div>
             )}
             {item.badge && (
               <div className="mt-2">
-                <Badge variant="warning" size="sm">{item.badge}</Badge>
+                <Badge variant="neutral" size="sm">{item.badge}</Badge>
               </div>
             )}
           </div>
